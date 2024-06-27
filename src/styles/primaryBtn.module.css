@@ -1,0 +1,38 @@
+
+
+.primaryBtn {
+    gap: 10px;
+    display: flex;
+    /* margin: 0 auto; */
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 400;
+    line-height: 24px;
+    border-radius: 6px;
+    padding: 12px 28px;
+    align-items: center;
+    transition: .4s ease-in-out;
+    text-transform: uppercase;
+    border: 1px solid #232321;
+    background-color: transparent;
+    font-family: "Khand", sans-serif;   
+}
+
+.btn {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.primaryBtn img {
+    width: 24px;
+    height: 24px;
+    transition: .4s ease-in-out;
+}
+
+.primaryBtn:hover {
+    color: #fff;
+    background-color: #232321;
+}
+.primaryBtn:hover.primaryBtn img {
+    filter: brightness(0) invert(1);
+}

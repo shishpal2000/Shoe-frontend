@@ -1,0 +1,58 @@
+
+
+.categoriesCard {
+    width: 100%;
+    position: relative;
+    border-radius: 12px;
+    border: 10px solid #F7F7FB;
+    padding: 50px 25px 40px 25px;
+    max-width: calc(100% / 3);
+}
+
+.categoriesCard .tittle {
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 42.68px;
+    margin-bottom: 12px;
+    white-space: pre-line;
+    text-transform: uppercase;
+    font-family: "Khand", sans-serif;   
+}
+
+.proImg {
+    /* margin-bottom: 20px; */
+}
+
+.proImg figure {
+    width: 100%;
+    height: 100%;
+    min-height: 245px;
+}
+
+.proImg figure img {
+    width: 100%;
+    height: 100%;
+}
+
+.tag {
+    top: 0;
+    right: 0;
+    position: absolute;
+    width: fit-content;
+    color: #FFFFFF;
+    padding: 12px 27px;
+    font-size: 14px;
+    line-height: 21.41px;
+    font-weight: 400;
+    border-radius: 0 4px 0 0;
+    text-transform: capitalize;
+    background-color: #232321;
+    font-family: "Khand", sans-serif;   
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 19% 100%);
+}
+
+.cardBtn_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,19 @@
+.secondaryBtn {
+    color: #ffffff;
+    padding: 19px 53.86px 19px 54px;
+    border-radius: 6px;
+    font-size: 20px;
+    line-height: 30.8px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #000000;
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    font-family: "Khand", sans-serif;
+}
+
+.secondaryBtn:hover{
+    background-color: #1a1a1a;
+}

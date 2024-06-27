@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+
+
+ul {
+  padding-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+figure {
+  margin-bottom: 0 !important;
+}
+
+
+body {
+  font-family: "Khand", sans-serif;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1240px !important;
+}
+
+
+/* shoe slider custome css  */
+
+.popular_propduct_slider
+.slick-slider .slick-track {
+  display: flex;
+  gap: 57.91px;
+}
+
+.popular_propduct_slider
+.slick-dots {
+  bottom: -43.22px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 17.29px;
+}
+
+
+.popular_propduct_slider
+.slick-dots li {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+
+.popular_propduct_slider
+.slick-dots li.slick-active button {
+  height: 5.9px;
+  width: 25.93px;
+  background-color: #000000;
+  border-radius: 17.29px;
+}
+
+.popular_propduct_slider .slick-dots li button {
+  height: 9.51px;
+  width: 9.51px;
+  transition: .4s ease-in-out;
+  background-color: #000000;
+  border-radius: 17.29px;
+}
+
+
+
+.popular_propduct_slider
+.slick-dots li button:before {
+  display: none;
+}
+
+
+
+/* .slick-prev:before {
+  content: "" !important;
+  display: flex !important;
+  width: 27.66px;
+  left: 0 !important;
+  top: 50% !important;
+  height: 27.66px;
+  position: absolute;
+  background-image: url('../../public/arrow-right.svg');
+} */

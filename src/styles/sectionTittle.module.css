@@ -1,0 +1,41 @@
+
+.tittle {
+    width: fit-content;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 46px;
+}
+
+.sectionTittle h2 {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 50px;
+    color: #0A0B0B;
+    text-transform: capitalize;
+    font-family: "Khand", sans-serif;   
+}
+
+.sectionTittle h2:after {
+    content: "";
+    left: -50px;
+    width: 31.38px;
+    height: 2px;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url('../../public/Line.svg');
+    top: 54%;
+    transform: translateY(-50%);
+}
+
+.sectionTittle h2:before {
+    content: "";
+    right: -50px;
+    width: 31.38px;
+    height: 2px;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url('../../public/Line.svg');
+    top: 54%;
+    transform: translateY(-50%);
+}

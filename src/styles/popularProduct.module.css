@@ -1,0 +1,134 @@
+
+.popular_product_main {
+    padding: 68px 0 96px 0;
+}
+
+.popular_product_items {
+    gap: 30px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.popular_product_items .left {
+    width: 100%;
+    max-width: 30%;
+}
+
+.popular_product_items .left .content {
+    font-family: "Khand", sans-serif;
+}
+
+.popular_product_items .left .content .tag {
+    font-size: 20px;
+    line-height: 30.58px;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 20px;
+    position: relative;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 19px;
+}
+
+.popular_product_items .left .content .line {
+    width: 40.62px;
+    height: 1.73px;
+    background-color: #000000;
+}
+
+
+
+.popular_product_items .left .content h3 {
+    font-size: 48px;
+    line-height: 50px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 23px;
+}
+
+.popular_product_items .left .content .descrip {
+    font-size: 16px;
+    line-height: 24.46px;
+    font-weight: 400;
+    color: #000000BF;
+    margin-bottom: 22px;
+}
+
+.popular_product_items .right {
+    width: 100%;
+    max-width: 70%;
+}
+
+.popular_product_items .right
+.shoeSlideCard {
+    border-radius: 12px;
+    padding: 0 31px 21px 31px;
+    border: 1.73px solid #EFEFF6;
+    background-color: #F7F7FB;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.popular_product_items .right .shoeSlideCard figure {
+    width: 194.47px;
+    height: 194.47px;
+}
+
+.popular_product_items .right .shoeSlideCard figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .4s ease-in-out;
+}
+
+.shoeSlideCard:hover 
+figure img {
+    transform: rotate(14deg);
+}
+
+
+.popular_product_items .right .shoeSlideCard h4 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 36.7px;
+    color: #000000;
+    font-family: "Khand", sans-serif;
+}
+
+.popular_product_items .right .shoeSlideCard .bar {
+    display: flex;
+    align-items: center;
+    margin-top: 8.5px;
+    justify-content: space-between;
+}
+
+
+.shoeSlideCard .bar .price {
+    font-size: 24px;
+        font-weight: 500;
+        line-height: 36.7px;
+        color: #000000;
+        margin-bottom: 0;
+        font-family: "Khand", sans-serif;
+}
+
+.shoeSlideCard .bar .learnMore {
+    width: 34.57px;
+    height: 34.57px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: #000000;
+}
+
+.shoeSlideCard .bar .learnMore img {
+    transition: .3s ease-in-out;
+}
+
+.popular_product_items .right .shoeSlideCard:hover
+.bar .learnMore
+img {
+    transform: rotate(45deg);
+}

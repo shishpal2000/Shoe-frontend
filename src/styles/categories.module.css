@@ -1,0 +1,14 @@
+
+
+.categories_main {
+    padding: 58px 0 65px 0;
+}
+
+
+.categories_main
+.categories_items {
+    gap: 32px;
+    display: flex;
+    align-items: flex-start;
+
+}
