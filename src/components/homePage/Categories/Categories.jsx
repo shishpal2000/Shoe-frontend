@@ -1,6 +1,6 @@
-import style from "../../styles/categories.module.css";
+import style from "../../../styles/categories.module.css";
 import CategoriesCard from "../CategoriesCard/CategoriesCard";
-import SectionTittle from "../homePage/SectionTittle/SectionTittle";
+import SectionTittle from "../SectionTittle/SectionTittle";
 
 const Categories = () => {
   return (

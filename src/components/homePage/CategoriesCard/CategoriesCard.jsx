@@ -1,5 +1,5 @@
-import style from "../../styles/categoriesCard.module.css";
-import PrimaryBtn from "../homePage/PrimaryBtn/PrimaryBtn";
+import style from "../../../styles/categoriesCard.module.css";
+import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";
 
 const CategoriesCard = () => {
   const CARD_DATA = [

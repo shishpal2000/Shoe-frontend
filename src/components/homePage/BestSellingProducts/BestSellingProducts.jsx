@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "../../../styles/bestSellingProduct.module.css";
 import SectionTittle from "../SectionTittle/SectionTittle";
 import Collection from "../ShoeCollection/Collection";
+import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 
 const BestSellingProducts = () => {
   const [activeTab, setActiveTab] = useState("Men");
@@ -59,6 +60,11 @@ const BestSellingProducts = () => {
                     {activeTab === `${data.tabName}` && (
                       <div>
                         <Collection />
+                        <div
+                          style={{ textAlign: "center", marginTop: "56.29px" }}
+                        >
+                          <SecondaryBtn btnText="explore more" />
+                        </div>
                       </div>
                     )}
                   </>

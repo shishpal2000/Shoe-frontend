@@ -1,6 +1,7 @@
-import Categories from "@/components/Categories/Categories";
+import Categories from "@/components/homePage/Categories/Categories";
+import Header from "@/components/Header/Header";
 import BestSellingProducts from "@/components/homePage/BestSellingProducts/BestSellingProducts";
-import Header from "@/components/homePage/Header/Header";
+
 import HeroSection from "@/components/homePage/HeroSection/HeroSection";
 import HomeGallery from "@/components/homePage/HomeGallery/HomeGallery";
 import PopularProducts from "@/components/homePage/PopularProducts/PopularProducts";
