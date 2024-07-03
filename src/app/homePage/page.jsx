@@ -6,6 +6,8 @@ import HeroSection from "@/components/homePage/HeroSection/HeroSection";
 import HomeGallery from "@/components/homePage/HomeGallery/HomeGallery";
 import PopularProducts from "@/components/homePage/PopularProducts/PopularProducts";
 import ShoeCollection from "@/components/homePage/ShoeCollection/ShoeCollection";
+import { WeOffer } from "@/components/homePage/WeOffer/WeOffer";
+import Testimonial from "@/components/homePage/Testimonial/Testimonial";
 
 const HomePage = () => {
   return (
@@ -17,6 +19,8 @@ const HomePage = () => {
       <PopularProducts />
       <ShoeCollection />
       <BestSellingProducts />
+      <WeOffer />
+      <Testimonial />
     </>
   );
 };
