@@ -1,14 +1,22 @@
-
-
 .categories_main {
-    padding: 58px 0 65px 0;
+  padding: 58px 0 65px 0;
 }
 
+.categories_main .categories_items {
+  gap: 32px;
+  display: flex;
+  align-items: flex-start;
+}
 
-.categories_main
-.categories_items {
-    gap: 32px;
-    display: flex;
-    align-items: flex-start;
+@media only screen and (max-width: 949px) {
+  .categories_main .categories_items {
+    gap: 20px;
+  }
+}
 
+@media only screen and (max-width: 738px) {
+  .categories_main .categories_items {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

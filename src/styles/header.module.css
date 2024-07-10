@@ -1,184 +1,179 @@
-
-
 .header_main {
-    padding: 16px 0;
-    background-color: #0A0B0B;
+  padding: 16px 0;
+  background-color: #0a0b0b;
 }
 
 .header_items .logo h2 a {
-    color: #FFFFFF;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 30.58px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-family: "Khand", sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30.58px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Khand", sans-serif;
 }
 
 .header_items {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header_items
-.search {
-    width: 100%;
-    max-width: 842px;
-    position: relative;
+.header_items .search {
+  width: 100%;
+  max-width: 842px;
+  position: relative;
 }
 
-.header_items
-.search input {
-    width: 100%;
-    outline: none;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 8px 8px 36px;
-    background-color: #1E2121;
+.header_items .search input {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 8px 8px 36px;
+  background-color: #1e2121;
 }
 
-
-.header_items
-.search input::placeholder,
-
-.header_items
-.search input{
-    color: #6A6C70;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 21.41px;
-    text-transform: uppercase;
-    font-family: "Khand", sans-serif;   
+.header_items .search input::placeholder,
+.header_items .search input {
+  color: #6a6c70;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21.41px;
+  text-transform: uppercase;
+  font-family: "Khand", sans-serif;
 }
 
-.header_items
-.search .icon {
-    top: 50%;
-    left: 12px;
-    position: absolute;
-    transform: translateY(-50%);
+.header_items .search .icon {
+  top: 50%;
+  left: 12px;
+  position: absolute;
+  transform: translateY(-50%);
 }
 
-.header_items
-.search .icon figure {
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.header_items .search .icon figure {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.header_items
-.search .icon figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.header_items .search .icon figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.header_items
-.contact {
-    gap: 10px;
-    display: flex;
-    align-items: center;
+.header_items .contact {
+  gap: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.header_items
-.contact .icon figure {
-    width: 20px;
-    height: 20px;
-    display: flex;
-        align-items: center;
-        justify-content: center;
+.header_items .contact .icon figure {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.header_items
-.contact .icon figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.header_items .contact .icon figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.header_items
-.contact .detail a {
-    color: #C4C5C8;
-    font-weight: 400;
-    font-size: 15.71px;
-    line-height: 24.02px;
-    text-decoration: none;
-    font-family: "Khand", sans-serif;
+.header_items .contact .detail a {
+  color: #c4c5c8;
+  font-weight: 400;
+  font-size: 15.71px;
+  line-height: 24.02px;
+  text-decoration: none;
+  font-family: "Khand", sans-serif;
 }
 
-.header_items
-.contact .detail a span {
-    color: #ffffff;
-    font-weight: 600;
+.header_items .contact .detail a span {
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .menuBar_main {
-    padding: 25px 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99999;
-    position: sticky;
-    margin-bottom: 9px;
-    background-color: #ffffff;
-    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  padding: 25px 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  position: sticky;
+  margin-bottom: 9px;
+  background-color: #ffffff;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
-.menuBar_main 
-.menuBar_items {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.menuBar_main .menuBar_items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.menuBar_main 
-.menuBar_items
-.menuLink {
-    gap: 36px;
-    display: flex;
-    align-items: center;
+.menuBar_main .menuBar_items .menuLink {
+  gap: 36px;
+  display: flex;
+  align-items: center;
 }
 
-
-.menuBar_main 
-.menuBar_items
-.menuLink li a {
-    gap: 8px;
-    display: flex;
-    font-size: 14px;
-    font-weight: 500;
-    color: #0A0B0B;
-    align-items: center;
-    line-height: 21.41px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-family: "Khand", sans-serif;
+.menuBar_main .menuBar_items .menuLink li a {
+  gap: 8px;
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0a0b0b;
+  align-items: center;
+  line-height: 21.41px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Khand", sans-serif;
 }
 
-
-.menuBar_main 
-.menuBar_items
-.menuOpt {
-    gap: 20px;
-    display: flex;
-    align-items: center;
+.menuBar_main .menuBar_items .menuOpt {
+  gap: 20px;
+  display: flex;
+  align-items: center;
 }
 
-.menuBar_main 
-.menuBar_items
-.menuOpt li a figure {
-    width: 24px;
-    height: 24px;
-    display: flex;
+.menuBar_main .menuBar_items .menuOpt li a figure {
+  width: 24px;
+  height: 24px;
+  display: flex;
 }
 
-.menuBar_main 
-.menuBar_items
-.menuOpt li a figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.menuBar_main .menuBar_items .menuOpt li a figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* header css for responsive  */
+
+@media only screen and (max-width: 1140px) {
+  .header_items .search {
+    max-width: 600px;
+  }
+}
+
+@media only screen and (max-width: 890px) {
+  .header_items .search {
+    max-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .header_main {
+    display: none;
+  }
+
+  .menuBar_main {
+    display: none;
+  }
 }

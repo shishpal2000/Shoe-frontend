@@ -1,7 +1,17 @@
+"use client";
+
+import { useEffect } from "react";
 import style from "../../../styles/categoriesCard.module.css";
 import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
 const CategoriesCard = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+    });
+  }, []);
   const CARD_DATA = [
     {
       id: 1,
@@ -26,7 +36,12 @@ const CategoriesCard = () => {
   return (
     <>
       {CARD_DATA.map((data) => (
-        <div key={data.id} className={`${style.categoriesCard}`}>
+        <div
+          key={data.id}
+          className={`${style.categoriesCard}`}
+          data-aos="fade-up"
+          data-aos-anchor-placement="top-bottom"
+        >
           <div className={style.tag}>{data.tag}</div>
           <h4 className={style.tittle}>{data.title}</h4>
 

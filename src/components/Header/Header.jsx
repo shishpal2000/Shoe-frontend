@@ -31,10 +31,9 @@ const Header = () => {
                 </figure>
               </div>
               <div className={style.detail}>
-                <a href="tel:821730182123">
-                  {" "}
+                <Link href="tel:821730182123">
                   <span>Call US :</span> (+62) 821730182123
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -46,9 +45,9 @@ const Header = () => {
           <div className={style.menuBar_items}>
             <ul className={style.menuLink}>
               <li>
-                <a href="">
+                <Link href="/">
                   <b>Home</b>
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="">

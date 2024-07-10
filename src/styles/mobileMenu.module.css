@@ -1,0 +1,183 @@
+/* components/Navbar.module.css */
+.navbar {
+  display: none;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 10px;
+  z-index: 999999999999999;
+  font-family: "Khand", sans-serif;
+}
+
+.scrollClass {
+  /* backdrop-filter: blur(0); */
+  background-color: #0a0b0b; /* Styles to apply when class is toggled */
+}
+.smNavItems {
+  padding: 15px;
+  backdrop-filter: blur(5px);
+  background-color: #0a0b0b;
+}
+
+.smNavItems {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hamburger {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+}
+
+.sm_logo {
+  filter: brightness(0) invert(1);
+}
+
+.sm_logo figure {
+  margin-bottom: 0;
+}
+
+.menu {
+  position: absolute;
+  transform: translateX(-100%);
+  flex-direction: column;
+  transition: 0.5s ease-in-out;
+  backdrop-filter: blur(9px) !important;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.786);
+  scroll-behavior: unset;
+}
+
+.menu.open {
+  /* padding-top: 20px; */
+  transform: translateX(0);
+}
+
+.menu a,
+.menu button {
+  color: white;
+  padding: 15px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+}
+
+.menu a figure {
+  display: flex;
+}
+
+.menu a figure img {
+  filter: brightness(0) invert(1);
+}
+
+.menu button img {
+  filter: brightness(1) invert(1);
+}
+
+.menu a:hover,
+.menu button:hover {
+  background-color: #575757;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown button {
+  font-family: "Khand", sans-serif;
+}
+
+.dropdownContent {
+  display: none;
+  flex-direction: column;
+  background-color: #575757;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+}
+
+.dropdownContent a {
+  padding: 0.5rem 1rem;
+}
+
+.dropdownContent.open {
+  display: flex;
+}
+
+.SmLogo {
+  font-size: 20px;
+  margin-bottom: 0;
+  padding-bottom: 22px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.navbar .search {
+  width: 100%;
+  max-width: 200px;
+  position: relative;
+}
+
+.navbar .search input {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 8px 5px 36px;
+  background-color: #1e2121;
+}
+
+.navbar .search input::placeholder,
+.navbar .search input {
+  color: #6a6c70;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21.41px;
+  text-transform: uppercase;
+  font-family: "Khand", sans-serif;
+}
+
+.navbar .search .icon {
+  top: 50%;
+  left: 12px;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.navbar .search .icon figure {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .search .icon figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media only screen and (max-width: 700px) {
+  .navbar {
+    display: block;
+  }
+}
