@@ -5,7 +5,7 @@ const Testimonial = () => {
   return (
     <>
       <div className={style.testimonial_main_container}>
-        <div className="container">
+        <div className="container" /* style={{ backgroundColor: "red" }} */>
           <h2>Testimonials</h2>
           <div className={style.testimonial_slider}>
             <TestimonialSlider />

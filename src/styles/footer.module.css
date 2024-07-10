@@ -1,0 +1,103 @@
+.footerMainContainer {
+  color: #fff;
+  padding: 70px 0;
+  background-color: #000000;
+  font-family: "Khand", sans-serif;
+}
+
+.footerMainContainer .footerLogo {
+  font-size: 30px;
+  margin-bottom: 0;
+  padding-bottom: 22px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.footerMainContainer .footerLogo a {
+  color: #fff;
+}
+
+.footerInnerItems {
+  display: flex;
+  gap: 100px;
+  align-items: flex-start;
+}
+
+.footerInnerItems .footerListing {
+  width: 100%;
+  max-width: calc(100% / 5);
+}
+
+.footerInnerItems .footerListing .social_icon {
+  gap: 27.92px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 18px;
+}
+
+.footerInnerItems .footerListing .social_icon a {
+  display: flex;
+  transition: 0.5s ease-in-out;
+}
+
+.footerInnerItems .footerListing .social_icon a:hover {
+  opacity: 0.6;
+}
+
+.footerInnerItems .footerListing .tag,
+.footerInnerItems .footerListing .address h4 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+  text-transform: capitalize;
+}
+
+.footerInnerItems .footerListing .address a {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 19.01px;
+  transition: 0.5s ease-in-out;
+  text-transform: capitalize;
+}
+
+.footerInnerItems .footerListing .address p {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 19.01px;
+  transition: 0.5s ease-in-out;
+  text-transform: capitalize;
+  margin-bottom: 0;
+  padding-top: 10px;
+}
+
+.footerInnerItems .footerListing .footerLinks {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerInnerItems .footerListing .footerLinks a {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 19.01px;
+  transition: 0.5s ease-in-out;
+  text-transform: capitalize;
+}
+
+.footerInnerItems .footerListing .footerLinks a:hover {
+  opacity: 0.6;
+}
+
+.footerMainContainer .copyRight {
+  padding-top: 50px;
+  font-size: 18px;
+}

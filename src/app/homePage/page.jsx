@@ -8,6 +8,7 @@ import PopularProducts from "@/components/homePage/PopularProducts/PopularProduc
 import ShoeCollection from "@/components/homePage/ShoeCollection/ShoeCollection";
 import { WeOffer } from "@/components/homePage/WeOffer/WeOffer";
 import Testimonial from "@/components/homePage/Testimonial/Testimonial";
+import Footer from "@/components/Footer/Footer";
 
 const HomePage = () => {
   return (
@@ -21,6 +22,7 @@ const HomePage = () => {
       <BestSellingProducts />
       <WeOffer />
       <Testimonial />
+      <Footer />
     </>
   );
 };

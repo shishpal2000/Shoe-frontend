@@ -1,3 +1,4 @@
+import Link from "next/link";
 import style from "../../styles/header.module.css";
 
 const Header = () => {
@@ -8,7 +9,7 @@ const Header = () => {
           <div className={style.header_items}>
             <div className={style.logo}>
               <h2>
-                <a href="">Shoes</a>
+                <Link href="/">Shoes</Link>
               </h2>
             </div>
             <div className={style.search}>
@@ -55,7 +56,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href="">new Arrivals</a>
+                <Link href="/newArrivals">new Arrivals</Link>
               </li>
               <li>
                 <a href="">About Us</a>

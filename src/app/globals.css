@@ -81,3 +81,7 @@ body {
   position: absolute;
   background-image: url('../../public/arrow-right.svg');
 } */
+
+.testimonialSliderContainer .slick-slider {
+  width: 100%;
+}
