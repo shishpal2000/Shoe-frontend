@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           <Header />
           <MobileNav />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </body>
       </>
     </html>

@@ -19,8 +19,8 @@ const HomePage = () => {
       <PopularProducts />
       <ShoeCollection />
       <BestSellingProducts />
-      {/* <WeOffer /> */}
-      {/* <Testimonial /> */}
+      <WeOffer />
+      <Testimonial />
     </>
   );
 };
