@@ -5,6 +5,7 @@
 .popular_product_items {
   gap: 30px;
   display: flex;
+  overflow: hidden;
   align-items: flex-start;
 }
 
