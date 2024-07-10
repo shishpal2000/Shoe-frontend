@@ -15,10 +15,10 @@ const HomePage = () => {
     <>
       <HeroSection />
       <Categories />
-      {/* <HomeGallery /> */}
-      {/* <PopularProducts /> */}
-      {/* <ShoeCollection /> */}
-      {/* <BestSellingProducts /> */}
+      <HomeGallery />
+      <PopularProducts />
+      <ShoeCollection />
+      <BestSellingProducts />
       {/* <WeOffer /> */}
       {/* <Testimonial /> */}
     </>

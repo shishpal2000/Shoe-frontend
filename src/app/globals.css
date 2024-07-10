@@ -85,3 +85,9 @@ body {
 .testimonialSliderContainer .slick-slider {
   width: 100%;
 }
+
+@media only screen and (max-width: 944px) {
+  .popular_propduct_slider .slick-slider .slick-track {
+    gap: 20px;
+  }
+}

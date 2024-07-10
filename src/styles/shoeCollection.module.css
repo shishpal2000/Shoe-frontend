@@ -51,5 +51,27 @@
   font-weight: 500;
   line-height: 26.61px;
   margin-bottom: 34px;
-  font-family: "Inter", sans-serif;
+  /* font-family: "Inter", sans-serif; */
+  font-family: "Khand", sans-serif;
+}
+
+@media only screen and (max-width: 830px) {
+  .shoe_collection_main .shoe_collect_items figure {
+    height: 340px;
+  }
+
+  .shoe_collect_items .content {
+    width: 100%;
+  }
+
+  .shoe_collect_items .content h3 {
+    font-size: 43px;
+    margin-bottom: 7px;
+  }
+
+  .shoe_collect_items .content p {
+    font-size: 18.99px;
+    line-height: 25.61px;
+    margin-bottom: 23px;
+  }
 }
