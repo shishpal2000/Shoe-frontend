@@ -52,10 +52,10 @@ const Footer = () => {
               <p className={style.tag}>my account</p>
               <ul className={style.footerLinks}>
                 <li>
-                  <Link href="">Sign in</Link>
+                  <Link href="/credential/log-in">Sign in</Link>
                 </li>
                 <li>
-                  <Link href="">Register</Link>
+                  <Link href="/credential/sign-up">Register</Link>
                 </li>
                 <li>
                   <Link href="">Order status</Link>

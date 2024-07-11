@@ -1,0 +1,16 @@
+.credentailMainContainer {
+}
+
+.credentailMainContainer .credentailInnerItems {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 75px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.credentailMainContainer .credentailInnerItems .left,
+.credentailMainContainer .credentailInnerItems .right {
+  width: 100%;
+  max-width: calc(100% / 2);
+}

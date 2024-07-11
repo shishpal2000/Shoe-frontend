@@ -20,14 +20,14 @@ const Header = () => {
               />
               <div className={style.icon}>
                 <figure>
-                  <img src="search.svg" alt="" />
+                  <img src="/search.svg" alt="" />
                 </figure>
               </div>
             </div>
             <div className={style.contact}>
               <div className={style.icon}>
                 <figure>
-                  <img src="WhatsApp_black.svg" alt="call icon" />
+                  <img src="/WhatsApp_black.svg" alt="call icon" />
                 </figure>
               </div>
               <div className={style.detail}>
@@ -51,7 +51,7 @@ const Header = () => {
               </li>
               <li>
                 <Link href="">
-                  shoes <img src="arrow-down.svg" alt="" />
+                  shoes <img src="/arrow-down.svg" alt="" />
                 </Link>
               </li>
               <li>
@@ -64,16 +64,16 @@ const Header = () => {
 
             <ul className={style.menuOpt}>
               <li>
-                <Link href="">
+                <Link href="/credential/log-in">
                   <figure>
-                    <img src="user.svg" alt="" />
+                    <img src="/user.svg" alt="" />
                   </figure>
                 </Link>
               </li>
               <li>
                 <Link href="">
                   <figure>
-                    <img src="cart.svg" alt="" />
+                    <img src="/cart.svg" alt="" />
                   </figure>
                 </Link>
               </li>
