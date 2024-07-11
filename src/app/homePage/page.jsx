@@ -2,7 +2,6 @@
 
 import Categories from "@/components/homePage/Categories/Categories";
 import BestSellingProducts from "@/components/homePage/BestSellingProducts/BestSellingProducts";
-
 import HeroSection from "@/components/homePage/HeroSection/HeroSection";
 import HomeGallery from "@/components/homePage/HomeGallery/HomeGallery";
 import PopularProducts from "@/components/homePage/PopularProducts/PopularProducts";

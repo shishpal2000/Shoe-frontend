@@ -42,6 +42,7 @@ const BestSellingProducts = () => {
                 return (
                   <>
                     <div
+                      key={data.id}
                       className={`${styles.tab} ${
                         activeTab === `${data.tabName}` ? styles.active : ""
                       }`}
