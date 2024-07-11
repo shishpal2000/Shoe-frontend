@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"); */
 
 * {
   margin: 0;
@@ -71,17 +71,6 @@ body {
   display: none;
 }
 
-/* .slick-prev:before {
-  content: "" !important;
-  display: flex !important;
-  width: 27.66px;
-  left: 0 !important;
-  top: 50% !important;
-  height: 27.66px;
-  position: absolute;
-  background-image: url('../../public/arrow-right.svg');
-} */
-
 .testimonialSliderContainer .slick-slider {
   width: 100%;
 }
@@ -89,5 +78,23 @@ body {
 @media only screen and (max-width: 944px) {
   .popular_propduct_slider .slick-slider .slick-track {
     gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 601px) {
+  .popular_propduct_slider .slick-slider .slick-track {
+    gap: 4px;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .popular_propduct_slider .slick-slider .slick-track {
+    gap: 2px;
+  }
+}
+
+@media only screen and (max-width: 389px) {
+  .popular_propduct_slider .slick-slider .slick-track {
+    gap: 0px;
   }
 }

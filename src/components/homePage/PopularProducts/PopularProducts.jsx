@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-import style from "../../../styles/popularProduct.module.css";
-import Image from "next/image";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
+import style from "../../../styles/popularProduct.module.css";
 
 const PopularProducts = () => {
   const ShoesData = [
@@ -52,13 +51,13 @@ const PopularProducts = () => {
       {
         breakpoint: 600, // Settings for screens <= 600px
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 1,
         },
       },
       {
-        breakpoint: 480, // Settings for screens <= 480px
+        breakpoint: 388, // Settings for screens <= 480px
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,

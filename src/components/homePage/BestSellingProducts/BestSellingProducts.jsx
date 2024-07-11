@@ -60,7 +60,7 @@ const BestSellingProducts = () => {
                   <>
                     {activeTab === `${data.tabName}` && (
                       <div>
-                        <Collection />
+                        <Collection key={data.id} />
                         <div
                           style={{ textAlign: "center", marginTop: "56.29px" }}
                         >

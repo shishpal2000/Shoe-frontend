@@ -50,32 +50,32 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <a href="">
+                <Link href="">
                   shoes <img src="arrow-down.svg" alt="" />
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/newArrivals">new Arrivals</Link>
               </li>
               <li>
-                <a href="">About Us</a>
+                <Link href="">About Us</Link>
               </li>
             </ul>
 
             <ul className={style.menuOpt}>
               <li>
-                <a href="">
+                <Link href="">
                   <figure>
                     <img src="user.svg" alt="" />
                   </figure>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link href="">
                   <figure>
                     <img src="cart.svg" alt="" />
                   </figure>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

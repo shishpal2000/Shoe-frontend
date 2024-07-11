@@ -88,6 +88,9 @@
   font-weight: 600;
   line-height: 36.7px;
   color: #000000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-family: "Khand", sans-serif;
 }
 
@@ -152,4 +155,45 @@
   /* .popular_product_items .left .vontent br {
     display: none;
   } */
+}
+
+@media only screen and (max-width: 567px) {
+  .popular_product_items .right .shoeSlideCard {
+    padding: 0 15px 15px 15px;
+  }
+
+  .popular_product_items .right .shoeSlideCard h4 {
+    font-size: 15px;
+  }
+
+  .popular_product_items .right .shoeSlideCard .bar {
+    margin-top: 0;
+  }
+
+  .shoeSlideCard .bar .price {
+    font-size: 18px;
+    line-height: 30.7px;
+  }
+
+  .popular_product_items .right .shoeSlideCard figure {
+    width: 133px;
+    height: 100px;
+    margin: 0 auto;
+  }
+
+  .shoeSlideCard .bar .learnMore {
+    width: 22px;
+    height: 22px;
+  }
+
+  .shoeSlideCard .bar .learnMore img {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media only screen and (max-width: 389px) {
+  .popular_product_items .right .shoeSlideCard {
+    padding: 0 10px 10px 10px;
+  }
 }

@@ -98,6 +98,17 @@
   font-weight: 400;
   font-size: 13.78px;
   line-height: 19.03px;
+  position: relative;
+}
+
+.productCard .proDetail .bar .price .realPrice:after {
+  content: "";
+  top: 45%;
+  width: 100%;
+  height: 1px;
+  left: 0;
+  background-color: #000000;
+  position: absolute;
 }
 
 @media only screen and (max-width: 1122px) {
@@ -206,10 +217,12 @@
   }
 
   .productCard .proDetail .bar .price {
-    flex-direction: column;
-    gap: 0px;
-    margin-top: 0;
-    align-items: flex-start;
+    gap: 5px;
+    align-items: flex-end;
+  }
+
+  .productCard .proDetail .bar .price .offerPrice {
+    font-weight: 500;
   }
 
   .productCard .proDetail .proName {
@@ -224,5 +237,12 @@
 
   .productCard .proDetail .bar .price .realPrice {
     font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .productCard figure {
+    width: 130px;
+    height: 125px;
   }
 }

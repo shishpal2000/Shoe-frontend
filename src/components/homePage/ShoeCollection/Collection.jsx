@@ -8,7 +8,7 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-2.png",
+      proImg: "shoe-1.svg",
     },
     {
       id: 2,
@@ -16,7 +16,7 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-2.png",
+      proImg: "shoe-1.svg",
     },
     {
       id: 3,
@@ -24,7 +24,7 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-2.png",
+      proImg: "shoe-1.svg",
     },
     {
       id: 4,
@@ -32,7 +32,7 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-2.png",
+      proImg: "shoe-1.svg",
     },
     {
       id: 5,
@@ -40,7 +40,7 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-2.png",
+      proImg: "shoe-1.svg",
     },
     {
       id: 6,
@@ -48,7 +48,7 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-2.png",
+      proImg: "shoe-1.svg",
     },
   ];
   return (
@@ -57,7 +57,7 @@ const Collection = () => {
         {MenShoeData.map((data) => {
           return (
             <>
-              <div className={style.productCard}>
+              <div key={data.id} className={style.productCard}>
                 <div className={style.tag}>{data.tag}</div>
                 <div className={style.wishlist}>
                   <img src="wishlist.svg" alt="" />
@@ -70,11 +70,10 @@ const Collection = () => {
 
                   <div className={style.bar}>
                     <div className={style.price}>
-                      <p className={style.offerPrice}>{data.offerPrice}</p>
-
                       <p className={style.realPrice}>
-                        <strike>{data.realprice}</strike>
+                        <del>{data.realprice}</del>
                       </p>
+                      <p className={style.offerPrice}>{data.offerPrice}</p>
                     </div>
                     <div className={style.learnMore}>
                       <img src="learnMore.svg" alt="" />

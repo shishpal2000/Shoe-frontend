@@ -67,6 +67,18 @@
   height: 100%;
   object-fit: contain;
 }
+@media only screen and (max-width: 944px) {
+  .testimonial_main_container h2 {
+    font-size: 37px;
+    line-height: 40px;
+    font-weight: 700;
+    color: #000000;
+  }
+
+  .testimonial_slider {
+    padding-top: 20px;
+  }
+}
 
 @media only screen and (max-width: 501px) {
   .testi_slider_card .testi_detail {
