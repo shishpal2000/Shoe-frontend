@@ -6,7 +6,7 @@
 }
 
 .credentailMainContainer .credentailInnerItems {
-  padding: 50px 0 60px 0;
+  padding: 70px 0 80px 0;
   display: flex;
   gap: 75px;
   align-items: center;
@@ -21,16 +21,16 @@
 }
 
 .credentailMainContainer .credentailInnerItems .right h3 {
-  font-size: 40px;
+  font-size: 48px;
   color: #0a0b0b;
   font-weight: 700;
   line-height: 38px;
   margin-bottom: 0;
-  padding-bottom: 40px;
+  padding-bottom: 54px;
 }
 
 .credentailMainContainer .credentailInnerItems .right form ul {
-  gap: 30px;
+  gap: 40px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;

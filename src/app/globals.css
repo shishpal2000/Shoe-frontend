@@ -98,3 +98,12 @@ body {
     gap: 0px;
   }
 }
+
+.react-tel-input .country-list {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.react-tel-input .country-list li {
+  max-width: 100%;
+}
