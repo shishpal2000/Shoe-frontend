@@ -1,0 +1,61 @@
+.socialLoginOpts {
+  gap: 11px;
+  display: flex;
+  padding-top: 30px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.socialLoginOpts label {
+  font-size: 16px;
+  line-height: 24.46px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.socialLoginOpts ul {
+  gap: 13px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.socialLoginOpts ul li {
+  width: 100%;
+  max-width: calc(100% / 3);
+}
+
+.socialLoginOpts ul li button {
+  gap: 13px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  border-radius: 11px;
+  outline: 0;
+  cursor: pointer;
+  border: 1px solid #cccccc;
+  background: transparent;
+  justify-content: center;
+  font-size: 17.83px;
+  color: #333333;
+  font-weight: 400;
+  transition: 0.5s ease-in-out;
+  font-family: "Khand", sans-serif;
+}
+
+.socialLoginOpts ul li button:hover {
+  color: #fff;
+  background-color: #333333a9;
+}
+
+.socialLoginOpts ul li button i {
+  width: 26px;
+  height: 26px;
+}
+
+.socialLoginOpts ul li button i img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

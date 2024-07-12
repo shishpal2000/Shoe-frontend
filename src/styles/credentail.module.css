@@ -1,4 +1,8 @@
 .credentailMainContainer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .credentailMainContainer .credentailInnerItems {
@@ -13,4 +17,122 @@
 .credentailMainContainer .credentailInnerItems .right {
   width: 100%;
   max-width: calc(100% / 2);
+  font-family: "Khand", sans-serif;
+}
+
+.credentailMainContainer .credentailInnerItems .right h3 {
+  font-size: 40px;
+  color: #0a0b0b;
+  font-weight: 700;
+  line-height: 38px;
+  margin-bottom: 0;
+  padding-bottom: 40px;
+}
+
+.credentailMainContainer .credentailInnerItems .right form ul {
+  gap: 30px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.credentailMainContainer .credentailInnerItems .right form ul li {
+  gap: 11px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.credentailMainContainer .credentailInnerItems .right form ul .formSubOpts {
+  gap: 30px;
+  align-items: center;
+  flex-direction: row;
+}
+
+.credentailMainContainer
+  .credentailInnerItems
+  .right
+  form
+  ul
+  .formSubOpts
+  input[type="submit"] {
+  width: fit-content;
+  cursor: pointer;
+  color: #f7f7fb;
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 500;
+  padding: 12px 40px;
+  transition: 0.5s ease-in-out;
+  text-transform: uppercase;
+  background-color: #11111139;
+}
+
+.credentailMainContainer
+  .credentailInnerItems
+  .right
+  form
+  ul
+  .formSubOpts
+  input[type="submit"]:hover {
+  background-color: #11111188;
+}
+
+.credentailMainContainer .credentailInnerItems .right form ul .formSubOpts p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24.46px;
+}
+
+.credentailMainContainer .credentailInnerItems .right form ul .formSubOpts p a {
+  text-decoration: underline;
+}
+
+.credentailMainContainer
+  .credentailInnerItems
+  .right
+  form
+  ul
+  li
+  .passwordLabel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.credentailMainContainer .credentailInnerItems .right form ul li label {
+  font-size: 16px;
+  line-height: 24.46px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.credentailMainContainer .credentailInnerItems .right form ul li input {
+  width: 100%;
+  outline: none;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 12px;
+  background-color: #f7f7fb;
+  font-size: 14px;
+  font-weight: 400;
+  color: #807d7e;
+  line-height: 21.41px;
+  font-family: "Khand", sans-serif;
+}
+
+.credentailMainContainer
+  .credentailInnerItems
+  .right
+  form
+  ul
+  li
+  input::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  color: #807d7e;
+  line-height: 21.41px;
+  text-transform: capitalize;
+  font-family: "Khand", sans-serif;
 }
