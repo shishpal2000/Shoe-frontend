@@ -1,7 +1,9 @@
+import InnerBanner from "@/components/InnerPageBanner/InnerBanner";
+
 const NewArrivals = () => {
   return (
     <>
-      <h1>new arrivals</h1>
+      <InnerBanner />
     </>
   );
 };

@@ -1,17 +1,24 @@
 "use client";
 
 import CredentialHero from "@/components/CredentialHero/CredentialHero";
-import OtherLoginOpts from "@/components/OtherLoginOpts/OtherLoginOpts";
 import style from "@/styles/credentail.module.css";
 import styles from "@/styles/credentail.module.css";
 import Link from "next/link";
 import { useState } from "react";
-const LogIn = () => {
+
+const SetPassword = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const [repassword, setrePassword] = useState("");
+  const [showrePassword, setShowrePassword] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const togglerePasswordVisibility = () => {
+    setShowrePassword(!showrePassword);
   };
   return (
     <>
@@ -20,25 +27,20 @@ const LogIn = () => {
           <div className={style.credentailInnerItems}>
             <div className={style.left}>
               <CredentialHero
-                bg="/logInHero.png"
+                bg="/signUpBg.png"
                 tag="A WISE QUOTE"
                 heading={`Get Everything \n You Want`}
                 descrip={`You can get everything you want if you work hard, trust the \n process, and stick to the plan.`}
               />
             </div>
             <div className={style.right}>
-              <h3>Log In Now</h3>
+              <h3>Set A Password</h3>
 
               <form>
                 <ul>
                   <li>
-                    <label>Email Address</label>
-                    <input type="emmail" placeholder="Email" required />
-                  </li>
-
-                  <li>
                     <div className={style.passwordLabel}>
-                      <label>Password</label>
+                      <label>Create Password</label>
                       <button
                         style={{
                           outline: "none",
@@ -52,9 +54,9 @@ const LogIn = () => {
                         className={styles.toggleButton}
                       >
                         {showPassword ? (
-                          <img src="/hide.svg" alt="" />
-                        ) : (
                           <img src="/show.svg" alt="" />
+                        ) : (
+                          <img src="/hide.svg" alt="" />
                         )}
                       </button>
                     </div>
@@ -64,25 +66,47 @@ const LogIn = () => {
                       required
                       onChange={(e) => setPassword(e.target.value)}
                       className={styles.passwordInput}
-                      placeholder="password"
+                      placeholder="Create Password"
+                    />
+                  </li>
+
+                  <li>
+                    <div className={style.passwordLabel}>
+                      <label>Re-enter Password</label>
+                      <button
+                        style={{
+                          outline: "none",
+                          border: "none",
+                          padding: "0",
+                          cursor: "pointer",
+                          background: "transparent",
+                        }}
+                        type="button"
+                        onClick={togglerePasswordVisibility}
+                        className={styles.toggleButton}
+                      >
+                        {showrePassword ? (
+                          <img src="/show.svg" alt="" />
+                        ) : (
+                          <img src="/hide.svg" alt="" />
+                        )}
+                      </button>
+                    </div>
+                    <input
+                      type={showrePassword ? "text" : "password"}
+                      value={repassword}
+                      required
+                      onChange={(e) => setrePassword(e.target.value)}
+                      className={styles.passwordInput}
+                      placeholder="Re-enter Passwords"
                     />
                   </li>
 
                   <li className={style.formSubOpts}>
-                    <input type="submit" value="Sign up" />
-                    <p>
-                      Already have an ccount?{" "}
-                      <Link href="/credential/sign-up">Sign up</Link>
-                      &nbsp;
-                      <Link href="/credential/forgot-password">
-                        Forgot Password
-                      </Link>
-                    </p>
+                    <input type="submit" value="Set Password" />
                   </li>
                 </ul>
               </form>
-
-              <OtherLoginOpts />
             </div>
           </div>
         </div>
@@ -91,4 +115,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default SetPassword;

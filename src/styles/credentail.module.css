@@ -30,7 +30,7 @@
 }
 
 .credentailMainContainer .credentailInnerItems .right form ul {
-  gap: 40px;
+  gap: 30px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -42,6 +42,18 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.credentailMainContainer .credentailInnerItems .right form .userName {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.credentailMainContainer .credentailInnerItems .right form .userName li {
+  width: 100%;
+  max-width: calc(100% / 2);
 }
 .credentailMainContainer .credentailInnerItems .right form ul .formSubOpts {
   gap: 30px;
@@ -122,6 +134,20 @@
   font-family: "Khand", sans-serif;
 }
 
+.phoneInput input {
+  width: 100%;
+  outline: none;
+  padding: 24.53px 20px 24.53px 55px !important;
+  border: 0;
+  border-radius: 12px;
+  background-color: #f7f7fb;
+  font-size: 14px;
+  font-weight: 400;
+  color: #807d7e;
+  line-height: 21.41px;
+  font-family: "Khand", sans-serif;
+}
+
 .credentailMainContainer
   .credentailInnerItems
   .right
@@ -135,4 +161,19 @@
   line-height: 21.41px;
   text-transform: capitalize;
   font-family: "Khand", sans-serif;
+}
+
+.checkboxContainer {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.checkboxContainer input[type="checkbox"] {
+  width: fit-content !important;
+}
+
+.checkboxContainer p {
+  font-size: 14px;
 }
