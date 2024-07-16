@@ -50,7 +50,7 @@ const MobileNav = () => {
           <input type="text" placeholder="Search Product" alt="search icon" />
           <div className={styles.icon}>
             <figure>
-              <img src="search.svg" alt="" />
+              <img src="/search.svg" alt="" />
             </figure>
           </div>
         </div>
@@ -65,7 +65,7 @@ const MobileNav = () => {
 
         <div className={styles.dropdown}>
           <button onClick={() => toggleDropdown("shoes")}>
-            Shoes <img src="dropDownArrow.svg" alt="" />
+            Shoes <img src="/dropDownArrow.svg" alt="" />
           </button>
           <div
             className={`${styles.dropdownContent} ${
@@ -92,14 +92,14 @@ const MobileNav = () => {
 
         <Link onClick={toggleMenu} href="/">
           <figure>
-            <img src="user.svg" alt="" />
+            <img src="/user.svg" alt="" />
             Users
           </figure>
         </Link>
 
         <Link onClick={toggleMenu} href="/">
           <figure>
-            <img src="cart.svg" alt="" />
+            <img src="/cart.svg" alt="" />
             Cart
           </figure>
         </Link>

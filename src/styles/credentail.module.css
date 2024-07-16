@@ -177,3 +177,65 @@
 .checkboxContainer p {
   font-size: 14px;
 }
+
+@media only screen and (max-width: 999px) {
+  .credentailMainContainer .credentailInnerItems {
+    gap: 45px;
+  }
+
+  .credentailMainContainer .credentailInnerItems .right h3 {
+    font-size: 33px;
+    color: #0a0b0b;
+    font-weight: 700;
+    line-height: 34px;
+    margin-bottom: 0;
+    padding-bottom: 20px;
+  }
+
+  .credentailMainContainer .credentailInnerItems .right form ul {
+    gap: 10px;
+  }
+
+  .credentailMainContainer .credentailInnerItems .right form ul li {
+    gap: 0;
+  }
+
+  .credentailMainContainer .credentailInnerItems .right form ul li label {
+    font-size: 14px;
+    line-height: 24.46px;
+  }
+
+  .credentailMainContainer .credentailInnerItems .right form ul li input {
+    padding: 10px 15px;
+  }
+
+  .credentailMainContainer
+    .credentailInnerItems
+    .right
+    form
+    ul
+    .formSubOpts
+    input[type="submit"] {
+    font-size: 16px;
+    padding: 7px 25px;
+  }
+}
+
+@media only screen and (max-width: 792px) {
+  .credentailMainContainer .credentailInnerItems {
+    flex-direction: column;
+  }
+
+  .credentailMainContainer .credentailInnerItems .left,
+  .credentailMainContainer .credentailInnerItems .right {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 421px) {
+  .credentailMainContainer .credentailInnerItems .right form ul .formSubOpts {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+}
