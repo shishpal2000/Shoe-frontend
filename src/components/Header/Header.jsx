@@ -50,12 +50,12 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link href="">
+                <Link href="/product-listing">
                   shoes <img src="/arrow-down.svg" alt="" />
                 </Link>
               </li>
               <li>
-                <Link href="/newArrivals">new Arrivals</Link>
+                <Link href="/new-arrivals">new Arrivals</Link>
               </li>
               <li>
                 <Link href="">About Us</Link>

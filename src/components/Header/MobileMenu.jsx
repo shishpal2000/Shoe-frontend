@@ -82,7 +82,7 @@ const MobileNav = () => {
           </div>
         </div>
 
-        <Link onClick={toggleMenu} href="/">
+        <Link onClick={toggleMenu} href="/new-arrivals">
           New Arrivals
         </Link>
 
@@ -92,7 +92,7 @@ const MobileNav = () => {
 
         <Link onClick={toggleMenu} href="/">
           <figure>
-            <img src="/user.svg" alt="" />
+            <img src="/redential/log-in" alt="" />
             Users
           </figure>
         </Link>

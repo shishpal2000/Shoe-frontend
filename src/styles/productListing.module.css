@@ -1,0 +1,23 @@
+.productListingMain {
+  padding-bottom: 100px;
+}
+
+.productListingItems {
+  gap: 30px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.productListingMain .left {
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #f7f7fb;
+  max-width: calc(100% - 80%);
+}
+
+.productListingMain .right {
+  width: 100%;
+  padding: 20px;
+  max-width: calc(100% - 20%);
+}
