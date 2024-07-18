@@ -1,0 +1,144 @@
+.productDetailInnerItems {
+  gap: 30px;
+  display: flex;
+  align-items: flex-start;
+  font-family: "Khand", sans-serif;
+}
+
+.productDetailInnerItems .left {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: calc(100% - 40%);
+}
+
+.productDetailInnerItems .right {
+  width: 100%;
+  padding: 10px;
+  position: sticky;
+  top: 100px;
+  max-width: calc(100% - 60%);
+}
+
+.productDetailInnerItems .left ul {
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.productDetailInnerItems .left ul li {
+  width: 100%;
+  background-color: #f7f7fb;
+  max-width: calc(100% / 2 - 5px);
+}
+
+.productDetailInnerItems .left ul li figure {
+  width: 100%;
+  overflow: hidden;
+}
+
+.productDetailInnerItems .left ul li figure img {
+  width: 100%;
+  height: 100%;
+}
+
+.productDetailInnerItems .right .productDetail .tag {
+  font-size: 14px;
+  line-height: 16.41px;
+  font-weight: 600;
+  padding: 13px 22px 10px 22px;
+  margin-bottom: 38px;
+  border-radius: 10px;
+  width: fit-content;
+  border: 1px solid #232321;
+}
+
+.productDetailInnerItems .right .productDetail h2 {
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 43px;
+  color: #232321;
+  margin-bottom: 15px;
+}
+
+.productDetailInnerItems .right .productDetail h3 {
+  font-size: 34px;
+  line-height: 49.8px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.productDetail h4 {
+  font-size: 16px;
+  line-height: 24.46px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.productDetailInnerItems .right .productDetail .colorOpt {
+  margin-bottom: 30px;
+}
+
+.productDetailInnerItems .right .productDetail .colorOpt ul {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.productDetailInnerItems .right .productDetail .colorOpt ul li {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+}
+
+.productDetailInnerItems .right .productDetail .colorOpt ul li i {
+  width: 32px;
+  height: 32px;
+  display: block;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.active {
+  border: 3px solid #000;
+}
+
+.productDetailInnerItems .right .productDetail .sizeOpt {
+  margin-bottom: 30px;
+}
+
+.sizeOpt .bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sizeOpt .bar a {
+  font-size: 14px;
+  line-height: 21.41px;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.sizeOpt ul {
+  gap: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sizeOpt ul li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: calc(100% / 8 - 4px);
+  border-radius: 8px;
+  font-size: 16px;
+  height: 48px;
+}

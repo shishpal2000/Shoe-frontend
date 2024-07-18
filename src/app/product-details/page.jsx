@@ -1,4 +1,4 @@
-import ShoeDetails from "./shoe-details";
+import ProductDetails from "./products-details";
 
 export const metadata = {
   title: "Shoe Details",
@@ -13,7 +13,7 @@ export const metadata = {
 const page = () => {
   return (
     <>
-      <ShoeDetails />
+      <ProductDetails />
     </>
   );
 };

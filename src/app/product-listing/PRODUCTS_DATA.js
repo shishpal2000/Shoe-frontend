@@ -5,7 +5,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -14,7 +14,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -23,7 +23,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -32,7 +32,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -41,7 +41,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -50,7 +50,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -59,7 +59,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -68,7 +68,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -77,7 +77,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -86,7 +86,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -95,7 +95,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -104,7 +104,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -113,7 +113,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
   {
@@ -122,7 +122,7 @@ const PRODUCTS_DATA = [
     realprice: "₹ 4999.00",
     offerPrice: "₹ 2999.00",
     tag: "new",
-    link: "/shoe-details",
+    link: "/product-details",
     proImg: "shoe-1.svg",
   },
 ];
