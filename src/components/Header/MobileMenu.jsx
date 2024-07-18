@@ -43,7 +43,7 @@ const MobileNav = () => {
             {/* <figure>
               <img src="logo.svg" alt="" />
             </figure> */}
-            <Link href="/">Shoes</Link>
+            Shoes
           </Link>
         </div>
         <div className={styles.search}>

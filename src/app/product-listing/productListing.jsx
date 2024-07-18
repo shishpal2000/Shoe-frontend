@@ -15,7 +15,20 @@ const ProductListing = () => {
 
       <div className={style.productListingMain}>
         <div className="container">
+          <div className={style.topBar}>
+            <div className={style.content}>
+              <h2>Life Style Shoes</h2>
+              <p>122 items</p>
+              {/* <p></p> */}
+            </div>
+            <div className={style.trendingDrop}>
+              Trending <img src="/down.svg" alt="" />
+            </div>
+          </div>
           <div className={style.productListingItems}>
+            <div className={style.phoneFilterButton}>
+              <p>⑂</p>
+            </div>
             <div className={style.left}>
               <ProductFilter />
             </div>

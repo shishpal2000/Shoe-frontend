@@ -95,30 +95,28 @@ const TestimonialSlider = () => {
           {TestimonialSliderData.map(
             ({ id, userImg, comment, descrip, rating, ratingVal, proImg }) => {
               return (
-                <>
-                  <div key={id} className={style.testi_slider_card}>
-                    <div className={style.testi_detail}>
-                      <div className={style.left}>
-                        <h3>{comment}</h3>
-                        <p className={style.descrip}>{descrip}</p>
-                        <p className={style.rating}>
-                          {rating}
-                          {ratingVal}
-                        </p>
-                      </div>
-                      <div className={style.right}>
-                        <figure>
-                          <img src={userImg} alt="" />
-                        </figure>
-                      </div>
+                <div key={id} className={style.testi_slider_card}>
+                  <div className={style.testi_detail}>
+                    <div className={style.left}>
+                      <h3>{comment}</h3>
+                      <p className={style.descrip}>{descrip}</p>
+                      <p className={style.rating}>
+                        {rating}
+                        {ratingVal}
+                      </p>
                     </div>
-                    <div className={style.proImg}>
+                    <div className={style.right}>
                       <figure>
-                        <img src={proImg} alt="" />
+                        <img src={userImg} alt="" />
                       </figure>
                     </div>
                   </div>
-                </>
+                  <div className={style.proImg}>
+                    <figure>
+                      <img src={proImg} alt="" />
+                    </figure>
+                  </div>
+                </div>
               );
             }
           )}

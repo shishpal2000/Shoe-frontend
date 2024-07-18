@@ -74,7 +74,7 @@ const PopularProducts = () => {
             <div className={`${style.left}`}>
               <div className={style.content}>
                 <p className={style.tag}>
-                  <div className={style.line}></div>
+                  <span className={style.line}></span>
                   Our Trending Shoe
                 </p>
                 <h3>

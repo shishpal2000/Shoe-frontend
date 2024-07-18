@@ -60,17 +60,15 @@ export const OfferCard = () => {
     <>
       {OfferCardData.map(({ id, icon, offerName, descrip }) => {
         return (
-          <>
-            <div key={id} className={style.offerCard}>
-              <div className="icon">
-                <figure>
-                  <Image src={icon} width={30} height={30} alt="" />
-                </figure>
-              </div>
-              <h4 className="tittle">{offerName}</h4>
-              <p>{descrip}</p>
+          <div key={id} className={style.offerCard}>
+            <div className="icon">
+              <figure>
+                <Image src={icon} width={30} height={30} alt="" />
+              </figure>
             </div>
-          </>
+            <h4 className="tittle">{offerName}</h4>
+            <p>{descrip}</p>
+          </div>
         );
       })}
     </>

@@ -56,32 +56,30 @@ const Collection = () => {
       <div className={style.collection_container}>
         {MenShoeData.map((data) => {
           return (
-            <>
-              <div key={data.id} className={style.productCard}>
-                <div className={style.tag}>{data.tag}</div>
-                <div className={style.wishlist}>
-                  <img src="wishlist.svg" alt="" />
-                </div>
-                <figure>
-                  <img src={data.proImg} alt="" />
-                </figure>
-                <div className={style.proDetail}>
-                  <p className={style.proName}>{data.proName}</p>
+            <div key={data.id} className={style.productCard}>
+              <div className={style.tag}>{data.tag}</div>
+              <div className={style.wishlist}>
+                <img src="wishlist.svg" alt="" />
+              </div>
+              <figure>
+                <img src={data.proImg} alt="" />
+              </figure>
+              <div className={style.proDetail}>
+                <p className={style.proName}>{data.proName}</p>
 
-                  <div className={style.bar}>
-                    <div className={style.price}>
-                      <p className={style.realPrice}>
-                        <del>{data.realprice}</del>
-                      </p>
-                      <p className={style.offerPrice}>{data.offerPrice}</p>
-                    </div>
-                    <div className={style.learnMore}>
-                      <img src="learnMore.svg" alt="" />
-                    </div>
+                <div className={style.bar}>
+                  <div className={style.price}>
+                    <p className={style.realPrice}>
+                      <del>{data.realprice}</del>
+                    </p>
+                    <p className={style.offerPrice}>{data.offerPrice}</p>
+                  </div>
+                  <div className={style.learnMore}>
+                    <img src="learnMore.svg" alt="" />
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           );
         })}
       </div>

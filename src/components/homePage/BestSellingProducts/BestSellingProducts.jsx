@@ -40,17 +40,15 @@ const BestSellingProducts = () => {
             <div className={styles.tab_btn_container}>
               {TabOptionData.map((data) => {
                 return (
-                  <>
-                    <div
-                      key={data.id}
-                      className={`${styles.tab} ${
-                        activeTab === `${data.tabName}` ? styles.active : ""
-                      }`}
-                      onClick={() => handleTabClick(`${data.tabName}`)}
-                    >
-                      {data.tabName}
-                    </div>
-                  </>
+                  <div
+                    key={data.id}
+                    className={`${styles.tab} ${
+                      activeTab === `${data.tabName}` ? styles.active : ""
+                    }`}
+                    onClick={() => handleTabClick(`${data.tabName}`)}
+                  >
+                    {data.tabName}
+                  </div>
                 );
               })}
             </div>
