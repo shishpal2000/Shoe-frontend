@@ -128,3 +128,7 @@ body {
 .react-tel-input .flag-dropdown:hover {
   background-color: #f7f7fb !important;
 }
+
+.nextjs-toast-errors-parent {
+  display: none;
+}

@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import style from "../../styles/productDetail.module.css";
 import Link from "next/link";
-import styles from "../../styles/video.module.css";
+import { useState } from "react";
 import ReactPlayer from "react-player";
+import style from "../../styles/productDetail.module.css";
+import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import Collection from "@/components/homePage/ShoeCollection/Collection";
 
 const ProductDetails = () => {
@@ -149,6 +149,7 @@ const ProductDetails = () => {
 
   return (
     <>
+      <PageLinkBar currentPage="Vantela New Public White low" />
       <div className={style.productDetailMainContainer}>
         <div className="container">
           <div className={style.productDetailInnerItems}>

@@ -1,0 +1,29 @@
+.pageLinkBarMain {
+  padding: 21px 0 30px 0;
+}
+
+.pageLinkBarMain ul {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  font-family: "Khand", sans-serif;
+}
+
+.pageLinkBarMain ul li {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.pageLinkBarMain ul li:last-child img {
+  display: none;
+}
+
+.pageLinkBarMain ul li a {
+  font-size: 15px;
+  color: #3c3d4c;
+  text-transform: capitalize;
+}
+.pageLinkBarMain ul li:last-child {
+  font-weight: 700;
+}
