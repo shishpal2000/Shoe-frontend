@@ -9,6 +9,7 @@ const ProductFilter = () => {
   const toggleCategory = (index) => {
     setOpenCategory(openCategory === index ? null : index);
   };
+
   const categories = [
     {
       name: "Refine by",
