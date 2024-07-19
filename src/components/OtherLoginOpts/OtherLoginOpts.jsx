@@ -22,14 +22,14 @@ const OtherLoginOpts = () => {
               Google
             </button>
           </li>
-          <li>
+          {/* <li>
             <button>
               <i>
                 <img src="/apple.svg" alt="" />
               </i>
               Apple
             </button>
-          </li>
+          </li> */}
         </ul>
       </div>
     </>

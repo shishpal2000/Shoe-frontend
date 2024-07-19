@@ -4,6 +4,7 @@ import style from "../../styles/productDetail.module.css";
 import Link from "next/link";
 import styles from "../../styles/video.module.css";
 import ReactPlayer from "react-player";
+import Collection from "@/components/homePage/ShoeCollection/Collection";
 
 const ProductDetails = () => {
   const [selectedColor, setSelectedColor] = useState(1);
@@ -109,27 +110,27 @@ const ProductDetails = () => {
     },
     {
       id: 2,
-      profile: "/user.png",
-      userName: "Guy Hawkins",
-      commTime: "1 week ago",
+      profile: "/user4.png",
+      userName: "Dianne Russell",
+      commTime: "51 mins ago",
       rating: "⭐⭐⭐⭐⭐",
       descrip:
         "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
     },
     {
       id: 3,
-      profile: "/user.png",
-      userName: "Guy Hawkins",
-      commTime: "1 week ago",
+      profile: "/user3.png",
+      userName: "Bessie Cooper",
+      commTime: "6 hours ago",
       rating: "⭐⭐⭐⭐⭐",
       descrip:
         "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
     },
     {
       id: 4,
-      profile: "/user.png",
-      userName: "Guy Hawkins",
-      commTime: "1 week ago",
+      profile: "/user2.png",
+      userName: "Eleanor Pena",
+      commTime: "1 days ago",
       rating: "⭐⭐⭐⭐⭐",
       descrip:
         "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
@@ -229,7 +230,7 @@ const ProductDetails = () => {
                   {userCommentData.map(
                     ({ id, userName, commTime, descrip, profile, rating }) => {
                       return (
-                        <li>
+                        <li key={id}>
                           <div className={style.commLeft}>
                             <figure className={style.userProfile}>
                               <img src={profile} alt="" />
@@ -250,8 +251,13 @@ const ProductDetails = () => {
                     }
                   )}
                 </ul>
+
+                <div className={style.loadmoreCon}>
+                  <Link href="" className={style.loadmore}>
+                    Load More
+                  </Link>
+                </div>
               </div>
-              <br></br>
             </div>
 
             <div className={style.right}>
@@ -411,6 +417,13 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className={style.relatedProducts}>
+        <div className="container">
+          <h4>Related Products</h4>
+          <Collection />
         </div>
       </div>
     </>

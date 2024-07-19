@@ -29,12 +29,12 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link href="">
-                    <img src="dribbleIcon.svg" alt="" />
+                    {/* <img src="dribbleIcon.svg" alt="" /> */}
                   </Link>
                 </li>
                 <li>
                   <Link href="">
-                    <img src="twitterIcon.svg" alt="" />
+                    {/* <img src="twitterIcon.svg" alt="" /> */}
                   </Link>
                 </li>
               </ul>

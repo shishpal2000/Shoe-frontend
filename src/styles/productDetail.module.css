@@ -1,3 +1,7 @@
+.productDetailMainContainer {
+  padding-bottom: 60px;
+}
+
 .productDetailInnerItems {
   gap: 30px;
   display: flex;
@@ -138,6 +142,11 @@
   border-bottom: 1px solid #e9eaf0;
 }
 
+.userComments ul li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
 .userComments ul li:first-child {
   padding-top: 0;
 }
@@ -197,6 +206,25 @@
   line-height: 22px;
   font-weight: 400;
   color: #4e5566;
+}
+
+.userComments .loadmoreCon {
+  padding-top: 50px;
+}
+
+.userComments .loadmoreCon .loadmore {
+  color: #fff;
+  padding: 12px 30px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 16px;
+  border-radius: 12px;
+  transition: 0.4s ease-in-out;
+  background-color: #0a0b0b;
+}
+
+.userComments .loadmoreCon .loadmore:hover {
+  background-color: #4e5566;
 }
 
 .productDescrip ul li:nth-child(2) {
@@ -445,4 +473,16 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.relatedProducts {
+  padding: 0 0 60px 0;
+  font-family: "Khand", sans-serif;
+}
+
+.relatedProducts h4 {
+  font-size: 36px;
+  font-weight: 600;
+  padding-bottom: 20px;
+  line-height: 55.04px;
 }
