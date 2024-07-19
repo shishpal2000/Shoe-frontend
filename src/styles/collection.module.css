@@ -12,7 +12,7 @@
   border-radius: 12px;
   max-width: calc(100% / 3 - 36px);
   border: 1.53px solid #dedede;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   padding: 36.74px 30.62px 45.3px 30.62px;
 }
 
@@ -40,7 +40,7 @@
   background-color: #000000;
   text-transform: uppercase;
   border-radius: 4px 50px 50px 4px;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   padding: 5.53px 11.16px 3.53px 13px;
 }
 

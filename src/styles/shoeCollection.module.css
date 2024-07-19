@@ -43,7 +43,7 @@
   font-weight: 600;
   line-height: 60px;
   margin-bottom: 34px;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .shoe_collect_items .content p {
@@ -52,7 +52,7 @@
   line-height: 26.61px;
   margin-bottom: 34px;
   /* font-family: "Inter", sans-serif; */
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 @media only screen and (max-width: 830px) {

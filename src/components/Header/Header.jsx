@@ -71,7 +71,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link href="">
+                <Link href="/cart">
                   <figure>
                     <img src="/cart.svg" alt="" />
                   </figure>

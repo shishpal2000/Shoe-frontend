@@ -1,0 +1,24 @@
+.cartMainContainer {
+}
+
+.cartItemsContainer {
+  gap: 30px;
+  display: flex;
+  padding-bottom: 30px;
+  align-items: flex-start;
+}
+
+.cartMainContainer .left {
+  width: 100%;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #f7f7fb;
+  max-width: calc(100% - 40%);
+}
+
+.cartMainContainer .right {
+  width: 100%;
+  padding: 10px;
+  background-color: #f7f7fb;
+  max-width: calc(100% - 60%);
+}

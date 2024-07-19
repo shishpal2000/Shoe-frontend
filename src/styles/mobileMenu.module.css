@@ -7,7 +7,7 @@
   right: 0;
   margin-bottom: 10px;
   z-index: 999999999999999;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .scrollClass {
@@ -98,7 +98,7 @@
 }
 
 .dropdown button {
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .dropdownContent {
@@ -152,7 +152,7 @@
   font-weight: 400;
   line-height: 21.41px;
   text-transform: uppercase;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .navbar .search .icon {

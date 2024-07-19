@@ -15,7 +15,7 @@
 }
 
 .popular_product_items .left .content {
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .popular_product_items .left .content .tag {
@@ -91,7 +91,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .popular_product_items .right .shoeSlideCard .bar {
@@ -107,7 +107,7 @@
   line-height: 36.7px;
   color: #000000;
   margin-bottom: 0;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .shoeSlideCard .bar .learnMore {

@@ -10,7 +10,7 @@
   line-height: 30.58px;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .header_items {
@@ -41,7 +41,7 @@
   font-weight: 400;
   line-height: 21.41px;
   text-transform: uppercase;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .header_items .search .icon {
@@ -91,7 +91,7 @@
   font-size: 15.71px;
   line-height: 24.02px;
   text-decoration: none;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .header_items .contact .detail a span {
@@ -133,7 +133,7 @@
   line-height: 21.41px;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .menuBar_main .menuBar_items .menuOpt {

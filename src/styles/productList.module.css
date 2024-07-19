@@ -13,7 +13,7 @@
   position: relative;
   border: 1px solid #dedede;
   transition: 0.5s ease-in-out;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   max-width: calc(100% / 3 - 20px);
 }
 
@@ -43,7 +43,7 @@
   background-color: #000000;
   text-transform: uppercase;
   border-radius: 4px 50px 50px 4px;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   padding: 5.53px 9.16px 2.53px 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

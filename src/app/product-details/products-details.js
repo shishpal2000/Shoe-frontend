@@ -307,7 +307,7 @@ const ProductDetails = () => {
                   </ul>
                 </div>
                 <div className={style.buyOpt}>
-                  <Link className={style.cartBtn} href="">
+                  <Link className={style.cartBtn} href="/cart">
                     Add to cart
                   </Link>
                   <Link className={style.wishlist} href="">

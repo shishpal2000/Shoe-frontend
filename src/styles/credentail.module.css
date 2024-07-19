@@ -17,7 +17,7 @@
 .credentailMainContainer .credentailInnerItems .right {
   width: 100%;
   max-width: calc(100% / 2);
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .credentailMainContainer .credentailInnerItems .right h3 {
@@ -131,7 +131,7 @@
   font-weight: 400;
   color: #807d7e;
   line-height: 21.41px;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .phoneInput input {
@@ -145,7 +145,7 @@
   font-weight: 400;
   color: #807d7e;
   line-height: 21.41px;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .credentailMainContainer
@@ -160,7 +160,7 @@
   color: #807d7e;
   line-height: 21.41px;
   text-transform: capitalize;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .checkboxContainer {

@@ -31,7 +31,7 @@
   color: #ffffff;
   line-height: 105.6px;
   text-transform: uppercase;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .gallery_items .right {
@@ -58,7 +58,7 @@
   font-weight: 700;
   margin-bottom: 16px;
   text-transform: uppercase;
-  font-family: "Khand", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 @media only screen and (max-width: 1159px) {
