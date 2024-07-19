@@ -97,13 +97,44 @@ const ProductDetails = () => {
     },
   ];
 
-  // const productDetailList = [
-  //   {
-  //     id: 1,
-  //     name: "",
-  //     pro
-  //   },
-  // ];
+  const userCommentData = [
+    {
+      id: 1,
+      profile: "/user.png",
+      userName: "Guy Hawkins",
+      commTime: "1 week ago",
+      rating: "⭐⭐⭐⭐⭐",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+    {
+      id: 2,
+      profile: "/user.png",
+      userName: "Guy Hawkins",
+      commTime: "1 week ago",
+      rating: "⭐⭐⭐⭐⭐",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+    {
+      id: 3,
+      profile: "/user.png",
+      userName: "Guy Hawkins",
+      commTime: "1 week ago",
+      rating: "⭐⭐⭐⭐⭐",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+    {
+      id: 4,
+      profile: "/user.png",
+      userName: "Guy Hawkins",
+      commTime: "1 week ago",
+      rating: "⭐⭐⭐⭐⭐",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+  ];
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -186,6 +217,41 @@ const ProductDetails = () => {
                   </li>
                 </ul>
               </div>
+
+              <div className={style.userComments}>
+                <div className={style.commentBar}>
+                  <h4>User Comments</h4>
+                  <div className={style.dropdown}>
+                    5 Star Rating <img src="/down.svg" alt="" />
+                  </div>
+                </div>
+                <ul>
+                  {userCommentData.map(
+                    ({ id, userName, commTime, descrip, profile, rating }) => {
+                      return (
+                        <li>
+                          <div className={style.commLeft}>
+                            <figure className={style.userProfile}>
+                              <img src={profile} alt="" />
+                            </figure>
+                          </div>
+                          <div className={style.commRight}>
+                            <div className={style.userReview}>
+                              <div className={style.userDetailBar}>
+                                <h4>{userName}</h4>
+                                <p>{commTime}</p>
+                              </div>
+                              <div className={style.userRating}>{rating}</div>
+                              <p className={style.descrip}>{descrip}</p>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+              </div>
+              <br></br>
             </div>
 
             <div className={style.right}>
@@ -340,6 +406,8 @@ const ProductDetails = () => {
                     }
                   `}</style>
                 </div>
+                <br />
+                <br />
               </div>
             </div>
           </div>

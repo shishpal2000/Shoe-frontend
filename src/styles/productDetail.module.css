@@ -90,6 +90,115 @@
   border-right: 0;
 }
 
+.userComments {
+  margin-top: 40px;
+}
+
+.commentBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.commentBar h4 {
+  font-size: 36px;
+  color: #232321;
+  line-height: 55.04px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.commentBar {
+  margin-bottom: 30px;
+}
+
+.commentBar .dropdown {
+  padding: 12px 18px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  cursor: pointer;
+  border: 1px solid #e9eaf0;
+  background-color: #f7f7fb;
+}
+
+.commentBar .dropdown img {
+  width: 16px;
+  height: 16px;
+}
+
+.userComments ul li {
+  gap: 14px;
+  display: flex;
+  align-items: flex-start;
+  padding: 30px 0;
+  border-bottom: 1px solid #e9eaf0;
+}
+
+.userComments ul li:first-child {
+  padding-top: 0;
+}
+
+.userComments ul li .commLeft {
+  width: 100%;
+  max-width: calc(100% - 94%);
+}
+
+.userComments ul li .commRight {
+  width: 100%;
+  max-width: calc(100% - 6%);
+}
+
+.userComments ul li .userProfile {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
+.userComments ul li .userProfile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userComments ul li .userReview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.userComments ul li .userReview .userDetailBar {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.userComments ul li .userReview .userDetailBar h4 {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+  color: #1d2026;
+}
+
+.userComments ul li .userReview .userDetailBar p {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #6e7485;
+}
+
+.userComments ul li .userReview .descrip {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #4e5566;
+}
+
 .productDescrip ul li:nth-child(2) {
   border-top: 0;
 }
