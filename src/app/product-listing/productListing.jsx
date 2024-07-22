@@ -1,9 +1,17 @@
+"use client";
+
 import InnerBanner from "@/components/InnerPageBanner/InnerBanner";
 import ProductList from "./productList";
 import style from "../../styles/productListing.module.css";
 import ProductFilter from "./productFilter";
+import { useState } from "react";
 
 const ProductListing = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleClass = () => {
+    setIsActive(!isActive);
+  };
   return (
     <>
       <InnerBanner
@@ -26,10 +34,12 @@ const ProductListing = () => {
             </div>
           </div>
           <div className={style.productListingItems}>
-            <div className={style.phoneFilterButton}>
-              <p>⑂</p>
+            <div className={style.phoneFilterButton} onClick={toggleClass}>
+              <figure>
+                <img src="/filter.png" alt="" />
+              </figure>
             </div>
-            <div className={style.left}>
+            <div className={isActive ? style.activeFliter : style.left}>
               <ProductFilter />
             </div>
             <div className={style.right}>

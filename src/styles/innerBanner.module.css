@@ -3,7 +3,9 @@
 }
 
 .InnerBannerItems {
-  position: relative;
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 17px;
 }
 
 .InnerBannerItems:after {
@@ -18,12 +20,13 @@
 
 .InnerBannerItems figure {
   overflow: hidden;
-  height: 445px;
+  height: 400px;
 }
 
 .InnerBannerItems figure img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .InnerBannerItems .content {
@@ -31,6 +34,8 @@
   top: 50%;
   left: 50%;
   z-index: 999;
+  width: 100%;
+  padding: 0 15px;
   color: #fff;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -38,25 +43,57 @@
 }
 
 .InnerBannerItems .content .tag {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 36.7px;
+  line-height: 27.7px;
   margin-bottom: 0;
   padding-bottom: 9px;
 }
 
 .InnerBannerItems .content h2 {
-  font-size: 74px;
+  font-size: 60px;
   font-weight: 600;
-  line-height: 85px;
+  line-height: 70px;
+  padding-bottom: 10px;
 }
 
 .InnerBannerItems .content .descrip {
-  font-size: 20px;
-  line-height: 30.58px;
+  font-size: 18px;
+  line-height: 28.58px;
   font-weight: 400;
+  white-space: pre-line;
 }
 
-.InnerBannerItems .content .descrip {
-  white-space: pre-line;
+@media only screen and (max-width: 795px) {
+  .innerBannerMain {
+    padding-bottom: 50px;
+  }
+
+  .InnerBannerItems figure {
+    height: 350px;
+  }
+
+  .InnerBannerItems .content .tag {
+    font-size: 18px;
+    line-height: 26.7px;
+    padding-bottom: 4px;
+  }
+
+  .InnerBannerItems .content h2 {
+    font-size: 45px;
+    font-weight: 600;
+    line-height: 55px;
+    padding-bottom: 5px;
+  }
+
+  .InnerBannerItems .content .descrip {
+    font-size: 16px;
+    line-height: 24.58px;
+  }
+}
+
+@media only screen and (max-width: 516px) {
+  .InnerBannerItems .content .descrip {
+    white-space: unset;
+  }
 }

@@ -26,10 +26,10 @@
 }
 
 .gallery_items .left .content h3 {
-  font-size: 96px;
+  font-size: 80px;
   font-weight: 700;
   color: #ffffff;
-  line-height: 105.6px;
+  line-height: 87.6px;
   text-transform: uppercase;
   font-family: "Nunito Sans", sans-serif;
 }
@@ -49,11 +49,11 @@
 }
 
 .gallery_items .right .content {
-  padding: 19px 0 28px 46px;
+  padding: 19px 46px 28px 46px;
 }
 
 .gallery_items .right .content h3 {
-  font-size: 80px;
+  font-size: 76px;
   line-height: 88px;
   font-weight: 700;
   margin-bottom: 16px;

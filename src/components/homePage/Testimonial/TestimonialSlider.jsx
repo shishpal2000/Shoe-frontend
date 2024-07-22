@@ -101,7 +101,7 @@ const TestimonialSlider = () => {
                       <h3>{comment}</h3>
                       <p className={style.descrip}>{descrip}</p>
                       <p className={style.rating}>
-                        {rating}
+                        {rating} &nbsp;
                         {ratingVal}
                       </p>
                     </div>

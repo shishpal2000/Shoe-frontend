@@ -39,7 +39,7 @@
 }
 
 .testi_slider_card .testi_detail .left h3 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   color: #232321;
   line-height: 36.7px;
@@ -49,10 +49,12 @@
 }
 
 .testi_slider_card .testi_detail .left .descrip {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
   color: #232321;
-  line-height: 30.58px;
+  line-height: 23.58px;
+  margin-bottom: 0;
+  padding-bottom: 10px;
 }
 
 .testi_slider_card .testi_detail .right figure {
@@ -67,6 +69,7 @@
   height: 100%;
   object-fit: contain;
 }
+
 @media only screen and (max-width: 944px) {
   .testimonial_main_container h2 {
     font-size: 37px;

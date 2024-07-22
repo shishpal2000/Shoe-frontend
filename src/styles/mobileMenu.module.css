@@ -14,6 +14,7 @@
   /* backdrop-filter: blur(0); */
   background-color: #0a0b0b; /* Styles to apply when class is toggled */
 }
+
 .smNavItems {
   padding: 15px;
   backdrop-filter: blur(5px);

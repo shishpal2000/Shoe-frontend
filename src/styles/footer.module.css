@@ -56,7 +56,7 @@
 
 .footerInnerItems .footerListing .address a {
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 1px;
   line-height: 19.01px;
@@ -66,7 +66,7 @@
 
 .footerInnerItems .footerListing .address p {
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 1px;
   line-height: 19.01px;
@@ -85,7 +85,7 @@
 
 .footerInnerItems .footerListing .footerLinks a {
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 1px;
   line-height: 19.01px;
@@ -99,7 +99,7 @@
 
 .footerMainContainer .copyRight {
   padding-top: 50px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 @media only screen and (max-width: 999px) {

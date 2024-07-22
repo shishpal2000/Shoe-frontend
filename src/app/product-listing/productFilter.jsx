@@ -105,42 +105,44 @@ const ProductFilter = () => {
     <div className={styles.fliterMainContainer}>
       <div className={styles.sidebar}>
         <h2 className={styles.title}>Filters</h2>
-        {categories.map((category, index) => (
-          <div key={index} className={styles.category}>
-            <div
-              className={styles.categoryHeader}
-              onClick={() => toggleCategory(index)}
-            >
-              <p>
-                {category.icon} {category.name}
-              </p>
-              <figure className={styles.arrow}>
-                <img
-                  src={openCategory === index ? "/up.svg" : "/down.svg"}
-                  alt={openCategory === index ? "Collapse" : "Expand"}
-                  className={styles.arrowIcon}
-                />
-              </figure>
+        <div className={styles.fliterList}>
+          {categories.map((category, index) => (
+            <div key={index} className={styles.category}>
+              <div
+                className={styles.categoryHeader}
+                onClick={() => toggleCategory(index)}
+              >
+                <p>
+                  {category.icon} {category.name}
+                </p>
+                <figure className={styles.arrow}>
+                  <img
+                    src={openCategory === index ? "/up.svg" : "/down.svg"}
+                    alt={openCategory === index ? "Collapse" : "Expand"}
+                    className={styles.arrowIcon}
+                  />
+                </figure>
+              </div>
+              {openCategory === index && (
+                <ul className={`${category.ulStyle}`}>
+                  {category.subcategories.map((subcategory, subIndex) => (
+                    <li key={subIndex} className={styles.subcategory}>
+                      <input
+                        style={{ backgroundColor: `${subcategory.color}` }}
+                        type={subcategory.type}
+                        value={subcategory.name}
+                        id={`subcategory-${index}-${subIndex}`}
+                      />
+                      <label htmlFor={`subcategory-${index}-${subIndex}`}>
+                        {subcategory.val}{" "}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-            {openCategory === index && (
-              <ul className={`${category.ulStyle}`}>
-                {category.subcategories.map((subcategory, subIndex) => (
-                  <li key={subIndex} className={styles.subcategory}>
-                    <input
-                      style={{ backgroundColor: `${subcategory.color}` }}
-                      type={subcategory.type}
-                      value={subcategory.name}
-                      id={`subcategory-${index}-${subIndex}`}
-                    />
-                    <label htmlFor={`subcategory-${index}-${subIndex}`}>
-                      {subcategory.val}{" "}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

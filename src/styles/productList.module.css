@@ -44,15 +44,15 @@
   text-transform: uppercase;
   border-radius: 4px 50px 50px 4px;
   font-family: "Nunito Sans", sans-serif;
-  padding: 5.53px 9.16px 2.53px 10px;
+  padding: 4px 8px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .proName {
-  margin-top: 8px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #000000;
+  text-transform: capitalize;
   line-height: 33.15px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -93,8 +93,9 @@
 
 .offerPrice {
   font-weight: 500;
-  font-size: 18.37px;
+  font-size: 16.37px;
   line-height: 25.37px;
+  color: #000000;
 }
 
 .learnMore {
@@ -141,6 +142,44 @@
   }
 }
 
+@media only screen and (max-width: 890px) {
+  .productListItems {
+    padding-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 736px) {
+  .productListItems {
+    gap: 10px;
+  }
+
+  .productListItems .card {
+    padding: 10px;
+    max-width: calc(100% / 3 - 7px);
+  }
+
+  .tag {
+    top: 10px;
+    font-size: 9px;
+    line-height: 13.59px;
+  }
+
+  .proName {
+    font-size: 14px;
+    line-height: 25.15px;
+  }
+
+  .realPrice {
+    font-size: 11.78px;
+    line-height: 16.03px;
+  }
+
+  .offerPrice {
+    font-size: 13.37px;
+    line-height: 16.37px;
+  }
+}
+
 @media only screen and (max-width: 668px) {
   .bar,
   .price {
@@ -163,8 +202,8 @@
   }
 }
 
-@media only screen and (max-width: 569px) {
+@media only screen and (max-width: 520px) {
   .productListItems .card {
-    max-width: calc(100% / 2 - 10px);
+    max-width: calc(100% / 2 - 5px);
   }
 }

@@ -9,9 +9,9 @@
 }
 
 .categoriesCard .tittle {
-  font-size: 44px;
+  font-size: 24px;
   font-weight: 600;
-  line-height: 42.68px;
+  line-height: 30.68px;
   margin-bottom: 12px;
   white-space: pre-line;
   text-transform: uppercase;
@@ -63,9 +63,9 @@
   }
 
   .categoriesCard .tittle {
-    font-size: 30px;
+    font-size: 18px;
     font-weight: 600;
-    line-height: 32.68px;
+    line-height: 24.68px;
   }
 
   .proImg figure {
@@ -74,11 +74,11 @@
 }
 
 @media only screen and (max-width: 949px) {
-  .categoriesCard .tittle {
+  /* .categoriesCard .tittle {
     font-size: 22px;
     font-weight: 600;
     line-height: 25px;
-  }
+  } */
 
   .proImg figure {
     min-height: 200px;
