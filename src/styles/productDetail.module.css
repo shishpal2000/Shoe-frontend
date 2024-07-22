@@ -56,24 +56,25 @@
 }
 
 .productDetailInnerItems .left .productDescrip h3 {
-  font-size: 36px;
+  font-size: 30px;
   color: #232321;
-  line-height: 55.04px;
+  line-height: 50.04px;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
 .productDetailInnerItems .left .productDescrip .proDesc {
-  font-size: 17px;
+  font-size: 16px;
   color: #807d7e;
-  margin-bottom: 22px;
+  margin-bottom: 15px;
   line-height: 27.14px;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .productDescrip ul {
   display: flex;
   gap: 0;
+  margin: 40px 0 !important ;
   flex-wrap: wrap;
   background-color: #f7f7fb;
   border-radius: 12px;
@@ -83,7 +84,7 @@
 
 .productDescrip ul li {
   width: 100%;
-  padding: 30px 50px;
+  padding: 30px;
   border: 0.5px solid #bebcbd;
   max-width: calc(100% / 3);
 }
@@ -94,7 +95,7 @@
   border-right: 0;
 }
 
-.userComments {
+.productDescrip ul li .userComments {
   margin-top: 40px;
 }
 
@@ -105,9 +106,9 @@
 }
 
 .commentBar h4 {
-  font-size: 36px;
+  font-size: 30px;
   color: #232321;
-  line-height: 55.04px;
+  line-height: 50.04px;
   font-weight: 600;
   margin-bottom: 5px;
 }
@@ -118,7 +119,7 @@
 
 .commentBar .dropdown {
   padding: 12px 18px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
   font-weight: 400;
   display: flex;
@@ -178,7 +179,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 10px;
 }
 
 .userComments ul li .userReview .userDetailBar {
@@ -202,7 +203,7 @@
 }
 
 .userComments ul li .userReview .descrip {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 22px;
   font-weight: 400;
   color: #4e5566;
@@ -254,21 +255,17 @@
 }
 
 .productDescrip ul li p {
-  font-size: 19.48px;
+  font-size: 17.48px;
   font-weight: 400;
   line-height: 19.48px;
   color: #807d7e;
-  margin-bottom: 14px;
-  letter-spacing: 0.8px;
+  margin-bottom: 9px;
 }
 
 .productDescrip ul li h4 {
-  font-size: 19.48px;
+  font-size: 17.48px;
   font-weight: 500;
-  line-height: 19.48px;
-  color: #000000;
-  margin-bottom: 14px;
-  letter-spacing: 0.8px;
+  line-height: 18.48px;
 }
 
 .productDetailInnerItems .right .productDetail .tag {
@@ -283,18 +280,18 @@
 }
 
 .productDetailInnerItems .right .productDetail h2 {
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 600;
-  line-height: 43px;
+  line-height: 39px;
   color: #232321;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .productDetailInnerItems .right .productDetail h3 {
-  font-size: 34px;
-  line-height: 49.8px;
+  font-size: 27px;
+  line-height: 41.8px;
   font-weight: 600;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 
 .productDetail h4 {
@@ -370,7 +367,7 @@
   justify-content: center;
   max-width: calc(100% / 8 - 4px);
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   height: 48px;
   color: #8f8c91;
   cursor: pointer;
@@ -391,10 +388,10 @@
 
 .buyOpt .cartBtn {
   width: 100%;
-  padding: 12px 0;
+  padding: 16px 0;
   text-align: center;
   max-width: calc(85%);
-  font-size: 18px;
+  font-size: 14px;
   color: #fff;
   font-weight: 500;
   border-radius: 8px;
@@ -455,8 +452,8 @@
 .opt ul li p {
   color: #0a0b0b;
   font-weight: 500;
-  font-size: 19.35px;
-  line-height: 29.59px;
+  font-size: 14.35px;
+  line-height: 24.59px;
 }
 
 .opt ul li:nth-last-child(-n + 2) {

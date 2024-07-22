@@ -16,7 +16,8 @@ const ProductList = () => {
                   <div className={style.tag}>{tag}</div>
                   <div className={style.proImg}>
                     <figure>
-                      <img src="/shoe-1.svg" alt="" />
+                      <img className={style.img1} src="/pro-1.png" alt="" />
+                      <img className={style.img2} src="/pro-2.png" alt="" />
                     </figure>
                   </div>
 

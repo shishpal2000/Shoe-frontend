@@ -1,7 +1,7 @@
 import ProductListing from "./productListing";
 
 export const metadata = {
-  title: "Product Listing",
+  title: "Shoe | Product Listing",
   description: "",
   alternates: {
     canonical: "abc",

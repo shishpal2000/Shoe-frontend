@@ -1,7 +1,7 @@
 import SignUp from "./signUp";
 
 export const metadata = {
-  title: "Sign Up",
+  title: "Shoe | Sign Up",
   description: "",
   alternates: {
     canonical: "abc",

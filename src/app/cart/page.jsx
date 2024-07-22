@@ -1,7 +1,7 @@
 import Cart from "./cart";
 
 export const metadata = {
-  title: "Cart",
+  title: "Shoe | Cart",
   description: "",
   alternates: {
     canonical: "abc",

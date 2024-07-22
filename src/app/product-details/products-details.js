@@ -5,6 +5,7 @@ import ReactPlayer from "react-player";
 import style from "../../styles/productDetail.module.css";
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import Collection from "@/components/homePage/ShoeCollection/Collection";
+import ProductGallery from "./productGallery";
 
 const ProductDetails = () => {
   const [selectedColor, setSelectedColor] = useState(1);
@@ -147,15 +148,23 @@ const ProductDetails = () => {
     setIsPlaying(false);
   };
 
+  const images = [
+    "/pro-1-1.png",
+    "/pro-1-2.png",
+    "/pro-1-3.png",
+    "/pro-1-4.png",
+  ];
+
   return (
     <>
       <PageLinkBar currentPage="Vantela New Public White low" />
+
       <div className={style.productDetailMainContainer}>
         <div className="container">
           <div className={style.productDetailInnerItems}>
             <div className={style.left}>
-              <ul className={style.proImgGall}>
-                <li>
+              <div className={style.proImgGall}>
+                {/* <li>
                   <figure>
                     <img src="/pro-1-1.png" alt="" />
                   </figure>
@@ -174,8 +183,9 @@ const ProductDetails = () => {
                   <figure>
                     <img src="/pro-1-4.png" alt="" />
                   </figure>
-                </li>
-              </ul>
+                </li> */}
+                <ProductGallery images={images} />
+              </div>
 
               <div className={style.productDescrip}>
                 <h3>Product Description</h3>

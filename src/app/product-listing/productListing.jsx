@@ -27,7 +27,6 @@ const ProductListing = () => {
             <div className={style.content}>
               <h2>Life Style Shoes</h2>
               <p>122 items</p>
-              {/* <p></p> */}
             </div>
             <div className={style.trendingDrop}>
               Trending <img src="/down.svg" alt="" />

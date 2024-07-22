@@ -1,7 +1,7 @@
 import VerifyCode from "./verify-code";
 
 export const metadata = {
-  title: "Verify Code",
+  title: "Shoe | Verify Code",
   description: "",
   alternates: {
     canonical: "abc",

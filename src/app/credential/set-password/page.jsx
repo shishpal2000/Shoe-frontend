@@ -1,7 +1,7 @@
 import SetPassword from "./set-password";
 
 export const metadata = {
-  title: "Set Password",
+  title: "Shoe | Set Password",
   description: "",
   alternates: {
     canonical: "abc",

@@ -1,7 +1,7 @@
 import NewArrivals from "./newArrivals";
 
 export const metadata = {
-  title: "New Arrivals",
+  title: "Shoe | New Arrivals",
   description: "",
   alternates: {
     canonical: "abc",

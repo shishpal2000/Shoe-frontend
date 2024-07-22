@@ -1,7 +1,7 @@
 import LogIn from "./logIn";
 
 export const metadata = {
-  title: "Log In",
+  title: "Shoe | Log In",
   description: "",
   alternates: {
     canonical: "abc",
