@@ -56,16 +56,21 @@ const BestSellingProducts = () => {
               {TabOptionData.map((data) => {
                 return (
                   <>
-                    {activeTab === `${data.tabName}` && (
-                      <div>
-                        <Collection key={data.id} />
-                        <div
-                          style={{ textAlign: "center", marginTop: "56.29px" }}
-                        >
-                          <SecondaryBtn btnText="explore more" />
+                    <div key={data.id}>
+                      {activeTab === `${data.tabName}` && (
+                        <div>
+                          <Collection />
+                          <div
+                            style={{
+                              textAlign: "center",
+                              marginTop: "56.29px",
+                            }}
+                          >
+                            <SecondaryBtn btnText="explore more" />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </>
                 );
               })}

@@ -64,7 +64,7 @@ const Header = () => {
 
             <ul className={style.menuOpt}>
               <li>
-                <Link href="/credential/log-in">
+                <Link href="/my-account">
                   <figure>
                     <img src="/user.svg" alt="" />
                   </figure>

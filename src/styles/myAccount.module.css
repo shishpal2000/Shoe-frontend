@@ -1,0 +1,15 @@
+.myAccountMainContainer .myAccountInnerItems {
+  padding: 20px 0 40px 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.myAccountInnerItems .left {
+  width: 100%;
+  max-width: calc(100% - 75%);
+}
+
+.myAccountInnerItems .right {
+  width: 100%;
+  max-width: calc(100% - 25%);
+}

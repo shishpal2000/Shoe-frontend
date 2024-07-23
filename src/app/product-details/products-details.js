@@ -282,11 +282,11 @@ const ProductDetails = () => {
                     {colors.map(({ id, color }) => {
                       return (
                         <li
+                          key={id}
                           onClick={() => handleClick(id)}
                           className={
                             selectedColor === id ? `${style.active}` : ""
                           }
-                          key={id}
                         >
                           <i style={{ backgroundColor: `${color}` }}></i>
                         </li>
@@ -304,11 +304,11 @@ const ProductDetails = () => {
                     {size.map(({ id, size }) => {
                       return (
                         <li
+                          key={id}
                           onClick={() => colorHandleClick(id)}
                           className={
                             setectSize === id ? `${style.selectSize}` : ""
                           }
-                          key={id}
                         >
                           {size}
                         </li>
