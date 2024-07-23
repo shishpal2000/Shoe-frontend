@@ -13,7 +13,7 @@ const MyAccountSideBar = () => {
 
           <ul className={style.sideBarNav}>
             <li>
-              <Link className={style.navActive} href="">
+              <Link className={style.navActive} href="/">
                 <figure>
                   <img src="/myOrder.svg" alt="" />
                 </figure>
@@ -22,7 +22,7 @@ const MyAccountSideBar = () => {
             </li>
 
             <li>
-              <Link href="">
+              <Link href="/">
                 <figure>
                   <img src="/wishlist1.svg" alt="" />
                 </figure>
@@ -31,7 +31,7 @@ const MyAccountSideBar = () => {
             </li>
 
             <li>
-              <Link href="">
+              <Link href="/">
                 <figure>
                   <img src="/user1.svg" alt="" />
                 </figure>
@@ -40,7 +40,7 @@ const MyAccountSideBar = () => {
             </li>
 
             <li>
-              <Link href="">
+              <Link href="/">
                 <figure>
                   <img src="/signOut.svg" alt="" />
                 </figure>

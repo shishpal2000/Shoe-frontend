@@ -1,4 +1,4 @@
-const MyOrder = () => {
+const MyOrders = () => {
   return (
     <>
       <h1>my order</h1>
@@ -6,4 +6,4 @@ const MyOrder = () => {
   );
 };
 
-export default MyOrder;
+export default MyOrders;

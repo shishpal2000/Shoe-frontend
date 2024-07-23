@@ -1,7 +1,7 @@
-import MyOrder from "./my-order";
+import MyOrders from "./my-order";
 
 export const metadata = {
-  title: "Shoe | My Order",
+  title: "Shoe | My Orders",
   description: "",
   alternates: {
     canonical: "abc",
@@ -13,7 +13,7 @@ export const metadata = {
 const page = () => {
   return (
     <>
-      <MyOrder />
+      <MyOrders />
     </>
   );
 };
