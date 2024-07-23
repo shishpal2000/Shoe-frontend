@@ -97,8 +97,11 @@ const Cart = () => {
                   <h3>$136.99</h3>
                 </li>
               </ul>
+
               <div className={style.checkoutBtn}>
-                <button>Checkout</button>
+                <Link href="/checkout">
+                  <button>Checkout</button>
+                </Link>
               </div>
 
               <p className={style.promo}>

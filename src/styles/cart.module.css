@@ -158,7 +158,14 @@
   padding: 13px 0;
   border-radius: 12px;
   cursor: pointer;
+  letter-spacing: 0.8px;
+  transition: 0.4s ease-in-out;
+  text-transform: uppercase;
   background-color: #232321;
+}
+
+.checkoutBtn button:hover {
+  background-color: #515151;
 }
 
 .right h3 {
