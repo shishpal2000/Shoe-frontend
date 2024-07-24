@@ -27,3 +27,34 @@
 .pageLinkBarMain ul li:last-child {
   font-weight: 700;
 }
+
+@media only screen and (max-width: 991px) {
+  .pageLinkBarMain ul {
+    gap: 12px;
+  }
+
+  .pageLinkBarMain ul li {
+    gap: 12px;
+  }
+
+  .pageLinkBarMain ul li a {
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 505px) {
+  .pageLinkBarMain {
+    padding: 15px 0 0px 0;
+  }
+  .pageLinkBarMain ul {
+    gap: 5;
+  }
+
+  .pageLinkBarMain ul li {
+    gap: 5;
+  }
+
+  .pageLinkBarMain ul li a {
+    font-size: 12px;
+  }
+}

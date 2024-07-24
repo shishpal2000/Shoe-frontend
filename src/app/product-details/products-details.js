@@ -4,7 +4,6 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import style from "../../styles/productDetail.module.css";
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
-import Collection from "@/components/homePage/ShoeCollection/Collection";
 import ProductGallery from "./productGallery";
 
 const ProductDetails = () => {
@@ -338,6 +337,7 @@ const ProductDetails = () => {
                     })}
                   </ul>
                 </div>
+
                 <div className={style.vedioSectionMain}>
                   {!isPlaying ? (
                     <div className="video-overlay" onClick={handlePlay}>
@@ -361,9 +361,8 @@ const ProductDetails = () => {
                         url="https://youtu.be/B_m8q9e9Osc"
                         playing={isPlaying}
                         controls
-                        width="100%
-                        "
-                        height="422px"
+                        width="100%"
+                        height="316px"
                         className={style.reactPlayer}
                         onEnded={handleEnded}
                       />
@@ -380,10 +379,11 @@ const ProductDetails = () => {
                     .video-overlay {
                       position: relative;
                       cursor: pointer;
+                      height: 100%;
                     }
                     .video-overlay img {
                       width: 100%;
-                      height: auto;
+                      height: 100%;
                     }
                     .play-button {
                       position: absolute;
@@ -423,18 +423,9 @@ const ProductDetails = () => {
                     }
                   `}</style>
                 </div>
-                <br />
-                <br />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className={style.relatedProducts}>
-        <div className="container">
-          <h4>Related Products</h4>
-          <Collection />
         </div>
       </div>
     </>
