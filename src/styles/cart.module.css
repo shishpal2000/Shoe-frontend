@@ -199,3 +199,86 @@
   font-size: 30px;
   margin-bottom: 30px;
 }
+
+@media only screen and (max-width: 1060px) {
+  .cartMainContainer .left .cartDetail h3 {
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  .cartMainContainer .left .cartDetail p {
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .shortProDescrip .ProImg figure {
+    width: 182.5px;
+    height: 182.57px;
+  }
+
+  .actionOpt li a figure {
+    width: 25px;
+    height: 25px;
+  }
+
+  .right ul {
+    gap: 10px;
+  }
+
+  .right h3 {
+    margin-bottom: 12px;
+  }
+}
+
+@media only screen and (max-width: 999px) {
+  .cartItemsContainer {
+    flex-direction: column;
+  }
+
+  .cartMainContainer .left,
+  .cartMainContainer .right {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 696px) {
+  .cartMainContainer .left .cartDetail h3 {
+    font-size: 15px;
+    line-height: 20px;
+    width: fit-content;
+    margin-bottom: 3px !important;
+  }
+
+  .cartMainContainer .left .cartDetail p {
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .selectOpt {
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .selectOpt li .sizeDropdown,
+  .selectOpt li .quantityDropdown {
+    padding: 12px;
+    min-width: 111px;
+    font-size: 11px;
+    border-radius: 12px;
+  }
+
+  .shortProDescrip .ProImg figure {
+    width: 161.5px;
+    height: 143.57px;
+  }
+
+  .actionOpt {
+    gap: 15px;
+    margin-top: 16px;
+  }
+
+  .actionOpt li a figure {
+    width: 20px;
+    height: 20px;
+  }
+}
