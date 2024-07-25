@@ -1,4 +1,5 @@
 .myAccountMainContainer .myAccountInnerItems {
+  gap: 60px;
   padding: 20px 0 40px 0;
   display: flex;
   align-items: flex-start;
@@ -6,6 +7,8 @@
 
 .myAccountInnerItems .left {
   width: 100%;
+  top: 100px;
+  position: sticky;
   max-width: calc(100% - 75%);
 }
 

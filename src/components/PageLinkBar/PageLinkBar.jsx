@@ -41,7 +41,7 @@ export const MyAccoutPageLinkBar = (props) => {
               <img src="/rightArrow.svg" alt="" />
             </li>
             <li>
-              <Link href="/">My account</Link>
+              <Link href="/">account</Link>
               <img src="/rightArrow.svg" alt="" />
             </li>
             <li>
