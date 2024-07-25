@@ -7,7 +7,7 @@ const MyAccountSideBar = () => {
       <div className={style.sideBarMainContainer}>
         <div className={style.sideBarItems}>
           <div className={style.tittle}>
-            <h3>Hello Jhanvi</h3>
+            <h3>Hello Ujjwal</h3>
             <p>Welcome to your Account</p>
           </div>
 
