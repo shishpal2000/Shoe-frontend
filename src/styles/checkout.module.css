@@ -349,3 +349,132 @@
   padding-top: 10px;
   padding-bottom: 0;
 }
+
+@media only screen and (max-width: 1186px) {
+  .orderDetailItems {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media only screen and (max-width: 806px) {
+  .checkoutInnerItems {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .checkoutInnerItems .left {
+    max-width: 100%;
+  }
+
+  .checkoutInnerItems .right {
+    top: 0;
+    position: relative;
+    max-width: 100%;
+  }
+
+  .orderDetailItems {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .checkoutLeft form h2 {
+    font-size: 20px;
+    line-height: 30px;
+    padding-bottom: 5px;
+  }
+
+  .checkoutLeft form p {
+    font-size: 16px;
+    line-height: 20px;
+    padding-bottom: 20px;
+  }
+
+  .checkoutLeft form ul {
+    gap: 20px;
+  }
+
+  .checkoutLeft form ul li {
+    gap: 5px;
+    max-width: 100%;
+  }
+
+  .checkoutLeft form ul li label {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .checkoutLeft form ul li input {
+    padding: 13px 15px;
+  }
+
+  .addressForm li {
+    width: 100%;
+    max-width: 100% !important;
+  }
+
+  .billingDetail {
+    padding-top: 20px;
+  }
+
+  .billingDetail h3,
+  .shippingAddress h3,
+  .shippingMethod h3 {
+    font-size: 20px;
+    line-height: 30px;
+    padding-bottom: 20px;
+  }
+
+  .addressDropdown,
+  .methodDetail {
+    padding: 20px !important;
+  }
+
+  .addressDropdown li {
+    padding: 15px 0;
+  }
+
+  .methodDetail li:first-child {
+    padding-bottom: 15px;
+  }
+
+  .methodDetail li:last-child {
+    padding-top: 15px;
+  }
+}
+
+@media only screen and (max-width: 385px) {
+  .orderDetailItems {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .orderSummary {
+    margin-bottom: 15px;
+  }
+
+  .orderSummary ul {
+    gap: 15px !important;
+  }
+
+  .orderSummary ul .type {
+    font-size: 14px;
+  }
+
+  .orderDetails,
+  .orderSummary {
+    padding: 10px;
+  }
+
+  .orderDetails h3,
+  .orderSummary h3 {
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+
+  .orderDetailItems .proDetail {
+    width: 100%;
+  }
+}
