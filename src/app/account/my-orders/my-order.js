@@ -5,7 +5,6 @@ import style from "../../../styles/myAccount.module.css";
 import styles from "../../../styles/myOrder.module.css";
 import { MyAccoutPageLinkBar } from "@/components/PageLinkBar/PageLinkBar";
 import Link from "next/link";
-import Collection from "@/components/homePage/ShoeCollection/Collection";
 
 const MyOrders = () => {
   const [activeTab, setActiveTab] = useState("orderActive");
@@ -272,7 +271,9 @@ const MyOrders = () => {
                                   </div>
                                 </div>
                                 <div className={styles.right}>
-                                  <Link href="/">View Detail</Link>
+                                  <Link href="/account/my-orders/my-order-detail">
+                                    View Detail
+                                  </Link>
                                 </div>
                               </div>
                             </li>
@@ -370,7 +371,7 @@ const MyOrders = () => {
                   }}
                 >
                   <ul className={styles.orderList}>
-                    {MyOrderList.map(
+                    {MyCompleteOrderList.map(
                       ({
                         id,
                         orderNo,
