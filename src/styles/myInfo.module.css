@@ -1,0 +1,138 @@
+.myInfoContainer h3 {
+  font-size: 28px;
+  line-height: 30px;
+  font-weight: 800;
+  padding-bottom: 13px;
+  color: #3c4242;
+}
+
+.myInfoContainer .topBar {
+  display: flex;
+  align-items: center;
+  padding-bottom: 40px;
+  justify-content: space-between;
+}
+
+.topBar p:first-child {
+  font-size: 18px;
+  line-height: 26px;
+  color: #3c4242;
+  text-transform: capitalize;
+}
+
+.topBar p:last-child {
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 24px;
+  color: #3c4242;
+  text-transform: capitalize;
+}
+
+.myInfoContainer .topBar p a {
+  color: #3c4242;
+}
+
+.infoBlanks li {
+  padding: 15px 0;
+  border-bottom: 1px solid #edeef2;
+}
+
+.infoBlanks li:first-child {
+  padding-top: 0;
+}
+
+.infoBlanks li h5 {
+  font-size: 15px;
+  color: #3c4242;
+  line-height: 20px;
+  font-weight: 700;
+  padding-bottom: 3px;
+  text-transform: capitalize;
+}
+
+.infoBlanks li p {
+  font-size: 13px;
+  color: #3c4242;
+  line-height: 20px;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.infoBlanks li .password {
+  font-size: 30px;
+  line-height: 20px;
+  letter-spacing: 1.6px;
+}
+
+.infoAddress .topBar {
+  padding-top: 40px;
+}
+
+.addressCardList {
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.addressCardList li {
+  width: 100%;
+  padding: 30px;
+  max-width: calc(100% / 2 - 10px);
+  border-radius: 12px;
+  background-color: #f7f7fb;
+}
+
+.addressCardList li h4 {
+  font-size: 20px;
+  line-height: 28px;
+  padding-bottom: 8px;
+  color: #3c4242;
+  text-transform: capitalize;
+}
+
+.addressCardList li h5 {
+  font-size: 16px;
+  line-height: 28px;
+  color: #232321;
+  padding-bottom: 5px;
+}
+
+.addressCardList li p {
+  font-size: 14px;
+  line-height: 24px;
+  color: #232321;
+  padding-bottom: 15px;
+}
+
+.addressCardList .addresOpt {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.addressCardList .addresOpt li {
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+  max-width: fit-content;
+  border: 1px solid #807d7e;
+}
+
+.addresEditOpt {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.addresEditOpt li {
+  padding: 0;
+  cursor: pointer;
+  width: fit-content;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
