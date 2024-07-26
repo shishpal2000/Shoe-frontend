@@ -66,13 +66,13 @@ const Footer = () => {
               <p className={style.tag}>Help</p>
               <ul className={style.footerLinks}>
                 <li>
-                  <Link href="">Shipping</Link>
+                  <Link href="/help/shipping">Shipping</Link>
                 </li>
                 <li>
-                  <Link href="">Returns</Link>
+                  <Link href="/help/return">Returns</Link>
                 </li>
                 <li>
-                  <Link href="">Sizing</Link>
+                  <Link href="/help/cancellation">Cancellation</Link>
                 </li>
               </ul>
             </div>
@@ -94,7 +94,7 @@ const Footer = () => {
               <p className={style.tag}>Legal Stuff</p>
               <ul className={style.footerLinks}>
                 <li>
-                  <Link href="">Terms & Conditions</Link>
+                  <Link href="/term-conditions">Terms & Conditions</Link>
                 </li>
                 <li>
                   <Link href="/privacy-policy">Privacy & Policy</Link>
