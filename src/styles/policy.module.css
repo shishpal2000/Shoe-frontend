@@ -1,0 +1,63 @@
+.policyMainContainer {
+  padding: 50px 0 60px 0;
+}
+
+.sectionDivider {
+  margin-bottom: 40px;
+}
+
+.sectionDivider h2 {
+  font-size: 30px;
+  line-height: 44px;
+  color: #1a1a1a;
+  padding-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.sectionDivider p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.sectionDivider ul li p {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.sectionDivider ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 0 !important;
+}
+
+.sectionDivider ul li {
+  gap: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.sectionDivider ul li i {
+  height: 4px;
+  flex-grow: 1 0 0;
+  width: 100%;
+  border-radius: 100%;
+  margin-top: 9px;
+  max-width: 5%;
+  background-color: #1a1a1a;
+}
+
+.sectionDivider ul li i {
+  width: 4px;
+  height: 4px;
+  background-color: #1a1a1a;
+}
+.sectionDivider h4 {
+  font-size: 18px;
+  line-height: 26px;
+  color: #1a1a1a;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
