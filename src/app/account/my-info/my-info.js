@@ -104,7 +104,12 @@ const MyInfo = () => {
                             </ul>
 
                             <ul className={styles.addresEditOpt}>
-                              <li>remove</li>|<li>edit</li>
+                              <li>remove</li>|
+                              <li>
+                                <Link href="/account/my-info/add-address">
+                                  edit
+                                </Link>
+                              </li>
                             </ul>
                           </li>
                         </>

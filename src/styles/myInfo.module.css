@@ -128,12 +128,14 @@
   align-items: center;
 }
 
-.addresEditOpt li {
+.addresEditOpt li,
+.addresEditOpt li a {
   padding: 0;
   cursor: pointer;
   width: fit-content;
   font-size: 14px;
   font-weight: 700;
+  color: #232321;
   text-transform: capitalize;
 }
 

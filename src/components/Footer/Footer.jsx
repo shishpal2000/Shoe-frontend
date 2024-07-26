@@ -14,17 +14,17 @@ const Footer = () => {
               <ul className={style.social_icon}>
                 <li>
                   <Link href="">
-                    <img src="fbIcon.svg" alt="" />
+                    <img src="/fbIcon.svg" alt="" />
                   </Link>
                 </li>
                 <li>
                   <Link href="">
-                    <img src="instaIcon.svg" alt="" />
+                    <img src="/instaIcon.svg" alt="" />
                   </Link>
                 </li>
                 <li>
                   <Link href="">
-                    <img src="linkedIcon.svg" alt="" />
+                    <img src="/linkedIcon.svg" alt="" />
                   </Link>
                 </li>
                 <li>
