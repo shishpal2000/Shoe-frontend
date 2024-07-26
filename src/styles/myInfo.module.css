@@ -173,21 +173,24 @@
   background-color: #f7f7fb;
 }
 
-.editMyInfoForm form ul li input::placeholder {
+.editMyInfoForm form ul li input::placeholder,
+.textarea li textarea::placeholder {
   text-transform: capitalize;
+  font-family: "Nunito Sans", sans-serif !important;
 }
 
-.editMyInfoForm form ul .nameGrid {
+.editMyInfoForm form .nameGrid {
   width: 100%;
   display: flex;
   flex-direction: row;
   padding-bottom: 0;
+  flex-wrap: wrap;
   align-items: flex-start;
 }
 
-.editMyInfoForm form ul .nameGrid li {
+.editMyInfoForm form .nameGrid li {
   width: 100%;
-  max-width: calc(100% / 2);
+  max-width: calc(100% / 2 - 15px);
 }
 
 .editMyInfoForm form input[type="submit"] {
@@ -206,4 +209,42 @@
 
 .editMyInfoForm form input[type="submit"]:hover {
   background-color: #3c4242;
+}
+
+.textarea {
+  padding-top: 30px;
+}
+
+.textarea li {
+  width: 100%;
+}
+
+.textarea li textarea {
+  outline: none;
+  border: none;
+  padding: 16px 20px;
+  width: 100%;
+  font-size: 13px;
+  color: #807d7e;
+  border-radius: 8px;
+  background-color: #f7f7fb;
+}
+
+.defaultOpt {
+  gap: 5px !important;
+}
+
+.defaultOpt li {
+  padding: 0;
+  align-items: center !important;
+  flex-direction: row !important;
+}
+
+.defaultOpt li input[type="checkbox"] {
+  max-width: fit-content;
+}
+
+.defaultOpt li {
+  font-size: 14px;
+  line-height: 20px;
 }

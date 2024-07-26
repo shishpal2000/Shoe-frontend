@@ -1,7 +1,6 @@
 import MyAccountSideBar from "@/components/MyAccountSideBar/MyAccountSideBar";
 import style from "../../../../styles/myAccount.module.css";
 import { MyAccoutPageLinkBar } from "@/components/PageLinkBar/PageLinkBar";
-import Link from "next/link";
 import styles from "../../../../styles/myInfo.module.css";
 
 const EditInfo = () => {
@@ -49,7 +48,7 @@ const EditInfo = () => {
                     </li>
                   </ul>
 
-                  <input type="submit" value="Save Details" required />
+                  <input type="submit" value="Save Details" />
                 </form>
               </div>
             </div>

@@ -86,7 +86,7 @@ const MyInfo = () => {
                       <b>Address</b>
                     </p>
                     <p>
-                      <Link href="">Add New</Link>
+                      <Link href="/account/my-info/add-address">Add New</Link>
                     </p>
                   </div>
 
