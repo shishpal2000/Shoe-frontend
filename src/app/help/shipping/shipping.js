@@ -3,47 +3,84 @@
 import { useState } from "react";
 import style from "../../../styles/help.module.css";
 
-const faqData = [
+const faqStageFirst = [
   {
-    question: "1). FAST BUILDING?",
+    question: "Can I modify my order after placing it?",
     answer:
       "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
   },
   {
-    question: "2). CAREFULLY PLANNED",
+    question: "How do I initiate a return?",
     answer:
       "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
   },
   {
-    question: "3). PERFECT DESIGN",
+    question: "How can I unsubscribe from the newsletter?",
     answer:
       "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
   },
   {
-    question: "4). FAST BUILDING?",
+    question: "Do you offer exchanges for products?",
+    answer:
+      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
+  },
+];
+
+const faqStageSecond = [
+  {
+    question: "How can I place an order on Klothink?",
+    answer:
+      "Ordering is easy! Simply browse our website, add items to your cart, and proceed to checkout. Follow the prompts to enter your details and complete your purchase.",
+  },
+  {
+    question: "What payment methods do you accept?",
     answer:
       "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
   },
   {
-    question: "5). CAREFULLY PLANNED",
+    question: "How can I track my order?",
     answer:
       "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
   },
   {
-    question: "6). PERFECT DESIGN",
+    question: "What is your shipping policy?",
     answer:
-      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
+      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
+  },
+];
+
+const faqStageThird = [
+  {
+    question: "Are there any additional fees for returns?",
+    answer:
+      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
+  },
+  {
+    question: "How do I create an account on Klothink?",
+    answer:
+      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
+  },
+  {
+    question: "Can I change my account information?",
+    answer:
+      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
+  },
+  {
+    question: "Are my personal details secure on Klothink?",
+    answer:
+      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.",
   },
 ];
 
 const FaqItem = ({ question, answer, isActive, onClick }) => {
   return (
-    <li className={style.faqItem}>
-      <div
-        className={`${style.question} ${isActive ? style.active : ""}`}
-        onClick={onClick}
-      >
-        {question}
+    <li
+      id={style.faqItem}
+      className={`${style.question} ${isActive ? style.active : ""}`}
+      onClick={onClick}
+    >
+      <div className={style.bar}>
+        <h3>{question}</h3>
         <p></p>
       </div>
       {isActive && <div className={style.answer}>{answer}</div>}
@@ -53,8 +90,19 @@ const FaqItem = ({ question, answer, isActive, onClick }) => {
 
 const Shipping = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex2, setActiveIndex2] = useState(null);
+  const [activeIndex3, setActiveIndex3] = useState(null);
+
   const handleClick = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
+  };
+
+  const handleClick2 = (index2) => {
+    setActiveIndex2(index2 === activeIndex2 ? null : index2);
+  };
+
+  const handleClick3 = (index3) => {
+    setActiveIndex3(index3 === activeIndex3 ? null : index3);
   };
   return (
     <>
@@ -108,17 +156,43 @@ const Shipping = () => {
               </p>
             </div>
 
-            <ul className={style.faqItems}>
-              {faqData.map((item, index) => (
-                <FaqItem
-                  key={index}
-                  question={item.question}
-                  answer={item.answer}
-                  isActive={index === activeIndex}
-                  onClick={() => handleClick(index)}
-                />
-              ))}
-            </ul>
+            <div className={style.faqListContainer}>
+              <ul className={style.faqItems}>
+                {faqStageFirst.map((item, index) => (
+                  <FaqItem
+                    key={index}
+                    question={item.question}
+                    answer={item.answer}
+                    isActive={index === activeIndex}
+                    onClick={() => handleClick(index)}
+                  />
+                ))}
+              </ul>
+
+              <ul className={style.faqItems}>
+                {faqStageSecond.map((item, index2) => (
+                  <FaqItem
+                    key={index2}
+                    question={item.question}
+                    answer={item.answer}
+                    isActive={index2 === activeIndex2}
+                    onClick={() => handleClick2(index2)}
+                  />
+                ))}
+              </ul>
+
+              <ul className={style.faqItems}>
+                {faqStageThird.map((item, index3) => (
+                  <FaqItem
+                    key={index3}
+                    question={item.question}
+                    answer={item.answer}
+                    isActive={index3 === activeIndex3}
+                    onClick={() => handleClick3(index3)}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
