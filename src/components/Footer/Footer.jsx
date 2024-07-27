@@ -58,13 +58,18 @@ const Footer = () => {
                   <Link href="/credential/sign-up">Register</Link>
                 </li>
                 <li>
-                  <Link href="">Order status</Link>
+                  <Link href="/account/my-orders/my-order-detail">
+                    Order status
+                  </Link>
                 </li>
               </ul>
             </div>
             <div className={style.footerListing}>
               <p className={style.tag}>Help</p>
               <ul className={style.footerLinks}>
+                <li>
+                  <Link href="/about-us">About Us</Link>
+                </li>
                 <li>
                   <Link href="/help/shipping">Shipping</Link>
                 </li>
@@ -80,7 +85,7 @@ const Footer = () => {
               <p className={style.tag}>Shop</p>
               <ul className={style.footerLinks}>
                 <li>
-                  <Link href="">All Products</Link>
+                  <Link href="/product-listing">All Products</Link>
                 </li>
                 <li>
                   <Link href="">Bedroom</Link>

@@ -1,3 +1,4 @@
+import BestSellingProducts from "@/components/homePage/BestSellingProducts/BestSellingProducts";
 import InnerBanner from "@/components/InnerPageBanner/InnerBanner";
 
 const NewArrivals = () => {
@@ -9,6 +10,8 @@ const NewArrivals = () => {
         bgImg="/newArrivalBg.png"
         descrip={`Shoes made with your comfort in mind so you can put all of your \n focus into your next session.`}
       />
+
+      <BestSellingProducts />
     </>
   );
 };

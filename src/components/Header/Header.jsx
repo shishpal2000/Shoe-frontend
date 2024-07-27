@@ -57,9 +57,6 @@ const Header = () => {
               <li>
                 <Link href="/new-arrivals">new Arrivals</Link>
               </li>
-              <li>
-                <Link href="">About Us</Link>
-              </li>
             </ul>
 
             <ul className={style.menuOpt}>
