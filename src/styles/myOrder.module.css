@@ -347,3 +347,23 @@
     padding-bottom: 20px;
   }
 }
+
+@media only screen and (max-width: 493px) {
+  .orderTrackBar ul li h3 {
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+  }
+
+  .orderTrackBar ul li p {
+    font-size: 9px;
+    line-height: 11px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .orderTrackBar ul li h3 {
+    min-height: 26px;
+  }
+}
