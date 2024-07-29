@@ -133,20 +133,29 @@
 
 #faqItem h3 {
   font-size: 15px;
-  line-height: 24px;
+  line-height: 17px;
   font-weight: 600;
 }
-
-/* .faqItem .question .active p:after {
-  content: "-";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  right: 16px;
-  transform: translateY(-50%);
-} */
 
 #faqItem .answer {
   font-size: 14px;
   font-weight: 400;
+}
+
+@media only screen and (max-width: 1151px) {
+  #faqItem {
+    padding: 15px;
+  }
+  #faqItem h3 {
+    font-size: 13px;
+  }
+
+  .faqListContainer {
+    gap: 15px;
+  }
+
+  .faqListContainer ul {
+    gap: 15px;
+    max-width: calc(100% / 3 - 10px);
+  }
 }
