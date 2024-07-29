@@ -55,6 +55,9 @@
 }
 
 @media only screen and (max-width: 680px) {
+  .myAccountMainContainer .myAccountInnerItems {
+    gap: 0;
+  }
   .phoneFilterButton {
     visibility: visible;
   }

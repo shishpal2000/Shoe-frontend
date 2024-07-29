@@ -333,3 +333,13 @@
     margin-bottom: 0;
   }
 }
+
+@media only screen and (max-width: 459px) {
+  .addressCardList {
+    gap: 15px;
+  }
+
+  .addressCardList li {
+    max-width: 100%;
+  }
+}
