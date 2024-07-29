@@ -200,3 +200,23 @@
     width: 15px;
   }
 }
+
+@media only screen and (max-width: 385px) {
+  .wishlistList li figure {
+    width: 70px;
+    height: 70px;
+  }
+
+  .wishlistList li .proInfo h4 {
+    font-size: 11px;
+  }
+
+  .wishlistList li .proInfo p {
+    font-size: 10px;
+    line-height: 13px;
+  }
+
+  .wishlistList li .proInfo .price {
+    font-size: 12px;
+  }
+}

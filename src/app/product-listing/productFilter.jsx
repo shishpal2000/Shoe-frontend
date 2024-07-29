@@ -4,7 +4,7 @@ import "./filter.css";
 import styles from "../../styles/productFilter.module.css";
 
 const ProductFilter = () => {
-  const [openCategory, setOpenCategory] = useState(null);
+  const [openCategory, setOpenCategory] = useState();
 
   const toggleCategory = (index) => {
     setOpenCategory(openCategory === index ? null : index);

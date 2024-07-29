@@ -365,7 +365,7 @@
 
 @media only screen and (max-width: 513px) {
   .myOrderDetailBar .orderDetail {
-    gap: 10px;
+    gap: 1px;
     flex-direction: column;
     align-items: flex-start;
   }
@@ -392,10 +392,64 @@
     margin-bottom: 0;
     margin-top: 10px;
   }
+
+  .tabOptContainer .tab button {
+    padding: 10px 30px;
+  }
+}
+
+@media only screen and (max-width: 505px) {
+  .tabcontent .orderList li .orderDetail {
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabcontent .orderList li .orderDetail .left,
+  .tabcontent .orderList li .orderDetail .right {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tabcontent .orderList li .orderDetail .right {
+    text-align: left !important;
+  }
+
+  .tabcontent .orderList li .orderDetail .left p,
+  .tabcontent .orderList li .orderDetail .right p {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 @media only screen and (max-width: 380px) {
+  .orderDetail .left h4 {
+    font-size: 13px;
+  }
   .orderTrackBar ul li h3 {
     min-height: 26px;
+  }
+
+  .tabOptContainer .tab button {
+    padding: 10px 20px;
+  }
+
+  .productDetail .left h4 {
+    font-size: 12px;
+    line-height: 13px;
+    margin-bottom: 2px;
+  }
+
+  .productDetail p {
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+
+  .productDetail .right a {
+    font-size: 8px;
+    padding: 6px 10px;
+    border-radius: 5px;
   }
 }
