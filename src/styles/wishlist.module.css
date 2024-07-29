@@ -80,6 +80,10 @@
   background-color: #000000;
 }
 
+.wishlistList li .right .cartBtn i {
+  display: none;
+}
+
 .wishlistList li .right {
   gap: 10px;
   display: flex;
@@ -161,5 +165,38 @@
 
   .wishlistList li .right .delBtn {
     padding: 9px;
+  }
+}
+
+@media only screen and (max-width: 460px) {
+  .wishlistList li .right {
+    flex-direction: column;
+  }
+
+  .wishlistList li .right .delBtn {
+    padding: 6px;
+  }
+
+  .wishlistList li .right .cartBtn {
+    padding: 6px;
+  }
+  .wishlistList li .right .cartBtn p {
+    display: none;
+  }
+
+  .wishlistList li .right .cartBtn i {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wishlistList li .right .cartBtn i img {
+    width: 15px;
+    filter: brightness(0.5) invert(2);
+  }
+
+  .wishlistList li .right .delBtn img {
+    width: 15px;
   }
 }

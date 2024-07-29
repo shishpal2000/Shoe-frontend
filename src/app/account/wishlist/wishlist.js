@@ -87,7 +87,10 @@ const Wishlist = () => {
                             </div>
                             <div className={styles.right}>
                               <Link className={styles.cartBtn} href="/cart">
-                                add to cart
+                                <p>add to cart</p>
+                                <i>
+                                  <img src="/cart.svg" alt="" />
+                                </i>
                               </Link>
 
                               <i className={styles.delBtn} href="">
