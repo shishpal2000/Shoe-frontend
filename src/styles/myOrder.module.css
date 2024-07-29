@@ -269,3 +269,81 @@
       0 0 0 20px rgba(236, 139, 0, 0);
   }
 }
+
+@media only screen and (max-width: 879px) {
+  .orderTrackBar {
+    padding: 20px 0;
+  }
+
+  .orderTrackBar ul li h3 {
+    font-size: 13px;
+    line-height: 24px;
+  }
+
+  .orderTrackBar ul li p {
+    font-size: 11px;
+    line-height: 18px;
+  }
+
+  .orderTrackBar ul li i {
+    width: 16px;
+    height: 16px;
+  }
+
+  .orderTrackBar:after {
+    top: 52%;
+  }
+}
+
+@media only screen and (max-width: 830px) {
+  .tabOptContainer h2 {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+    padding-bottom: 20px;
+  }
+
+  .tabOptContainer .tab button {
+    padding: 10px 40px;
+    font-size: 13px;
+  }
+
+  .orderDetail .left h4 {
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 5px;
+  }
+
+  .orderDetail p {
+    font-size: 12px;
+  }
+
+  .productDetail .left figure {
+    width: 80px;
+    height: 85px;
+  }
+
+  .productDetail p {
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+
+  .productDetail .right a {
+    font-size: 10px;
+    padding: 10px 12px;
+  }
+
+  .trackTag {
+    padding: 6px 10px;
+    font-size: 10px;
+    border-radius: 10px;
+    line-height: 20px;
+  }
+
+  .myOrderDetailBar h4 {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+    padding-bottom: 20px;
+  }
+}

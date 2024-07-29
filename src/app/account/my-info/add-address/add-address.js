@@ -1,15 +1,28 @@
+"use client";
 import MyAccountSideBar from "@/components/MyAccountSideBar/MyAccountSideBar";
 import { MyAccoutPageLinkBar } from "@/components/PageLinkBar/PageLinkBar";
 import style from "../../../../styles/myAccount.module.css";
 import styles from "../../../../styles/myInfo.module.css";
+import { useState } from "react";
 const AddAddress = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleClass = () => {
+    setIsActive(!isActive);
+  };
+
   return (
     <>
       <div className={style.myAccountMainContainer}>
         <MyAccoutPageLinkBar currentPage="Add Address" />
         <div className="container">
           <div className={style.myAccountInnerItems}>
-            <div className={style.left}>
+            <div className={style.phoneFilterButton} onClick={toggleClass}>
+              <figure>
+                <img src="/user.svg" alt="" />
+              </figure>
+            </div>
+            <div className={isActive ? style.activeFliter : style.left}>
               <MyAccountSideBar />
             </div>
             <div className={style.right}>

@@ -92,3 +92,60 @@
 .navActive figure img {
   filter: brightness(0.5);
 }
+
+@media only screen and (max-width: 830px) {
+  .sideBarItems .tittle {
+    padding-bottom: 10px;
+  }
+
+  .tittle h3 {
+    font-size: 16px;
+    font-weight: 700;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .tittle p {
+    padding-top: 9px;
+    font-size: 13px;
+    line-height: 21px;
+  }
+
+  .sideBarNav {
+    gap: 10px;
+    /* padding-top: 6px; */
+  }
+
+  .sideBarNav li a figure {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sideBarNav li a {
+    gap: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    line-height: 20px;
+    color: #807d7e;
+    padding: 10px 0 10px 30px;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .sideBarMainContainer {
+    position: absolute;
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    z-index: 9999;
+    background-color: #00000093;
+    backdrop-filter: blur(5px);
+  }
+
+  .sideBarNav li a figure img,
+  .sideBarNav li a {
+    transition: unset;
+  }
+}

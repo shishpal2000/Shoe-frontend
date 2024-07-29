@@ -1,10 +1,18 @@
+"use client";
 import MyAccountSideBar from "@/components/MyAccountSideBar/MyAccountSideBar";
 import style from "../../../styles/myAccount.module.css";
 import { MyAccoutPageLinkBar } from "@/components/PageLinkBar/PageLinkBar";
 import styles from "../../../styles/wishlist.module.css";
 import Link from "next/link";
+import { useState } from "react";
 
 const Wishlist = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleClass = () => {
+    setIsActive(!isActive);
+  };
+
   const WishListData = [
     {
       id: 1,
@@ -48,7 +56,12 @@ const Wishlist = () => {
         <MyAccoutPageLinkBar currentPage="Wishlist" />
         <div className="container">
           <div className={style.myAccountInnerItems}>
-            <div className={style.left}>
+            <div className={style.phoneFilterButton} onClick={toggleClass}>
+              <figure>
+                <img src="/user.svg" alt="" />
+              </figure>
+            </div>
+            <div className={isActive ? style.activeFliter : style.left}>
               <MyAccountSideBar />
             </div>
             <div className={style.right}>

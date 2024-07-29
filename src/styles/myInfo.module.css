@@ -250,3 +250,86 @@
   font-size: 14px;
   line-height: 20px;
 }
+
+@media only screen and (max-width: 880px) {
+  .addressCardList li {
+    padding: 20px;
+  }
+
+  .addresEditOpt li,
+  .addresEditOpt li a {
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 830px) {
+  .myInfoContainer .topBar {
+    padding-bottom: 30px;
+  }
+  .myInfoContainer h3 {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 600;
+    padding-bottom: 20px;
+  }
+
+  .addressCardList li h5 {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .addressCardList li h4 {
+    font-size: 16px;
+    line-height: 22px;
+    padding-bottom: 4px;
+  }
+
+  .infoBlanks li h5 {
+    font-size: 13px;
+    line-height: 22px;
+    padding-bottom: 2px;
+  }
+
+  .addressCardList li p {
+    font-size: 12px;
+    line-height: 18px;
+    color: #232321;
+    padding-bottom: 10px;
+  }
+
+  .addressCardList .addresOpt {
+    gap: 5px;
+    padding-bottom: 10px;
+  }
+
+  .addressCardList .addresOpt li {
+    padding: 5px;
+    font-size: 10px;
+    line-height: 20px;
+  }
+
+  .addresEditOpt li,
+  .addresEditOpt li a {
+    font-size: 12px;
+  }
+
+  .infoBlanks li {
+    padding: 10px 0;
+  }
+
+  .infoBlanks li:first-child {
+    padding-top: 0;
+  }
+
+  .infoBlanks li h5 {
+    font-size: 12px;
+    line-height: 15px;
+    padding-bottom: 0px;
+  }
+
+  .infoBlanks li p {
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 0;
+  }
+}

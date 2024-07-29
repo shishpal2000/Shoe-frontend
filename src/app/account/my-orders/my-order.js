@@ -13,6 +13,12 @@ const MyOrders = () => {
     setActiveTab(pageName);
   };
 
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleClass = () => {
+    setIsActive(!isActive);
+  };
+
   const MyOrderList = [
     {
       id: 1,
@@ -151,7 +157,12 @@ const MyOrders = () => {
         <MyAccoutPageLinkBar currentPage="My Orders" />
         <div className="container">
           <div className={style.myAccountInnerItems}>
-            <div className={style.left}>
+            <div className={style.phoneFilterButton} onClick={toggleClass}>
+              <figure>
+                <img src="/user.svg" alt="" />
+              </figure>
+            </div>
+            <div className={isActive ? style.activeFliter : style.left}>
               <MyAccountSideBar />
             </div>
             <div className={style.right}>
