@@ -87,12 +87,6 @@ const Footer = () => {
                 <li>
                   <Link href="/product-listing">All Products</Link>
                 </li>
-                <li>
-                  <Link href="">Bedroom</Link>
-                </li>
-                <li>
-                  <Link href="">Dinning Room</Link>
-                </li>
               </ul>
             </div>
             <div className={style.footerListing}>

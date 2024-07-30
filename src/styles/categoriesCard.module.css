@@ -32,6 +32,11 @@
 .proImg figure img {
   width: 100%;
   height: 100%;
+  transition: 0.4s ease-in-out;
+}
+
+.categoriesCard:hover .proImg figure img {
+  transform: scale(1.02);
 }
 
 .tag {
