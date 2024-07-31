@@ -44,3 +44,33 @@
 .aboutItems .right p:last-child {
   padding-left: 0;
 }
+
+.abouSectionContainer .aboutItems {
+}
+
+@media only screen and (max-width: 992px) {
+  .abouSectionContainer {
+    padding-bottom: 50px;
+  }
+
+  .aboutItems .left figure {
+    height: 370px;
+  }
+  .abouSectionContainer .aboutItems {
+    flex-direction: column;
+  }
+
+  .abouSectionContainer .aboutItems .left,
+  .abouSectionContainer .aboutItems .right {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 539px) {
+  .aboutItems .right h2 {
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 37px;
+    padding-bottom: 15px;
+  }
+}

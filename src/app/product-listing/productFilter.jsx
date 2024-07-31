@@ -7,7 +7,7 @@ const ProductFilter = () => {
   const [openCategory, setOpenCategory] = useState();
 
   const toggleCategory = (index) => {
-    setOpenCategory(openCategory === index ? null : index);
+    setOpenCategory(openCategory === index ? !openCategory : index);
   };
 
   const categories = [

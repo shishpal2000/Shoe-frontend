@@ -5,6 +5,7 @@ import styles from "../../../styles/bestSellingProduct.module.css";
 import SectionTittle from "../SectionTittle/SectionTittle";
 import Collection from "../ShoeCollection/Collection";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
+import Link from "next/link";
 
 const BestSellingProducts = () => {
   const [activeTab, setActiveTab] = useState("Men");
@@ -66,7 +67,9 @@ const BestSellingProducts = () => {
                               marginTop: "56.29px",
                             }}
                           >
-                            <SecondaryBtn btnText="explore more" />
+                            <Link href="/product-listing">
+                              <SecondaryBtn btnText="explore more" />
+                            </Link>
                           </div>
                         </div>
                       )}
