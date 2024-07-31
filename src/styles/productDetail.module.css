@@ -125,6 +125,7 @@
   display: flex;
   align-items: center;
   gap: 40px;
+  position: relative;
   cursor: pointer;
   border: 1px solid #e9eaf0;
   background-color: #f7f7fb;
@@ -484,6 +485,29 @@
   line-height: 55.04px;
 }
 
+.activeRating {
+  display: block;
+  position: absolute;
+  top: 49px;
+  left: 0;
+  padding: 12px !important;
+  background-color: #ffffff;
+  width: 100%;
+  border: 1px solid #e9eaf0;
+}
+
+.activeRating {
+  margin-bottom: 12px;
+}
+
+.ratingDrop {
+  display: none;
+}
+
+.activeRating li {
+  padding: 5px 0 !important;
+}
+
 @media only screen and (max-width: 1199px) {
   .opt ul li {
     gap: 10px;
@@ -658,4 +682,140 @@
   .productDescrip ul li:nth-child(6) {
     border-left: 0.5px solid #bebcbd;
   }
+}
+
+/* size chart popup css  */
+.sizeChartContainer {
+  position: absolute;
+  visibility: hidden;
+}
+
+.sizeChartInner {
+  height: 100vh;
+  width: 50%;
+  padding: 30px;
+  border-radius: 12px 0 0 12px;
+  background-color: #000;
+}
+
+.activeFliter {
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  backdrop-filter: blur(4px);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 99999999;
+  visibility: visible;
+
+  background-color: #00000041;
+}
+
+.crossBtn {
+  position: absolute;
+  top: 5%;
+  font-size: 14px;
+  right: 2%;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.sizeChartInner .ProImg {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  background-color: #f7f7fb;
+}
+
+.sizeProduct {
+  color: #fff;
+  display: flex;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ffffff60;
+  align-items: flex-start;
+}
+
+.sizeChartInner .ProImg figure {
+  width: 130px;
+  height: 130px;
+  overflow: hidden;
+}
+
+.sizeChartInner .ProImg img {
+  width: 100%;
+  height: 100%;
+}
+
+.sizeProduct .proDesc h3 {
+  font-size: 18px;
+  line-height: 28px;
+  /* margin-bottom: 5px; */
+}
+
+.sizeProduct .proDesc p {
+  font-size: 14px;
+  line-height: 23px;
+  /* margin-bottom: 4px; */
+}
+
+/* .sizeProduct .price h5 {
+  font-size: 14px;
+} */
+
+.sizeProduct .price h4 {
+  padding-top: 8px;
+  font-size: 22px;
+}
+
+.proDesc {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sizeChartList .sizeOpt {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  padding: 20px 0;
+  border-bottom: 1px solid #ffffff60;
+}
+
+.sizeChartList .sizeOpt .opt {
+  display: flex;
+  margin-bottom: 0;
+  gap: 5px;
+  align-content: center;
+}
+
+.sizeChartList .sizeOpt .opt input {
+  cursor: pointer;
+}
+
+.sizeChartList table {
+  width: 100%;
+}
+
+.sizeChartList table,
+.sizeChartList th,
+.sizeChartList td {
+  color: #fff;
+  text-align: center;
+  border: 1px solid #fff;
+}
+
+.sizeChartList th,
+.sizeChartList td {
+  padding: 5px;
+}
+
+.sizeChartList table input {
+  cursor: pointer;
 }

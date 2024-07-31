@@ -7,6 +7,12 @@ import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import ProductGallery from "./productGallery";
 
 const ProductDetails = () => {
+  const [isRatingActive, setRatingIsActive] = useState(false);
+
+  const ratingToggleClass = () => {
+    setRatingIsActive(!isRatingActive);
+  };
+
   const [selectedColor, setSelectedColor] = useState(1);
   const [setectSize, setSelectSize] = useState(1);
 
@@ -16,6 +22,12 @@ const ProductDetails = () => {
 
   const colorHandleClick = (id) => {
     setSelectSize(id);
+  };
+
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleClass = () => {
+    setIsActive(!isActive);
   };
 
   const colors = [
@@ -232,8 +244,20 @@ const ProductDetails = () => {
               <div className={style.userComments}>
                 <div className={style.commentBar}>
                   <h4>User Comments</h4>
-                  <div className={style.dropdown}>
+                  <div className={style.dropdown} onClick={ratingToggleClass}>
                     5 Star Rating <img src="/down.svg" alt="" />
+                    <ul
+                      className={
+                        isRatingActive ? style.activeRating : style.ratingDrop
+                      }
+                    >
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                    </ul>
                   </div>
                 </div>
                 <ul>
@@ -296,7 +320,7 @@ const ProductDetails = () => {
                 <div className={style.sizeOpt}>
                   <div className={style.bar}>
                     <h4>Size</h4>
-                    <Link href="/">Size chart</Link>
+                    <p onClick={toggleClass}>Size chart</p>
                   </div>
 
                   <ul>
@@ -425,6 +449,156 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={isActive ? style.activeFliter : style.sizeChartContainer}>
+        <div
+          className={style.crossBtn}
+          style={{ color: "#fff" }}
+          onClick={toggleClass}
+        >
+          ❌
+        </div>
+        <div className={style.sizeChartInner}>
+          <div className={style.sizeProduct}>
+            <div className={style.ProImg}>
+              <figure>
+                <img src="/cart.png" alt="" />
+              </figure>
+            </div>
+            <div className={style.proDesc}>
+              <h3>U.S. Polo Assn.</h3>
+              <p>U.S. Polo Assn. Men Textured Sneakers</p>
+
+              <div className={style.price}>
+                {/* <h5>₹ 2699</h5> */}
+                <h4>₹ 2699</h4>
+              </div>
+            </div>
+          </div>
+
+          <div className={style.sizeChartList}>
+            <div className={style.sizeOpt}>
+              <div className={style.opt}>
+                <input type="checkbox" />
+                <p>US</p>
+              </div>
+
+              <div className={style.opt}>
+                <input type="checkbox" />
+                <p>EURO</p>
+              </div>
+            </div>
+
+            <table>
+              <tr key="">
+                <th>Select</th>
+                <th>UK</th>
+                <th>US</th>
+                <th>EURO</th>
+                <th>To Fit Foot Length (cm)</th>
+              </tr>
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

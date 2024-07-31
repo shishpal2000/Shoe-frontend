@@ -49,7 +49,7 @@ const TestimonialSlider = () => {
   ];
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: false,
     speed: 500,
     arrows: true,
@@ -74,6 +74,7 @@ const TestimonialSlider = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 1,
+          dots: true,
         },
       },
       {
@@ -81,6 +82,7 @@ const TestimonialSlider = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: true,
         },
       },
     ],

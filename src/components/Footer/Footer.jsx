@@ -58,9 +58,7 @@ const Footer = () => {
                   <Link href="/credential/sign-up">Register</Link>
                 </li>
                 <li>
-                  <Link href="/account/my-orders/my-order-detail">
-                    Order status
-                  </Link>
+                  <Link href="/account/my-orders">Order status</Link>
                 </li>
               </ul>
             </div>
@@ -85,7 +83,13 @@ const Footer = () => {
               <p className={style.tag}>Shop</p>
               <ul className={style.footerLinks}>
                 <li>
+                  <Link href="/account/wishlist">Wishlist</Link>
+                </li>
+                <li>
                   <Link href="/product-listing">All Products</Link>
+                </li>
+                <li>
+                  <Link href="/new-arrivals">New Arrivals</Link>
                 </li>
               </ul>
             </div>

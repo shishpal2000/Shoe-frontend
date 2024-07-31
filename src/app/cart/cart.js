@@ -1,9 +1,23 @@
+"use client";
+
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import style from "../../styles/cart.module.css";
 import Link from "next/link";
 import Collection from "@/components/homePage/ShoeCollection/Collection";
+import { useState } from "react";
 
 const Cart = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleClass = () => {
+    setIsActive(!isActive);
+  };
+
+  const [isQunActive, setQunIsActive] = useState(false);
+
+  const quntoggleClass = () => {
+    setQunIsActive(!isQunActive);
+  };
   return (
     <>
       <PageLinkBar currentPage="Cart" />
@@ -33,20 +47,53 @@ const Cart = () => {
 
                       <ul className={style.selectOpt}>
                         <li>
-                          <div className={style.sizeDropdown}>
+                          <div
+                            className={style.sizeDropdown}
+                            onClick={toggleClass}
+                          >
                             SIZE 10{" "}
                             <figure>
                               <img src="/down.svg" alt="" />
                             </figure>
                           </div>
+                          <ul
+                            className={
+                              isActive ? style.activeSizeDrop : style.sizeDrop
+                            }
+                          >
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                          </ul>
                         </li>
                         <li>
-                          <div className={style.quantityDropdown}>
+                          <div
+                            className={style.quantityDropdown}
+                            onClick={quntoggleClass}
+                          >
                             Quantity 1{" "}
                             <figure>
                               <img src="/down.svg" alt="" />
                             </figure>
                           </div>
+
+                          <ul
+                            className={
+                              isQunActive
+                                ? style.activeQuanDrop
+                                : style.quanDrop
+                            }
+                          >
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                            <li>9</li>
+                          </ul>
                         </li>
                       </ul>
 

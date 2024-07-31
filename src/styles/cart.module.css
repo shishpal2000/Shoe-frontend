@@ -85,6 +85,10 @@
   align-items: center;
 }
 
+.selectOpt li {
+  position: relative;
+}
+
 .selectOpt li .sizeDropdown,
 .selectOpt li .quantityDropdown {
   display: flex;
@@ -198,6 +202,26 @@
 .relatedProduct h2 {
   font-size: 30px;
   margin-bottom: 30px;
+}
+
+.activeSizeDrop,
+.activeQuanDrop {
+  display: block;
+  position: absolute;
+  top: 34px;
+  padding: 12px !important;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.activeSizeDrop li,
+.activeQuanDrop li {
+  margin-bottom: 12px;
+}
+
+.sizeDrop,
+.quanDrop {
+  display: none;
 }
 
 @media only screen and (max-width: 1060px) {

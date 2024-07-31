@@ -12,6 +12,12 @@ const ProductListing = () => {
   const toggleClass = () => {
     setIsActive(!isActive);
   };
+
+  const [istrendActive, setTrendIsActive] = useState(false);
+
+  const trendtoggleClass = () => {
+    setTrendIsActive(!istrendActive);
+  };
   return (
     <>
       <InnerBanner
@@ -28,8 +34,20 @@ const ProductListing = () => {
               <h2>Life Style Shoes</h2>
               <p>122 items</p>
             </div>
-            <div className={style.trendingDrop}>
+            <div className={style.trendingDrop} onClick={trendtoggleClass}>
               Trending <img src="/down.svg" alt="" />
+              <ul
+                className={
+                  istrendActive ? style.activetrendDrop : style.trendDrop
+                }
+              >
+                <li>9</li>
+                <li>9</li>
+                <li>9</li>
+                <li>9</li>
+                <li>9</li>
+                <li>9</li>
+              </ul>
             </div>
           </div>
           <div className={style.productListingItems}>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import style from "../../../styles/collection.module.css";
 
 const Collection = () => {
@@ -8,7 +9,8 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-1.svg",
+      proImg: "/pro-1.png",
+      proImg2: "/pro-2.png",
     },
     {
       id: 2,
@@ -16,7 +18,8 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-1.svg",
+      proImg: "/pro-1.png",
+      proImg2: "/pro-2.png",
     },
     {
       id: 3,
@@ -24,7 +27,8 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-1.svg",
+      proImg: "/pro-1.png",
+      proImg2: "/pro-2.png",
     },
     {
       id: 4,
@@ -32,7 +36,8 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-1.svg",
+      proImg: "/pro-1.png",
+      proImg2: "/pro-2.png",
     },
     {
       id: 5,
@@ -40,7 +45,8 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-1.svg",
+      proImg: "/pro-1.png",
+      proImg2: "/pro-2.png",
     },
     {
       id: 6,
@@ -48,7 +54,8 @@ const Collection = () => {
       realprice: "₹ 4999.00",
       offerPrice: "₹ 2999.00",
       tag: "new",
-      proImg: "shoe-1.svg",
+      proImg: "/pro-1.png",
+      proImg2: "/pro-2.png",
     },
   ];
   return (
@@ -56,13 +63,18 @@ const Collection = () => {
       <div className={style.collection_container}>
         {MenShoeData.map((data) => {
           return (
-            <div key={data.id} className={style.productCard}>
+            <Link
+              href="/product-details"
+              key={data.id}
+              className={style.productCard}
+            >
               <div className={style.tag}>{data.tag}</div>
               <div className={style.wishlist}>
                 <img src="wishlist.svg" alt="" />
               </div>
               <figure>
                 <img src={data.proImg} alt="" />
+                <img src={data.proImg2} alt="" />
               </figure>
               <div className={style.proDetail}>
                 <p className={style.proName}>{data.proName}</p>
@@ -79,7 +91,7 @@ const Collection = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

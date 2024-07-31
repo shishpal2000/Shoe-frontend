@@ -10,6 +10,8 @@
   cursor: pointer;
   position: relative;
   border-radius: 12px;
+  text-decoration: none;
+  color: #000000;
   max-width: calc(100% / 3 - 36px);
   border: 1.53px solid #dedede;
   font-family: "Nunito Sans", sans-serif;
@@ -21,6 +23,11 @@
   height: 285.51px;
   overflow: hidden;
   margin: 0 auto;
+  position: relative;
+}
+
+.productCard:hover figure img:first-child {
+  display: none;
 }
 
 .productCard figure img {
