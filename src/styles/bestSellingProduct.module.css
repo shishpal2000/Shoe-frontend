@@ -19,15 +19,15 @@
 }
 
 .tab {
-  padding: 18.9px 37.35px 18.9px 37.87px;
+  padding: 10.9px 37.35px 10.9px 37.87px;
   cursor: pointer;
-  border: 1.53px solid #000000;
+  border: 1.53px solid #000;
   border-radius: 4px;
   line-height: 30.38px;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   transition: 0.4s ease-in-out;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .tab:hover {

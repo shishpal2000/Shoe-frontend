@@ -64,6 +64,8 @@ const Collection = () => {
         {MenShoeData.map((data) => {
           return (
             <Link
+              data-aos="fade-up"
+              data-aos-anchor-placement="top-bottom"
               href="/product-details"
               key={data.id}
               className={style.productCard}

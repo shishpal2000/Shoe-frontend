@@ -60,7 +60,12 @@ export const OfferCard = () => {
     <>
       {OfferCardData.map(({ id, icon, offerName, descrip }) => {
         return (
-          <div key={id} className={style.offerCard}>
+          <div
+            data-aos="fade-up"
+            data-aos-anchor-placement="top-bottom"
+            key={id}
+            className={style.offerCard}
+          >
             <div className="icon">
               <figure>
                 <Image src={icon} width={30} height={30} alt="" />

@@ -3,8 +3,16 @@
 import PRODUCTS_DATA from "./PRODUCTS_DATA";
 import style from "../../styles/productList.module.css";
 import Link from "next/link";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 const ProductList = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+    });
+  }, []);
   return (
     <>
       <div className="productListMain">
@@ -12,7 +20,13 @@ const ProductList = () => {
           {PRODUCTS_DATA.map(
             ({ id, proName, realprice, offerPrice, tag, link }) => {
               return (
-                <Link href={link} className={style.card} key={id}>
+                <Link
+                  data-aos="fade-up"
+                  data-aos-anchor-placement="top-bottom"
+                  href={link}
+                  className={style.card}
+                  key={id}
+                >
                   <div className={style.tag}>{tag}</div>
                   <div className={style.proImg}>
                     <figure>
