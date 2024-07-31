@@ -9,7 +9,11 @@ const ShoeCollection = () => {
           <figure>
             <img src="shoe_collection_bg.png" alt="" />
           </figure>
-          <div className={style.content}>
+          <div
+            className={style.content}
+            data-aos="fade-up"
+            data-aos-anchor-placement="top-bottom"
+          >
             <h3>Men's Shoe Collection</h3>
             <p>
               It is a long established fact that a reader <br />

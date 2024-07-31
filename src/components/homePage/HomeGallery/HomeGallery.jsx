@@ -8,7 +8,11 @@ const HomeGallery = () => {
       <div className={style.homeGallery_main}>
         <div className="container">
           <div className={style.gallery_items}>
-            <div className={style.left}>
+            <div
+              className={style.left}
+              data-aos="fade-up"
+              data-aos-anchor-placement="top-bottom"
+            >
               <figure
                 style={{ position: "relative", width: "100%", height: "792px" }}
               >
@@ -30,7 +34,11 @@ const HomeGallery = () => {
                 </h3>
               </div>
             </div>
-            <div className={style.right}>
+            <div
+              className={style.right}
+              data-aos="fade-up"
+              data-aos-anchor-placement="top-bottom"
+            >
               <figure
                 style={{ position: "relative", width: "100%", height: "505px" }}
               >

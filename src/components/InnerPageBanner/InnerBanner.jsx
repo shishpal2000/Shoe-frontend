@@ -3,7 +3,11 @@ import style from "../../styles/innerBanner.module.css";
 const InnerBanner = ({ tag, heading, descrip, bgImg }) => {
   return (
     <>
-      <div className={style.innerBannerMain}>
+      <div
+        className={style.innerBannerMain}
+        data-aos="fade-up"
+        data-aos-anchor-placement="top-bottom"
+      >
         <div className="container">
           <div className={style.InnerBannerItems}>
             <figure>
