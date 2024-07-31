@@ -159,3 +159,26 @@
     max-width: calc(100% / 3 - 10px);
   }
 }
+
+@media only screen and (max-width: 830px) {
+  .helpPointsContainer {
+    gap: 10px;
+    flex-wrap: wrap;
+    border: 0;
+    padding: 0;
+  }
+  .helpPointsContainer li {
+    max-width: calc(100%);
+    padding: 40px;
+    border: 1px solid #c8c8c8 !important;
+  }
+}
+
+@media only screen and (max-width: 931px) {
+  .faqListContainer {
+    flex-direction: column;
+  }
+  .faqListContainer ul {
+    max-width: 100%;
+  }
+}
