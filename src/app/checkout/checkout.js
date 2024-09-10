@@ -1,8 +1,244 @@
+"use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import style from "../../styles/checkout.module.css";
+import styles from "../../styles/myInfo.module.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Checkout = () => {
+  const [user, setUser] = useState(null);
+  const [addresses, setAddresses] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [selectedShippingAddress, setSelectedShippingAddress] = useState("");
+  const [selectedBillingAddress, setSelectedBillingAddress] = useState("");
+  const [useSameAddressForBilling, setUseSameAddressForBilling] = useState(true);
+  const [newShippingAddress, setNewShippingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    country: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    phone: "",
+  });
+  const [newBillingAddress, setNewBillingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    country: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    phone: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [orderSummary, setOrderSummary] = useState({ itemTotal: 0, shipping: 6.99, tax: 0 });
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        if (!token || !userId) {
+          throw new Error("No authentication token or user ID found");
+        }
+
+        const [userResponse, cartResponse] = await Promise.all([
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/get-user-cart/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
+
+        setUser(userResponse.data);
+        setAddresses(userResponse.data.addresses);
+
+        if (userResponse.data.addresses.length > 0) {
+          setSelectedShippingAddress(userResponse.data.addresses[0]._id);
+          setSelectedBillingAddress(userResponse.data.addresses[0]._id);
+        }
+
+        if (cartResponse.data.success && cartResponse.data.data) {
+          const items = cartResponse.data.data.cart.items;
+          setCartItems(items);
+          calculateOrderSummary(items);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to load data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const calculateOrderSummary = (items) => {
+    const itemTotal = items.reduce((total, item) => total + item.variant.price * item.quantity, 0);
+    setOrderSummary((prevSummary) => ({
+      ...prevSummary,
+      itemTotal,
+    }));
+  };
+
+  const handleNewAddressSubmit = async (addressType, event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No authentication token found");
+      }
+
+      const addressData = addressType === "shipping" ? newShippingAddress : newBillingAddress;
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/address/add-addresses`, addressData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status === 201) {
+        const newAddressData = response.data.data;
+        setAddresses((prevAddresses) => [...prevAddresses, newAddressData]);
+        if (addressType === "shipping") {
+          setSelectedShippingAddress(newAddressData._id);
+        } else {
+          setSelectedBillingAddress(newAddressData._id);
+        }
+        addressType === "shipping"
+          ? setNewShippingAddress({
+            firstName: "",
+            lastName: "",
+            country: "",
+            streetAddress: "",
+            city: "",
+            state: "",
+            postalCode: "",
+            phone: "",
+          })
+          : setNewBillingAddress({
+            firstName: "",
+            lastName: "",
+            country: "",
+            streetAddress: "",
+            city: "",
+            state: "",
+            postalCode: "",
+            phone: "",
+          });
+      } else {
+        setError("Failed to add new address.");
+      }
+    } catch (error) {
+      setError("Failed to add new address.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddressChange = (event, type) => {
+    const selectedValue = event.target.value;
+    if (type === "shipping") {
+      setSelectedShippingAddress(selectedValue === "new" ? "" : selectedValue);
+    } else {
+      setSelectedBillingAddress(selectedValue === "new" ? "" : selectedValue);
+    }
+  };
+
+  const handleNewAddressChange = (event, type) => {
+    const { name, value } = event.target;
+    if (type === "shipping") {
+      setNewShippingAddress((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setNewBillingAddress((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleUseSameAddressForBilling = () => {
+    setUseSameAddressForBilling(!useSameAddressForBilling);
+    if (!useSameAddressForBilling) {
+      setSelectedBillingAddress(selectedShippingAddress);
+    }
+  };
+
+  const handleSubmitOrder = async (event) => {
+    event.preventDefault();
+    if (!selectedShippingAddress && !newShippingAddress.firstName) {
+      setError("Please select or add a shipping address.");
+      return;
+    }
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      if (!token || !userId) {
+        throw new Error("No authentication token or user ID found");
+      }
+
+      const shippingAddress = selectedShippingAddress
+        ? addresses.find((address) => address._id === selectedShippingAddress)
+        : newShippingAddress;
+
+      const billingAddress = useSameAddressForBilling
+        ? shippingAddress
+        : selectedBillingAddress
+          ? addresses.find((address) => address._id === selectedBillingAddress)
+          : newBillingAddress;
+
+      const orderData = {
+        userId,
+        shippingAddress,
+        billingAddress,
+        cartItems: cartItems.map(item => ({
+          product: item.product._id,
+          variant: item.variant._id,
+          quantity: item.quantity,
+        })),
+        totalAmount: orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax,
+      };
+
+      const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create-order`, orderData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (orderResponse.status === 201) {
+        const { orderId } = orderResponse.data;
+        const paymentResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/create-payment-order`, {
+          orderId,
+          userId,
+          amount: orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax,
+        }, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (paymentResponse.status === 201) {
+          const { razorpayOrder } = paymentResponse.data;
+          router.push(`/payment?orderId=${orderId}&paymentId=${razorpayOrder.id}`);
+        } else {
+          setError("Failed to create payment.");
+        }
+      } else {
+        setError("Failed to submit order.");
+      }
+    } catch (error) {
+      setError("Failed to complete order.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <>
       <PageLinkBar currentPage="Checkout" />
@@ -12,133 +248,238 @@ const Checkout = () => {
           <div className={style.checkoutInnerItems}>
             <div className={style.left}>
               <div className={style.checkoutLeft}>
-                <p>
-                  <Link href="/credential/log-in">
-                    Login and Checkout faster
-                  </Link>
-                </p>
-
-                <form>
+                <form onSubmit={handleSubmitOrder}>
                   <h2>Contact Details</h2>
-                  <p>
-                    We will use these details to keep you inform about your
-                    delivery.
-                  </p>
-
+                  <p>We will use these details to keep you informed about your delivery.</p>
                   <ul>
                     <li>
                       <label>Email*</label>
-                      <input type="email" placeholder="Emali" required />
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        value={user?.email || ""}
+                        readOnly
+                      />
                     </li>
-                    <li></li>
                   </ul>
 
-                  <div className={style.billingDetail}>
-                    <h3>Billing Details</h3>
-                    <ul>
-                      <li>
-                        <label>First Name*</label>
-                        <input type="text" placeholder="First Name*" required />
-                      </li>
+                  <div className={styles.infoAddress}>
+                    <div className={style.shippingAddress}>
+                      <h3>Shipping Address</h3>
+                      <p>Select the address that matches your card or payment method.</p>
 
-                      <li>
-                        <label>Last Name*</label>
-                        <input type="text" placeholder="Last Name" required />
-                      </li>
-
-                      <li>
-                        <label>Country / Region*</label>
-                        <input
-                          type="text"
-                          placeholder="Country / Region"
-                          required
-                        />
-                      </li>
-
-                      <li>
-                        <label>Company Name</label>
-                        <input
-                          type="text"
-                          placeholder="Company (optional)"
-                          required
-                        />
-                      </li>
-
-                      <li>
-                        <label>Street Address*</label>
-                        <input
-                          type="text"
-                          placeholder="House number and street name"
-                          required
-                        />
-                      </li>
-
-                      <li>
-                        <label>Apt, suite, unit</label>
-                        <input
-                          type="text"
-                          placeholder="apartment, suite, unit, etc. (optional)"
-                          required
-                        />
-                      </li>
-
-                      <ul className={style.addressForm}>
-                        <li>
-                          <label>City*</label>
-                          <input
-                            type="text"
-                            placeholder="Town / City"
-                            required
-                          />
+                    </div>
+                    <ul className={styles.addressCardList}>
+                      {addresses.map(({ _id, firstName, phone, streetAddress, city, state, postalCode }) => (
+                        <li key={_id}>
+                          <h4>{firstName}</h4>
+                          <h5>{phone || "No Phone Number"}</h5>
+                          <p>{`${streetAddress}, ${city}, ${state}, ${postalCode}`}</p>
                         </li>
-                        <li>
-                          <label>State*</label>
-                          <input type="text" placeholder="State" required />
-                        </li>
-                        <li>
-                          <label>Postal Code*</label>
-                          <input
-                            type="text"
-                            placeholder="Postal Code"
-                            required
-                          />
-                        </li>
-                      </ul>
-
-                      <li>
-                        <label>Phone*</label>
-                        <input type="text" placeholder="Phone" required />
-                      </li>
+                      ))}
                     </ul>
-
-                    <ul className={style.safeInfor}>
-                      <li>
-                        <input type="checkbox" required />
-                        <p>Save my information for a faster checkouts</p>
-                      </li>
-                    </ul>
+                    <br />
                   </div>
 
                   <div className={style.shippingAddress}>
                     <h3>Shipping Address</h3>
-                    <p>
-                      Select the address that matches your card or payment
-                      method.
-                    </p>
-
+                    <p>Select the address that matches your card or payment method.</p>
                     <ul className={style.addressDropdown}>
-                      <li>
-                        <input type="radio" id="" name="Address" value="" />
-                        <label htmlFor="">Same as Billing address</label>
-                      </li>
-                      <li>
-                        <input type="radio" id="" name="Address" value="" />
-                        <label htmlFor="">
-                          Use a different shipping address
-                        </label>
-                      </li>
+                      <ul>
+                        {addresses.map((address) => (
+                          <li key={address._id}>
+                            <input
+                              type="radio"
+                              id={`shipping-${address._id}`}
+                              name="ShippingAddress"
+                              value={address._id}
+                              checked={selectedShippingAddress === address._id}
+                              onChange={(event) => handleAddressChange(event, "shipping")}
+                            />
+                            <label htmlFor={`shipping-${address._id}`}>
+                              {address.firstName} - {address.streetAddress}, {address.city}, {address.state}, {address.postalCode}
+                            </label>
+                          </li>
+                        ))}
+                        <li>
+                          <input
+                            type="radio"
+                            id="new-shipping-address"
+                            name="ShippingAddress"
+                            value="new"
+                            checked={selectedShippingAddress === ""}
+                            onChange={(event) => handleAddressChange(event, "shipping")}
+                          />
+                          <label htmlFor="new-shipping-address">Add New Shipping Address</label>
+                        </li>
+                      </ul>
+                      {selectedShippingAddress === "" && (
+                        <div className={style.newAddressForm}>
+                          <h4>New Shipping Address</h4>
+                          <div className={style.newAddressForm}>
+                            <br />
+                            <form onSubmit={(e) => handleNewAddressSubmit("shipping", e)}>
+                              <h3>New Address</h3>
+                              <ul>
+                                <li><label>First Name*</label><input type="text" name="firstName" placeholder="First Name" value={newShippingAddress.firstName} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                <li><label>Last Name*</label><input type="text" name="lastName" placeholder="Last Name" value={newShippingAddress.lastName} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                <li><label>Country / Region*</label><input type="text" name="country" placeholder="Country / Region" value={newShippingAddress.country} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                <li><label>Street Address*</label><input type="text" name="streetAddress" placeholder="Street Address" value={newShippingAddress.streetAddress} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                <ul className={style.addressForm}>
+                                  <li><label>City*</label><input type="text" name="city" placeholder="City" value={newShippingAddress.city} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                  <li><label>State*</label><input type="text" name="state" placeholder="State" value={newShippingAddress.state} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                  <li><label>Postal Code*</label><input type="text" name="postalCode" placeholder="Postal Code" value={newShippingAddress.postalCode} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                                </ul>
+                                <li><label>Phone*</label><input type="text" name="phone" placeholder="Phone" value={newShippingAddress.phone} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                              </ul>
+                              <input type="submit" value="Add Address" />
+                            </form>
+                          </div>
+                        </div>
+                      )}
                     </ul>
+                    <div className={style.billingAddress}>
+                      <div className={style.billingDetail}>
+                        <h3>Billing Address</h3>
+                        <ul className={style.safeInfor}>
+                          <li>
+                            <input
+                              type="checkbox"
+                              checked={useSameAddressForBilling}
+                              onChange={handleUseSameAddressForBilling}
+                            />
+                            <label>Use the same address for billing</label>
+                          </li>
+                        </ul>
+                      </div>
+                      {!useSameAddressForBilling && (
+                        <>
+                          <ul>
+                            {addresses.map((address) => (
+                              <li key={address._id}>
+                                <input
+                                  type="radio"
+                                  id={`billing-${address._id}`}
+                                  name="BillingAddress"
+                                  value={address._id}
+                                  checked={selectedBillingAddress === address._id}
+                                  onChange={(event) => handleAddressChange(event, "billing")}
+                                />
+                                <label htmlFor={`billing-${address._id}`}>
+                                  {address.firstName} - {address.streetAddress}, {address.city}, {address.state}, {address.postalCode}
+                                </label>
+                              </li>
+                            ))}
+                            <li>
+                              <input
+                                type="radio"
+                                id="new-billing-address"
+                                name="BillingAddress"
+                                value="new"
+                                checked={selectedBillingAddress === ""}
+                                onChange={(event) => handleAddressChange(event, "billing")}
+                              />
+                              <label htmlFor="new-billing-address">Add New Billing Address</label>
+                            </li>
+                          </ul>
+                          {selectedBillingAddress === "" && (
+                            <div className={style.newAddressForm}>
+                              <h4>New Billing Address</h4>
+                              <form onSubmit={(e) => handleNewAddressSubmit("billing", e)}>
+                                <ul>
+                                  <li>
+                                    <label>First Name*</label>
+                                    <input
+                                      type="text"
+                                      name="firstName"
+                                      value={newBillingAddress.firstName}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>Last Name*</label>
+                                    <input
+                                      type="text"
+                                      name="lastName"
+                                      value={newBillingAddress.lastName}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>Country/Region*</label>
+                                    <input
+                                      type="text"
+                                      name="country"
+                                      value={newBillingAddress.country}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>Street Address*</label>
+                                    <input
+                                      type="text"
+                                      name="streetAddress"
+                                      value={newBillingAddress.streetAddress}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>City*</label>
+                                    <input
+                                      type="text"
+                                      name="city"
+                                      value={newBillingAddress.city}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>State*</label>
+                                    <input
+                                      type="text"
+                                      name="state"
+                                      value={newBillingAddress.state}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>Postal Code*</label>
+                                    <input
+                                      type="text"
+                                      name="postalCode"
+                                      value={newBillingAddress.postalCode}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <label>Phone*</label>
+                                    <input
+                                      type="text"
+                                      name="phone"
+                                      value={newBillingAddress.phone}
+                                      onChange={(e) => handleNewAddressChange(e, "billing")}
+                                      required
+                                    />
+                                  </li>
+                                  <li>
+                                    <button type="submit" disabled={loading}>Add Address</button>
+                                  </li>
+                                </ul>
+                              </form>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
+
+
 
                   <div className={style.shippingMethod}>
                     <h3>Shipping Method</h3>
@@ -150,7 +491,7 @@ const Checkout = () => {
                       <li>
                         <p>
                           Delivery Charges
-                          <span>Additional fess may apply</span>
+                          <span>Additional fees may apply</span>
                         </p>
                         <p>$5.00</p>
                       </li>
@@ -167,52 +508,59 @@ const Checkout = () => {
             <div className={style.right}>
               <div className={style.orderSummary}>
                 <h3>Order Summary</h3>
-
-                <ul>
-                  <li>
-                    <div className={style.type}>1 ITEM</div>
-                    <div className={style.val}>$125.00</div>
-                  </li>
-
-                  <li>
-                    <div className={style.type}>Delivery</div>
-                    <div className={style.val}>$6.99</div>
-                  </li>
-
-                  <li>
-                    <div className={style.type}>Sales Tax</div>
-                    <div className={style.val}>-</div>
-                  </li>
-
-                  <li>
-                    <h3>Total</h3>
-                    <h3>$136.99</h3>
-                  </li>
-                </ul>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : error ? (
+                  <p>{error}</p>
+                ) : (
+                  <ul>
+                    <li>
+                      <p>Item Total</p>
+                      <p>${orderSummary.itemTotal.toFixed(2)}</p>
+                    </li>
+                    <li>
+                      <p>Shipping</p>
+                      <p>${orderSummary.shipping.toFixed(2)}</p>
+                    </li>
+                    <li>
+                      <p>Tax</p>
+                      <p>${orderSummary.tax.toFixed(2)}</p>
+                    </li>
+                    <li>
+                      <h3>Total</h3>
+                      <p>${(orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}</p>
+                    </li>
+                  </ul>
+                )}
               </div>
-
               <div className={style.orderDetails}>
                 <h3>Order Details</h3>
-
-                <div className={style.orderDetailItems}>
-                  <div className={style.proImg}>
-                    <figure>
-                      <img src="/cart.png" alt="" />
-                    </figure>
-                  </div>
-                  <div className={style.proDetail}>
-                    <h4>DROPSET TRAINER SHOES</h4>
-                    <p>Men’s Road Running Shoes</p>
-                    <p>Enamel Blue/ University White</p>
-
-                    <ul className={style.quantity}>
-                      <li>Size 10</li>
-                      <li>Quantity 1</li>
-                    </ul>
-
-                    <h3>$130.00</h3>
-                  </div>
-                </div>
+                {cartItems.length > 0 ? (
+                  cartItems.map((item) => (
+                    <div className={style.orderDetailItems} key={item._id}>
+                      <div className={style.proImg}>
+                        <figure>
+                          <img
+                            src={item.product?.images?.[0]?.url || '/images/default-image.jpg'}
+                            alt={item.product?.product_name || 'Product Image'}
+                          />
+                        </figure>
+                      </div>
+                      <div className={style.proDetail}>
+                        <h4>{item.product?.product_name}</h4>
+                        {/* <p>Men’s Road Running Shoes</p>
+                         <p>Enamel Blue/ University White</p> */}
+                        <ul className={style.quantity}>
+                          <li>Size {item.variant.size}</li>
+                          <li>Quantity {item.quantity || 0}</li>
+                        </ul>
+                        <h3>${item.variant.price.toFixed(2)}</h3>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div>Your cart is empty</div>
+                )}
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+"use client";
 import style from "../../../styles/categories.module.css";
 import CategoriesCard from "../CategoriesCard/CategoriesCard";
 import SectionTittle from "../SectionTittle/SectionTittle";

@@ -7,8 +7,8 @@
 }
 
 .refinedLink li {
-  width: 100%;
-  max-width: calc(100% / 3 - 8px);
+  /* width: 100%; */
+  min-width: calc(100% / 3 - 22px);
 }
 
 .refinedLink li input[type="button"] {

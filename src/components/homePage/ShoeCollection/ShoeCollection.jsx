@@ -1,3 +1,4 @@
+"use client";
 import style from "../../../styles/shoeCollection.module.css";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 

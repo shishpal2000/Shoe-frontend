@@ -1,50 +1,75 @@
 "use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import MyAccountSideBar from "@/components/MyAccountSideBar/MyAccountSideBar";
 import style from "../../../styles/myAccount.module.css";
 import { MyAccoutPageLinkBar } from "@/components/PageLinkBar/PageLinkBar";
 import styles from "../../../styles/myInfo.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import CustomAlert from "@/components/CustomAlert/CustomAlert";
 
 const MyInfo = () => {
   const [isActive, setIsActive] = useState(false);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
+  const [alert, setAlert] = useState({ message: "", type: "" });
 
   const toggleClass = () => {
     setIsActive(!isActive);
   };
-  const AddressList = [
-    {
-      id: 1,
-      name: "Ujjwal",
-      conNum: "8980252445",
-      address:
-        "1/4 Pragatinagar Flats, opp. jain derasar , near Jain derasar, Vijaynagar road",
-    },
 
-    {
-      id: 2,
-      name: "Ujjwal",
-      conNum: "8980252445",
-      address:
-        "1/4 Pragatinagar Flats, opp. jain derasar , near Jain derasar, Vijaynagar road",
-    },
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
 
-    {
-      id: 3,
-      name: "Ujjwal",
-      conNum: "8980252445",
-      address:
-        "1/4 Pragatinagar Flats, opp. jain derasar , near Jain derasar, Vijaynagar road",
-    },
+        if (!token || !userId) {
+          throw new Error("No authentication token or user ID found");
+        }
 
-    {
-      id: 4,
-      name: "Ujjwal",
-      conNum: "8980252445",
-      address:
-        "1/4 Pragatinagar Flats, opp. jain derasar , near Jain derasar, Vijaynagar road",
-    },
-  ];
+        const response = await axios.get("http://localhost:8000/api/user/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(response.data);
+      } catch (error) {
+        setError("Failed to load user data.");
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleDelete = async (addressId) => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/address/delete-addresses/${addressId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.status === 200) {
+        setAlert({ message: "Address deleted successfully!", type: "success" });
+        setUser((prevUser) => ({
+          ...prevUser,
+          addresses: prevUser.addresses.filter((address) => address._id !== addressId),
+        }));
+        setTimeout(() => {
+          setAlert({ ...alert, message: "" });
+        }, 3000);
+      }
+    } catch (error) {
+      setAlert({ message: "Failed to delete address. Please try again.", type: "error" });
+      setTimeout(() => {
+        setAlert({ ...alert, message: "" });
+      }, 3000);
+    }
+  };
+
+  const handleAlertClose = () => {
+    setAlert({ ...alert, message: "" });
+  };
 
   return (
     <>
@@ -73,23 +98,26 @@ const MyInfo = () => {
                 </div>
 
                 <ul className={styles.infoBlanks}>
-                  <li>
-                    <h5>Your Name</h5>
-                    <p>Ujjwal</p>
-                  </li>
-                  <li>
-                    <h5>Email Address</h5>
-                    <p>ujjwal@gmail.com</p>
-                  </li>
-
-                  <li>
-                    <h5>Phone Number</h5>
-                    <p>84654755547</p>
-                  </li>
-                  <li>
-                    <h5>Password</h5>
-                    <p className={styles.password}>........</p>
-                  </li>
+                  {user && (
+                    <>
+                      <li>
+                        <h5>Your Name</h5>
+                        <p>{user.firstName} {user.lastName}</p>
+                      </li>
+                      <li>
+                        <h5>Email Address</h5>
+                        <p>{user.email}</p>
+                      </li>
+                      <li>
+                        <h5>Phone Number</h5>
+                        <p>{user.phone}</p>
+                      </li>
+                      <li>
+                        <h5>Password</h5>
+                        <p className={styles.password}>........</p>
+                      </li>
+                    </>
+                  )}
                 </ul>
 
                 <div className={styles.infoAddress}>
@@ -101,32 +129,29 @@ const MyInfo = () => {
                       <Link href="/account/my-info/add-address">Add New</Link>
                     </p>
                   </div>
-
                   <ul className={styles.addressCardList}>
-                    {AddressList.map(({ id, name, conNum, address }) => {
-                      return (
-                        <>
-                          <li key={id}>
-                            <h4>{name}</h4>
-                            <h5>{conNum}</h5>
-                            <p>{address}</p>
-                            <ul className={styles.addresOpt}>
-                              <li>Home</li>
-                              <li>Default billing address</li>
-                            </ul>
-
-                            <ul className={styles.addresEditOpt}>
-                              <li>remove</li>|
-                              <li>
-                                <Link href="/account/my-info/add-address">
-                                  edit
-                                </Link>
-                              </li>
-                            </ul>
+                    {user?.addresses?.map(({ _id, firstName, phone, streetAddress, city, state, postalCode, type, isDefaultBilling, isDefaultShipping }) => (
+                      <li key={_id}>
+                        <h4>{firstName}</h4>
+                        <h5>{phone}</h5>
+                        <p>{`${streetAddress}, ${city}, ${state}, ${postalCode}`}</p>
+                        <ul className={styles.addresOpt}>
+                          <li>{type}</li>
+                          {isDefaultBilling}
+                          {isDefaultShipping}
+                        </ul>
+                        <ul className={styles.addresEditOpt}>
+                          <li>
+                            <button onClick={() => handleDelete(_id)}>remove</button>
                           </li>
-                        </>
-                      );
-                    })}
+                          <li>|
+                          </li>
+                          <li>
+                            <Link href={`/account/my-info/edit-address/${_id}`}>edit</Link>
+                          </li>
+                        </ul>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -134,6 +159,14 @@ const MyInfo = () => {
           </div>
         </div>
       </div>
+
+      {alert.message && (
+        <CustomAlert
+          message={alert.message}
+          type={alert.type}
+          onClose={handleAlertClose}
+        />
+      )}
     </>
   );
 };

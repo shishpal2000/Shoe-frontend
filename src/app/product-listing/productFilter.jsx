@@ -1,102 +1,76 @@
 "use client";
+
 import { useState } from "react";
 import "./filter.css";
 import styles from "../../styles/productFilter.module.css";
 
-const ProductFilter = () => {
-  const [openCategory, setOpenCategory] = useState();
+const ProductFilter = ({ filterOptions = {}, onFilterChange }) => {
+  const [openCategory, setOpenCategory] = useState(null);
+  const [selectedFilters, setSelectedFilters] = useState({});
 
   const toggleCategory = (index) => {
-    setOpenCategory(openCategory === index ? !openCategory : index);
+    setOpenCategory(openCategory === index ? null : index);
   };
-
+  
+  const handleFilterChange = (e) => {
+    const { value, type, checked } = e.target;
+    setSelectedFilters(prev => {
+      const newFilters = { ...prev };
+      if (type === 'checkbox') {
+        if (checked) {
+          newFilters[value] = true;
+        } else {
+          delete newFilters[value];
+        }
+      } else {
+        // For buttons or other types
+        if (newFilters[value]) {
+          delete newFilters[value];
+        } else {
+          newFilters[value] = value;
+        }
+      }
+      onFilterChange(newFilters);
+      return newFilters;
+    });
+  };
+  
   const categories = [
     {
       name: "Refine by",
       ulStyle: "refinedLink",
-      subcategories: [
-        { name: "Mens", type: "button" },
-        { name: "casual", type: "button" },
-      ],
+      subcategories: filterOptions.parentCategories?.map(parent => ({
+        id: parent._id,
+        name: parent.name,
+        type: "button"
+      })) || [],
     },
     {
-      name: "size",
+      name: "Size",
       ulStyle: "size",
-      subcategories: [
-        {
-          name: "38",
-          type: "button",
-        },
-        {
-          name: "39",
-          type: "button",
-        },
-        {
-          name: "40",
-          type: "button",
-        },
-        {
-          name: "41",
-          type: "button",
-        },
-        {
-          name: "42",
-          type: "button",
-        },
-        {
-          name: "43",
-          type: "button",
-        },
-        {
-          name: "44",
-          type: "button",
-        },
-        {
-          name: "45",
-          type: "button",
-        },
-      ],
+      subcategories: filterOptions.sizes?.map(size => ({ name: size, type: "button" })) || [],
     },
     {
-      name: "colour",
+      name: "Colour",
       ulStyle: "colour",
-      subcategories: [
-        { color: "#4A69E2", type: "button" },
-        { color: "#FFA52F", type: "button" },
-        { color: "#232321", type: "button" },
-        { color: "#234D41", type: "button" },
-        { color: "#F08155", type: "button" },
-        { color: "#C9CCC6", type: "button" },
-        { color: "#677282", type: "button" },
-        { color: "#925513", type: "button" },
-      ],
+      subcategories: filterOptions.colors?.map(color => ({ color, type: "button" })) || [],
     },
-
     {
       name: "Shoe Category",
-      ulStyle: "Category",
-      subcategories: [
-        { val: "Casual shoes", type: "checkbox" },
-        { val: "Runners", type: "checkbox" },
-        { val: "Hiking", type: "checkbox" },
-        { val: "Sneaker", type: "checkbox" },
-        { val: "Basketball", type: "checkbox" },
-        { val: "Golf", type: "checkbox" },
-        { val: "Outdoor", type: "checkbox" },
-      ],
+      ulStyle: "refinedLink",
+      subcategories: filterOptions.childCategories?.map(child => ({
+        name: child.name,
+        type: "button",
+        image: child.image
+      })) || [],
     },
-
     {
-      name: "gender",
+      name: "Gender",
       ulStyle: "gender",
-      subcategories: [
-        { val: "men", type: "checkbox" },
-        { val: "women", type: "checkbox" },
-      ],
+      subcategories: filterOptions.genders?.map(gender => ({ val: gender, type: "checkbox" })) || [],
     },
-
     {
-      name: "price",
+      name: "Price",
       subcategories: [],
     },
   ];
@@ -112,9 +86,7 @@ const ProductFilter = () => {
                 className={styles.categoryHeader}
                 onClick={() => toggleCategory(index)}
               >
-                <p>
-                  {category.icon} {category.name}
-                </p>
+                <p>{category.name}</p>
                 <figure className={styles.arrow}>
                   <img
                     src={openCategory === index ? "/up.svg" : "/down.svg"}
@@ -124,20 +96,34 @@ const ProductFilter = () => {
                 </figure>
               </div>
               {openCategory === index && (
-                <ul className={`${category.ulStyle}`}>
-                  {category.subcategories.map((subcategory, subIndex) => (
-                    <li key={subIndex} className={styles.subcategory}>
-                      <input
-                        style={{ backgroundColor: `${subcategory.color}` }}
-                        type={subcategory.type}
-                        value={subcategory.name}
-                        id={`subcategory-${index}-${subIndex}`}
-                      />
-                      <label htmlFor={`subcategory-${index}-${subIndex}`}>
-                        {subcategory.val}{" "}
-                      </label>
-                    </li>
-                  ))}
+                <ul className={category.ulStyle || styles.defaultUlStyle}>
+                  {category.subcategories.length > 0 ? (
+                    category.subcategories.map((subcategory, subIndex) => (
+                      <li key={subIndex} className={styles.subcategory}>
+                        {subcategory.color ? (
+                          <input
+                            style={{ backgroundColor: subcategory.color }}
+                            type={subcategory.type}
+                            value={subcategory.name || subcategory.val}
+                            id={`subcategory-${index}-${subIndex}`}
+                            onChange={handleFilterChange}
+                          />
+                        ) : (
+                          <input
+                            type={subcategory.type}
+                            value={subcategory.name || subcategory.val}
+                            id={`subcategory-${index}-${subIndex}`}
+                            onChange={handleFilterChange}
+                          />
+                        )}
+                        <label htmlFor={`subcategory-${index}-${subIndex}`}>
+                          {subcategory.val}
+                        </label>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No Data available</li>
+                  )}
                 </ul>
               )}
             </div>

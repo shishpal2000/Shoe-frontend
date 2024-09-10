@@ -1,62 +1,70 @@
 "use client";
 
-import PRODUCTS_DATA from "./PRODUCTS_DATA";
 import style from "../../styles/productList.module.css";
 import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 
-const ProductList = () => {
+const ProductList = ({ products }) => {
   useEffect(() => {
     AOS.init({
       duration: 800,
     });
   }, []);
+
   return (
-    <>
-      <div className="productListMain">
-        <div className={style.productListItems}>
-          {PRODUCTS_DATA.map(
-            ({ id, proName, realprice, offerPrice, tag, link }) => {
-              return (
-                <Link
-                  data-aos="fade-up"
-                  data-aos-anchor-placement="top-bottom"
-                  href={link}
-                  className={style.card}
-                  key={id}
-                >
-                  <div className={style.tag}>{tag}</div>
-                  <div className={style.proImg}>
-                    <figure>
-                      <img className={style.img1} src="/pro-1.png" alt="" />
-                      <img className={style.img2} src="/pro-2.png" alt="" />
-                    </figure>
-                  </div>
+    <div className="productListMain">
+      <div className={style.productListItems}>
+        {products.length === 0 ? (
+          <p>No products available.</p>
+        ) : (
+          products.map(product => {
+            const { _id, product_name, images, product_slug, isNewArrival, variants } = product;
 
-                  <div className={style.proDetail}>
-                    <p className={style.proName}>{proName}</p>
+            const productUrl = product_slug ? `/product/${product_slug}` : "#";
 
-                    <div className={style.bar}>
-                      <div className={style.price}>
-                        <p className={style.realPrice}>
-                          <del>{realprice}</del>
+            const mainImage = images[0]?.url || "/default-image.png";
+            const secondImage = images[1]?.url || mainImage;
+            const mainVariant = variants && variants.length > 0 ? variants[0] : null;
+            const price = mainVariant ? mainVariant.price : null;
+
+            return (
+              <Link
+                data-aos="fade-up"
+                data-aos-anchor-placement="top-bottom"
+                href={productUrl}
+                className={style.card}
+                key={_id}
+              >
+                <div className={style.tag}>{isNewArrival ? 'New' : ''}</div>
+                <div className={style.proImg}>
+                  <figure>
+                    <img className={style.img1} src={mainImage} alt={product_name} />
+                    <img className={style.img2} src={secondImage} alt={product_name} />
+                  </figure>
+                </div>
+                <div className={style.proDetail}>
+                  <p className={style.proName}>{product_name}</p>
+                  <div className={style.bar}>
+                    <div className={style.price}>
+                      {price && (
+                        <p className={style.productPrice}>
+                          ${price.toFixed(2)}
                         </p>
-                        <p className={style.offerPrice}>{offerPrice}</p>
-                      </div>
-                      <div className={style.learnMore}>
-                        <img src="learnMore.svg" alt="" />
-                      </div>
+                      )}
+                    </div>
+                    <div className={style.learnMore}>
+                      <img src="learnMore.svg" alt="Learn More" />
                     </div>
                   </div>
-                </Link>
-              );
-            }
-          )}
-        </div>
+                </div>
+              </Link>
+            );
+          })
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

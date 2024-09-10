@@ -1,57 +1,53 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import style from "../../../styles/categoriesCard.module.css";
 import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";
+import axios from "axios";  // Assuming axios is used for API calls
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 const CategoriesCard = () => {
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     AOS.init({
       duration: 800,
     });
+
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/category/get-all-categories?showOnFrontend=true`);
+        if (response.status === 200) {
+          setCategories(response.data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+
+    fetchCategories();
   }, []);
-  const CARD_DATA = [
-    {
-      id: 1,
-      title: "Classic Formal\nShoes",
-      img: "cate-1.png",
-      tag: "Skate",
-    },
-    {
-      id: 2,
-      title: "occasion \n boots",
-      img: "cate-2.png",
-      tag: "Retro",
-    },
-    {
-      id: 3,
-      title: "Slippers & \n Sandals",
-      img: "cate-3.png",
-      tag: "Sporty",
-    },
-  ];
 
   return (
     <>
-      {CARD_DATA.map((data) => (
+      {categories.map((category) => (
         <div
-          key={data.id}
-          className={`${style.categoriesCard}`}
+          key={category._id}
+          className={style.categoriesCard}
           data-aos="fade-up"
           data-aos-anchor-placement="top-bottom"
         >
-          <div className={style.tag}>{data.tag}</div>
-          <h4 className={style.tittle}>{data.title}</h4>
-
+          <div className={style.tag}>{category.badgeName || category.name}</div>
+          <h4 className={style.tittle}>{category.name}</h4>
           <div className={style.proImg}>
             <figure>
-              <img src={data.img} alt="" />
+              <img src={category.image} alt={category.name} />
             </figure>
           </div>
           <div className={style.cardBtn_container}>
-            <PrimaryBtn btnText="buy now" />
+            <PrimaryBtn btnText="Buy Now" />
           </div>
         </div>
       ))}

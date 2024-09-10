@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import style from "../../../styles/homeGallery.module.css";
 import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";

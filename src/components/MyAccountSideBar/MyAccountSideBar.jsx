@@ -1,13 +1,51 @@
 import Link from "next/link";
 import style from "../../styles/MyAccountSideBar.module.css";
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const MyAccountSideBar = () => {
+  const router = useRouter();
+  const [userName, setUserName] = useState("Guest");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:8000/api/user/profile', {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const user = response.data;
+          setUserName(`${user.firstName} ${user.lastName}`);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:8000/api/auth/logout/user', {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+      localStorage.removeItem('token');
+      router.push('/credential/log-in');
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <>
       <div className={style.sideBarMainContainer}>
         <div className={style.sideBarItems}>
           <div className={style.tittle}>
-            <h3>Hey, Ujjwal</h3>
+            <h3>Hey, {userName}</h3> {/* Display user name */}
             <p>Welcome to your Account</p>
           </div>
 
@@ -38,14 +76,19 @@ const MyAccountSideBar = () => {
                 My info
               </Link>
             </li>
-
-            <li>
+            {/* <li>
               <Link href="/credential/log-in">
                 <figure>
                   <img src="/signOut.svg" alt="" />
                 </figure>
                 Sign out
               </Link>
+            </li> */}
+            <li onClick={handleLogout} style={{ cursor: 'pointer' }}>
+              <figure>
+                <img src="/signOut.svg" alt="" />
+              </figure>
+              Sign out
             </li>
           </ul>
         </div>

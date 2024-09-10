@@ -1,3 +1,4 @@
+"use client";
 import style from "../../../styles/testimonial.module.css";
 import TestimonialSlider from "./TestimonialSlider";
 
