@@ -52,23 +52,25 @@ const RazorpayPayment = () => {
 
     useEffect(() => {
         if (orderDetails) {
-            // Load Razorpay Checkout Script
             const script = document.createElement('script');
             script.src = 'https://checkout.razorpay.com/v1/checkout.js';
             script.async = true;
             script.onload = () => {
-                // Define Razorpay options and handlers
                 const options = {
                     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                     amount: orderDetails.amount,
                     currency: orderDetails.currency,
                     name: 'Shoe',
-                    // description: orderDetails.description,
                     order_id: orderDetails.razorpayOrderId,
                     handler: async (response) => {
                         console.log("Payment Success:", response);
                         window.location.href = `/payment-success?paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}`;
                         try {
+                            const token = localStorage.getItem("token");
+                            if (!token) {
+                                throw new Error("No authentication token found");
+                            }
+
                             const verifyResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/verify-payment`, {
                                 method: 'POST',
                                 headers: {
@@ -92,7 +94,7 @@ const RazorpayPayment = () => {
                             console.error("Error verifying payment:", error);
                             alert('Error verifying payment');
                         }
-                    },                    
+                    },
                     prefill: {
                         name: `${orderDetails?.shippingAddress?.firstName} ${orderDetails?.shippingAddress?.lastName}`,
                         email: orderDetails?.userEmail || '',
@@ -146,7 +148,7 @@ const RazorpayPayment = () => {
             </ul>
 
             <span>
-                Cost: {orderDetails ? `${(orderDetails.amount / 100).toFixed(2)} Rupees` : 'Loading...'}
+                Cost: {orderDetails ? `${(orderDetails.amount)} Rupees` : 'Loading...'}
                 <button id="pay-button" style={{ marginLeft: '10px', padding: '10px 20px', backgroundColor: '#2300a3', color: '#fff', border: 'none', cursor: 'pointer' }}>
                     Pay Now & Get Access
                 </button>
