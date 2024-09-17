@@ -1,7 +1,6 @@
-import ProductDetails from "./products-details";
-import SmProductDetail from "./sm-product-detail";
+import ProductDetails from "../products-details";
 
-import style from "../../styles/productDetail.module.css";
+import style from "@/styles/productDetail.module.css";
 import Collection from "@/components/homePage/ShoeCollection/Collection";
 
 export const metadata = {
@@ -14,11 +13,12 @@ export const metadata = {
     },
   },
 };
-const page = () => {
+const page = ({ params }) => {
+  const { product_slug } = params;
+
   return (
     <>
-      <ProductDetails />
-      <SmProductDetail />
+      <ProductDetails slug={product_slug} />
 
       <div className={style.relatedProducts}>
         <div className="container">

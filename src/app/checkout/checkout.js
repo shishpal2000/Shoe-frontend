@@ -88,12 +88,14 @@ const Checkout = () => {
       );
 
       if (response.data.success) {
+        const newAddress = response.data.address;
+
         if (type === 'shipping') {
-          setSelectedShippingAddress(response.data.address._id);
+          setSelectedShippingAddress(newAddress._id);
         } else if (type === 'billing') {
-          setSelectedBillingAddress(response.data.address._id);
+          setSelectedBillingAddress(newAddress._id);
         }
-        setAddresses((prev) => [...prev, response.data.address]);
+        setAddresses((prev) => [...prev, newAddress]);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -132,10 +134,11 @@ const Checkout = () => {
   };
 
   const handleUseSameAddressForBilling = () => {
-    setUseSameAddressForBilling(!useSameAddressForBilling);
     if (!useSameAddressForBilling) {
       setSelectedBillingAddress(selectedShippingAddress);
+      setNewBillingAddress(newShippingAddress);
     }
+    setUseSameAddressForBilling(!useSameAddressForBilling);
   };
 
   const handleSubmitOrder = async (event) => {
@@ -211,6 +214,149 @@ const Checkout = () => {
           <div className={style.checkoutInnerItems}>
             <div className={style.left}>
               <div className={style.checkoutLeft}>
+                <div className={styles.infoAddress}>
+                  <div className={style.shippingAddress}>
+                    <h3>Shipping Address</h3>
+                    <p>Select the address that matches your card or payment method.</p>
+                    <ul className={style.addressDropdown}>
+                      {addresses.map((address) => (
+                        <li key={address._id}>
+                          <input
+                            type="radio"
+                            id={`shipping-${address._id}`}
+                            name="ShippingAddress"
+                            value={address._id}
+                            checked={selectedShippingAddress === address._id}
+                            onChange={(event) => handleAddressChange(event, "shipping")}
+                          />
+                          <label htmlFor={`shipping-${address._id}`}>
+                            {address.firstName} - {address.streetAddress}, {address.city}, {address.state}, {address.postalCode}
+                          </label>
+                        </li>
+                      ))}
+                      <li>
+                        <input
+                          type="radio"
+                          id="new-shipping-address"
+                          name="ShippingAddress"
+                          value="new"
+                          checked={selectedShippingAddress === ""}
+                          onChange={(event) => handleAddressChange(event, "shipping")}
+                        />
+                        <label htmlFor="new-shipping-address">Add New Shipping Address</label>
+                      </li>
+                    </ul>
+                    {selectedShippingAddress === "" && (
+                      <div className={style.newAddressForm}>
+                        <form onSubmit={handleNewShippingAddressSubmit}>
+                          <br />
+                          <h3>New Shipping Address</h3>
+                          <ul>
+                            <li><label>First Name*</label><input type="text" name="firstName" placeholder="First Name" value={newShippingAddress.firstName} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                            <li><label>Last Name*</label><input type="text" name="lastName" placeholder="Last Name" value={newShippingAddress.lastName} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                            <li><label>Country / Region*</label><input type="text" name="country" placeholder="Country / Region" value={newShippingAddress.country} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                            <li><label>Street Address*</label><input type="text" name="streetAddress" placeholder="Street Address" value={newShippingAddress.streetAddress} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                            <ul className={style.addressForm}>
+                              <li><label>City*</label><input type="text" name="city" placeholder="City" value={newShippingAddress.city} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                              <li><label>State*</label><input type="text" name="state" placeholder="State" value={newShippingAddress.state} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                              <li><label>Postal Code*</label><input type="text" name="postalCode" placeholder="Postal Code" value={newShippingAddress.postalCode} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                              <li><label>Phone*</label><input type="text" name="phone" placeholder="Phone" value={newShippingAddress.phone} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
+                              <li>
+                                <label>Address Type*</label>
+                                <select name="type" value={newShippingAddress.type} onChange={(e) => handleNewAddressChange(e, "shipping")} required>
+                                  <option value="Shipping">Shipping</option>
+                                  <option value="Billing">Billing</option>
+                                </select>
+                              </li>
+                            </ul>
+                          </ul>
+                          <li className={style.submitBtn}>
+                            <input type="submit" value="Add Address" />
+                          </li>
+                        </form>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className={style.billingAddress}>
+                    <div className={style.billingDetail}>
+                      <h3>Billing Address</h3>
+                      <ul className={style.safeInfor}>
+                        <li>
+                          <input
+                            type="checkbox"
+                            checked={useSameAddressForBilling}
+                            onChange={handleUseSameAddressForBilling}
+                          />
+                          <label>Use the same address for billing</label>
+                        </li>
+                      </ul>
+                    </div>
+                    {!useSameAddressForBilling && (
+                      <>
+                        <ul className={style.addressDropdown}>
+                          {addresses.map((address) => (
+                            <li key={address._id}>
+                              <input
+                                type="radio"
+                                id={`billing-${address._id}`}
+                                name="BillingAddress"
+                                value={address._id}
+                                checked={selectedBillingAddress === address._id}
+                                onChange={(event) => handleAddressChange(event, "billing")}
+                              />
+                              <label htmlFor={`billing-${address._id}`}>
+                                {address.firstName} - {address.streetAddress}, {address.city}, {address.state}, {address.postalCode}
+                              </label>
+                            </li>
+                          ))}
+                          <li>
+                            <input
+                              type="radio"
+                              id="new-billing-address"
+                              name="BillingAddress"
+                              value="new"
+                              checked={selectedBillingAddress === ""}
+                              onChange={(event) => handleAddressChange(event, "billing")}
+                            />
+                            <label htmlFor="new-billing-address">Add New Billing Address</label>
+                          </li>
+                        </ul>
+                        {selectedBillingAddress === "" && (
+                          <div className={style.newAddressForm}>
+                            <form onSubmit={handleNewBillingAddressSubmit}>
+                              <br />
+                              <h3>New Billing Address</h3>
+                              <br />
+                              <ul>
+                                <li><label>First Name*</label><input type="text" name="firstName" placeholder="First Name" value={newBillingAddress.firstName} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                <li><label>Last Name*</label><input type="text" name="lastName" placeholder="Last Name" value={newBillingAddress.lastName} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                <li><label>Country / Region*</label><input type="text" name="country" placeholder="Country / Region" value={newBillingAddress.country} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                <li><label>Street Address*</label><input type="text" name="streetAddress" placeholder="Street Address" value={newBillingAddress.streetAddress} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                <ul className={style.addressForm}>
+                                  <li><label>City*</label><input type="text" name="city" placeholder="City" value={newBillingAddress.city} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                  <li><label>State*</label><input type="text" name="state" placeholder="State" value={newBillingAddress.state} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                  <li><label>Postal Code*</label><input type="text" name="postalCode" placeholder="Postal Code" value={newBillingAddress.postalCode} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                  <li><label>Phone*</label><input type="text" name="phone" placeholder="Phone" value={newBillingAddress.phone} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
+                                  <li>
+                                    <label>Address Type*</label>
+                                    <select name="type" value={newBillingAddress.type} onChange={(e) => handleNewAddressChange(e, "billing")} required>
+                                      <option value="Shipping">Shipping</option>
+                                      <option value="Billing">Billing</option>
+                                    </select>
+                                  </li>
+                                </ul>
+                              </ul>
+                              <li className={style.submitBtn}>
+                                <input type="submit" value="Add Address" />
+                              </li>
+                            </form>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </div>
                 <form onSubmit={handleSubmitOrder}>
                   <h2>Contact Details</h2>
                   <p>We will use these details to keep you informed about your delivery.</p>
@@ -225,133 +371,6 @@ const Checkout = () => {
                       />
                     </li>
                   </ul>
-
-                  {/* Shipping Address Form */}
-                  <div className={styles.infoAddress}>
-                    <div className={style.shippingAddress}>
-                      <h3>Shipping Address</h3>
-                      <p>Select the address that matches your card or payment method.</p>
-                      <ul className={style.addressDropdown}>
-                        {addresses.map((address) => (
-                          <li key={address._id}>
-                            <input
-                              type="radio"
-                              id={`shipping-${address._id}`}
-                              name="ShippingAddress"
-                              value={address._id}
-                              checked={selectedShippingAddress === address._id}
-                              onChange={(event) => handleAddressChange(event, "shipping")}
-                            />
-                            <label htmlFor={`shipping-${address._id}`}>
-                              {address.firstName} - {address.streetAddress}, {address.city}, {address.state}, {address.postalCode}
-                            </label>
-                          </li>
-                        ))}
-                        <li>
-                          <input
-                            type="radio"
-                            id="new-shipping-address"
-                            name="ShippingAddress"
-                            value="new"
-                            checked={selectedShippingAddress === ""}
-                            onChange={(event) => handleAddressChange(event, "shipping")}
-                          />
-                          <label htmlFor="new-shipping-address">Add New Shipping Address</label>
-                        </li>
-                      </ul>
-                      {selectedShippingAddress === "" && (
-                        <div className={style.newAddressForm}>
-                          <form onSubmit={handleNewShippingAddressSubmit}>
-                            <br />
-                            <h3>New Shipping Address</h3>
-                            <ul>
-                              <li><label>First Name*</label><input type="text" name="firstName" placeholder="First Name" value={newShippingAddress.firstName} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                              <li><label>Last Name*</label><input type="text" name="lastName" placeholder="Last Name" value={newShippingAddress.lastName} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                              <li><label>Country / Region*</label><input type="text" name="country" placeholder="Country / Region" value={newShippingAddress.country} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                              <li><label>Street Address*</label><input type="text" name="streetAddress" placeholder="Street Address" value={newShippingAddress.streetAddress} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                              <ul className={style.addressForm}>
-                                <li><label>City*</label><input type="text" name="city" placeholder="City" value={newShippingAddress.city} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                                <li><label>State*</label><input type="text" name="state" placeholder="State" value={newShippingAddress.state} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                                <li><label>Postal Code*</label><input type="text" name="postalCode" placeholder="Postal Code" value={newShippingAddress.postalCode} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                              </ul>
-                              <li><label>Phone*</label><input type="text" name="phone" placeholder="Phone" value={newShippingAddress.phone} onChange={(e) => handleNewAddressChange(e, "shipping")} required /></li>
-                            </ul>
-                            <input type="submit" value="Add Address" />
-                          </form>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className={style.billingAddress}>
-                      <div className={style.billingDetail}>
-                        <h3>Billing Address</h3>
-                        <ul className={style.safeInfor}>
-                          <li>
-                            <input
-                              type="checkbox"
-                              checked={useSameAddressForBilling}
-                              onChange={handleUseSameAddressForBilling}
-                            />
-                            <label>Use the same address for billing</label>
-                          </li>
-                        </ul>
-                      </div>
-                      {!useSameAddressForBilling && (
-                        <>
-                          <ul className={style.addressDropdown}>
-                            {addresses.map((address) => (
-                              <li key={address._id}>
-                                <input
-                                  type="radio"
-                                  id={`billing-${address._id}`}
-                                  name="BillingAddress"
-                                  value={address._id}
-                                  checked={selectedBillingAddress === address._id}
-                                  onChange={(event) => handleAddressChange(event, "billing")}
-                                />
-                                <label htmlFor={`billing-${address._id}`}>
-                                  {address.firstName} - {address.streetAddress}, {address.city}, {address.state}, {address.postalCode}
-                                </label>
-                              </li>
-                            ))}
-                            <li>
-                              <input
-                                type="radio"
-                                id="new-billing-address"
-                                name="BillingAddress"
-                                value="new"
-                                checked={selectedBillingAddress === ""}
-                                onChange={(event) => handleAddressChange(event, "billing")}
-                              />
-                              <label htmlFor="new-billing-address">Add New Billing Address</label>
-                            </li>
-                          </ul>
-                          {selectedBillingAddress === "" && (
-                            <div className={style.newAddressForm}>
-                               <form onSubmit={handleNewBillingAddressSubmit}>
-                                <br />
-                                <h3>New Billing Address</h3>
-                                <br />
-                                <ul>
-                                  <li><label>First Name*</label><input type="text" name="firstName" placeholder="First Name" value={newShippingAddress.firstName} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                  <li><label>Last Name*</label><input type="text" name="lastName" placeholder="Last Name" value={newShippingAddress.lastName} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                  <li><label>Country / Region*</label><input type="text" name="country" placeholder="Country / Region" value={newShippingAddress.country} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                  <li><label>Street Address*</label><input type="text" name="streetAddress" placeholder="Street Address" value={newShippingAddress.streetAddress} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                  <ul className={style.addressForm}>
-                                    <li><label>City*</label><input type="text" name="city" placeholder="City" value={newShippingAddress.city} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                    <li><label>State*</label><input type="text" name="state" placeholder="State" value={newShippingAddress.state} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                    <li><label>Postal Code*</label><input type="text" name="postalCode" placeholder="Postal Code" value={newShippingAddress.postalCode} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                  </ul>
-                                  <li><label>Phone*</label><input type="text" name="phone" placeholder="Phone" value={newShippingAddress.phone} onChange={(e) => handleNewAddressChange(e, "billing")} required /></li>
-                                </ul>
-                                <input type="submit" value="Add Address" />
-                              </form>
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  </div>
 
                   <div className={style.shippingMethod}>
                     <h3>Shipping Method</h3>

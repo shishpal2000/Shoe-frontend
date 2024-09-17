@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import smStyle from "../../styles/smProductDetail.module.css";
-import style from "../../styles/productDetail.module.css";
+import style from "../../../styles/productDetail.module.css";
 import Product from "./productGallery";
 import Link from "next/link";
 import ReactPlayer from "react-player";

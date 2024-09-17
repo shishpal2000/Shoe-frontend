@@ -38,7 +38,7 @@ const Wishlist = () => {
 
       setIsAuthenticated(true);
 
-      const wishlistResponse = await axios.get('http://localhost:8000/api/wishlist/get-wishlist', {
+      const wishlistResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/get-wishlist`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -50,7 +50,7 @@ const Wishlist = () => {
 
       const wishlistWithProductDetails = await Promise.all(wishlistResponse.data.data.map(async (item) => {
         try {
-          const variantsResponse = await axios.get(`http://localhost:8000/api/product/products/${item._id}/variants`, {
+          const variantsResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/products/${item._id}/variants`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -80,16 +80,7 @@ const Wishlist = () => {
     }
   };
 
-
-
   const handleAddToCart = async () => {
-    const { productId } = modalContent;
-
-    if (!selectedVariant) {
-      alert("Please select a variant before adding to cart.");
-      return;
-    }
-
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
 
@@ -98,27 +89,43 @@ const Wishlist = () => {
       return;
     }
 
+    const { productId } = modalContent;
+
+    if (!selectedVariant) {
+      alert("Please select a variant before adding to cart.");
+      return;
+    }
+
     try {
-      const response = await fetch("http://localhost:8000/api/cart/add-cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add-cart`,
+        {
+          userId,
+          productId,
+          variantId: selectedVariant,
+          quantity: 1,
         },
-        body: JSON.stringify({ userId, productId, variantId: selectedVariant, quantity: 1 }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      const result = await response.json();
-      if (response.ok) {
-        console.log("Item added to cart", result);
+      if (response.status === 200) {
+        console.log("Item added to cart", response.data);
+
+        // Remove from wishlist
+        await handleRemoveFromWishlist(productId);
+
+        // Redirect to cart
+        window.location.href = "/cart";
       } else {
-        console.error("Failed to add to cart:", result.message);
+        console.error("Failed to add to cart:", response.data.message);
       }
-
-      await handleRemoveFromWishlist(productId);
-      window.location.href = "/cart";
     } catch (error) {
-      console.error('Failed to add to cart:', error);
+      console.error('Failed to add to cart:', error.response ? error.response.data.message : error.message);
     }
 
     handleCloseModal();
@@ -129,15 +136,15 @@ const Wishlist = () => {
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No authentication token found');
 
-      await axios.delete(`http://localhost:8000/api/wishlist/remove-wishlist/${productId}`, {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/remove-wishlist/${productId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-
+      console.log("Response: ", response);
       fetchWishlist();
     } catch (error) {
-      console.error('Failed to remove item from wishlist:', error);
+      console.error('Failed to remove item from wishlist:', error.response ? error.response.data.message : error.message);
     }
   };
 
@@ -147,7 +154,7 @@ const Wishlist = () => {
         const token = localStorage.getItem('token');
         if (!token) throw new Error('No authentication token found');
 
-        const response = await axios.get(`http://localhost:8000/api/product/products/${productId}/variants`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/products/${productId}/variants`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

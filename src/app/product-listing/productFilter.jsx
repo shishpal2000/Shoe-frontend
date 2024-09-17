@@ -11,30 +11,30 @@ const ProductFilter = ({ filterOptions = {}, onFilterChange }) => {
   const toggleCategory = (index) => {
     setOpenCategory(openCategory === index ? null : index);
   };
-  
-  const handleFilterChange = (e) => {
+
+  const handleFilterChange = (e, filterType) => {
     const { value, type, checked } = e.target;
-    setSelectedFilters(prev => {
-      const newFilters = { ...prev };
+
+    setSelectedFilters(prevFilters => {
+      const newFilters = { ...prevFilters };
+
       if (type === 'checkbox') {
         if (checked) {
-          newFilters[value] = true;
+          if (!newFilters[filterType]) newFilters[filterType] = [];
+          newFilters[filterType].push(value);
         } else {
-          delete newFilters[value];
+          newFilters[filterType] = newFilters[filterType].filter(item => item !== value);
         }
       } else {
-        // For buttons or other types
-        if (newFilters[value]) {
-          delete newFilters[value];
-        } else {
-          newFilters[value] = value;
-        }
+        newFilters[filterType] = value;
       }
+
       onFilterChange(newFilters);
       return newFilters;
     });
   };
-  
+
+
   const categories = [
     {
       name: "Refine by",
@@ -106,7 +106,7 @@ const ProductFilter = ({ filterOptions = {}, onFilterChange }) => {
                             type={subcategory.type}
                             value={subcategory.name || subcategory.val}
                             id={`subcategory-${index}-${subIndex}`}
-                            onChange={handleFilterChange}
+                            onChange={(e) => handleFilterChange(e, category.name.toLowerCase())}
                           />
                         ) : (
                           <input

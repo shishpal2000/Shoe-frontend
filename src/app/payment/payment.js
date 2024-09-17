@@ -35,7 +35,6 @@ const RazorpayPayment = () => {
                 if (data.success) {
                     setOrderDetails(data.data);
                     console.log("Order Details:", data.data);
-                    console.log(orderDetails?.shippingAddress, orderDetails?.userEmail);
                 } else {
                     setError('Failed to fetch order details');
                 }
@@ -58,7 +57,7 @@ const RazorpayPayment = () => {
             script.onload = () => {
                 const options = {
                     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-                    amount: orderDetails.amount,
+                    amount: orderDetails.totalAmount,
                     currency: orderDetails.currency,
                     name: 'Shoe',
                     order_id: orderDetails.razorpayOrderId,
@@ -148,7 +147,7 @@ const RazorpayPayment = () => {
             </ul>
 
             <span>
-                Cost: {orderDetails ? `${(orderDetails.amount)} Rupees` : 'Loading...'}
+                Cost: {orderDetails ? `${(orderDetails.totalAmount)} Rupees` : 'Loading...'}
                 <button id="pay-button" style={{ marginLeft: '10px', padding: '10px 20px', backgroundColor: '#2300a3', color: '#fff', border: 'none', cursor: 'pointer' }}>
                     Pay Now & Get Access
                 </button>

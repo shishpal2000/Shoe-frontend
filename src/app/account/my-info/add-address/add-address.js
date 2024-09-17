@@ -13,7 +13,6 @@ const AddAddress = () => {
     firstName: "",
     lastName: "",
     country: "",
-    company: "",
     streetAddress: "",
     aptSuiteUnit: "",
     city: "",
@@ -21,9 +20,8 @@ const AddAddress = () => {
     phone: "",
     postalCode: "",
     deliveryInstruction: "",
-    isDefaultShipping: false,
-    isDefaultBilling: false,
-    type: "Shipping", 
+    isDefault: false,
+    type: "", 
     status: "Active" 
   });
 
@@ -83,7 +81,7 @@ const AddAddress = () => {
             <div className={styles.editMyInfoForm}>
               <form onSubmit={handleSubmit}>
                 <ul className={styles.nameGrid}>
-                  {["firstName", "lastName", "country", "company", "streetAddress", "aptSuiteUnit", "city", "state", "phone", "postalCode"].map((field) => (
+                  {["firstName", "lastName", "country", "streetAddress", "aptSuiteUnit", "city", "state", "phone", "postalCode"].map((field) => (
                     <li key={field}>
                       <label>{field.replace(/([A-Z])/g, ' $1').toUpperCase()}*</label>
                       <input
@@ -113,20 +111,11 @@ const AddAddress = () => {
                   <li>
                     <input
                       type="checkbox"
-                      name="isDefaultShipping"
-                      checked={address.isDefaultShipping}
+                      name="isDefault"
+                      checked={address.isDefault}
                       onChange={handleChange}
                     />
-                    <p>Set as default shipping address</p>
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      name="isDefaultBilling"
-                      checked={address.isDefaultBilling}
-                      onChange={handleChange}
-                    />
-                    <p>Set as default billing address</p>
+                    <p>Set as default address</p>
                   </li>
                 </ul>
                 <ul className={styles.selectType}>

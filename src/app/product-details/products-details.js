@@ -1,604 +1,220 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import ReactPlayer from "react-player";
+import { useState, useEffect } from "react";
 import style from "../../styles/productDetail.module.css";
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import ProductGallery from "./productGallery";
+import axios from "axios";
 
-const ProductDetails = () => {
-  const [isRatingActive, setRatingIsActive] = useState(false);
+const ProductDetails = ({ slug }) => {
+  const [product, setProduct] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(1);
 
-  const ratingToggleClass = () => {
-    setRatingIsActive(!isRatingActive);
+  useEffect(() => {
+    if (slug) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products`, {
+          params: { product_slug: slug }
+        })
+        .then((response) => {
+          const { data } = response;
+          if (data.success) {
+            const allSizes = data.data.variants.map(variant => variant.size);
+            const uniqueSizes = [...new Set(allSizes)];
+
+            setProduct({ ...data.data, uniqueSizes });
+          }
+        })
+        .catch((err) => {
+          console.error("Error fetching product data: ", err);
+        });
+    }
+  }, [slug]);
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    const variant = product.variants[selectedColor];
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (!token || !userId) {
+      console.error("No authentication token or user ID found");
+      return;
+    }
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add-cart`, {
+
+        userId: userId,
+        productId: product._id,
+        variantId: variant._id,
+        quantity: 1
+      },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+        }
+      );
+      if (response.data.success) {
+        console.log("Added to cart successfully");
+      } else {
+        console.error("Failed to add to cart:", response.data.message);
+      }
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+    }
   };
 
-  const [selectedColor, setSelectedColor] = useState(1);
-  const [setectSize, setSelectSize] = useState(1);
+  const moveToWishlist = async () => {
+    if (!product) return;
 
-  const handleClick = (id) => {
+    const variant = product.variants[selectedColor];
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (!token || !userId) {
+      console.error("No authentication token or user ID found");
+      return;
+    }
+
+    try {
+
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/add-wishlist`, {
+        userId,
+        productId: product._id,
+        variantId: variant._id,
+      }, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        console.log("Moved to wishlist successfully");
+      }
+      else {
+        console.error("Failed to move to wishlist:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error moving item to wishlist:", error);
+    }
+  };
+
+  const handleColorClick = (id) => {
     setSelectedColor(id);
   };
 
-  const colorHandleClick = (id) => {
-    setSelectSize(id);
+  const handleSizeClick = (id) => {
+    setSelectedSize(id);
   };
 
-  const [isActive, setIsActive] = useState(false);
-
-  const toggleClass = () => {
-    setIsActive(!isActive);
-  };
-
-  const colors = [
-    {
-      id: 1,
-      color: "#614842",
-    },
-    {
-      id: 2,
-      color: "#707E6E",
-    },
-    {
-      id: 3,
-      color: "#FB9D52",
-    },
-    {
-      id: 4,
-      color: "#925513",
-    },
-  ];
-
-  const size = [
-    {
-      id: 1,
-      size: 40,
-      stock: "#0A0B0B",
-    },
-    {
-      id: 2,
-      size: 40,
-      stock: "#D2D1D3",
-    },
-    {
-      id: 3,
-      size: 40,
-      stock: "#D2D1D3",
-    },
-    {
-      id: 4,
-      size: 40,
-      stock: "",
-    },
-    {
-      id: 5,
-      size: 40,
-      stock: "",
-    },
-    {
-      id: 6,
-      size: 40,
-      stock: "",
-    },
-    {
-      id: 7,
-      size: 40,
-      stock: "",
-    },
-  ];
-
-  const options = [
-    {
-      id: 1,
-      img: "/secureImg.svg",
-      optType: "Secure payment",
-    },
-    {
-      id: 2,
-      img: "/Size&Fit.svg",
-      optType: "Size & Fit",
-    },
-    {
-      id: 3,
-      img: "/truck.svg",
-      optType: "Free shipping",
-    },
-    {
-      id: 4,
-      img: "/Returns.svg",
-      optType: "Free Shipping & Returns",
-    },
-  ];
-
-  const userCommentData = [
-    {
-      id: 1,
-      profile: "/user.png",
-      userName: "Guy Hawkins",
-      commTime: "1 week ago",
-      rating: "⭐⭐⭐⭐⭐",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-    {
-      id: 2,
-      profile: "/user4.png",
-      userName: "Dianne Russell",
-      commTime: "51 mins ago",
-      rating: "⭐⭐⭐⭐⭐",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-    {
-      id: 3,
-      profile: "/user3.png",
-      userName: "Bessie Cooper",
-      commTime: "6 hours ago",
-      rating: "⭐⭐⭐⭐⭐",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-    {
-      id: 4,
-      profile: "/user2.png",
-      userName: "Eleanor Pena",
-      commTime: "1 days ago",
-      rating: "⭐⭐⭐⭐⭐",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-  ];
-
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-  };
-
-  const handleEnded = () => {
-    setIsPlaying(false);
-  };
-
-  const images = [
-    "/pro-1-1.png",
-    "/pro-1-2.png",
-    "/pro-1-3.png",
-    "/pro-1-4.png",
-  ];
+  if (!product) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
-      <PageLinkBar currentPage="Vantela New Public White low" />
+      <PageLinkBar currentPage={product.product_name} />
 
       <div className={style.productDetailMainContainer}>
         <div className="container">
           <div className={style.productDetailInnerItems}>
             <div className={style.left}>
               <div className={style.proImgGall}>
-                {/* <li>
-                  <figure>
-                    <img src="/pro-1-1.png" alt="" />
-                  </figure>
-                </li>
-                <li>
-                  <figure>
-                    <img src="/pro-1-2.png" alt="" />
-                  </figure>
-                </li>
-                <li>
-                  <figure>
-                    <img src="/pro-1-3.png" alt="" />
-                  </figure>
-                </li>
-                <li>
-                  <figure>
-                    <img src="/pro-1-4.png" alt="" />
-                  </figure>
-                </li> */}
-                <ProductGallery images={images} />
+                {/* Product Gallery */}
+                <ProductGallery images={product.images.map(img => img.url)} />
               </div>
 
               <div className={style.productDescrip}>
                 <h3>Product Description</h3>
-                <p className={style.proDesc}>
-                  100% Bio-washed Cotton – makes the fabric extra soft & silky.
-                  Flexible ribbed crew neck. Precisely stitched with no pilling
-                  & no fading. Provide all-time comfort. Anytime, anywhere.
-                  Infinite range of matte-finish HD prints.
-                </p>
-
-                <p className={style.proDesc}>
-                  100% Bio-washed Cotton – makes the fabric extra soft & silky.
-                  Flexible ribbed crew neck. Precisely stitched with no pilling
-                  & no fading.
-                </p>
+                <p className={style.proDesc}>{product.description}</p>
 
                 <ul>
                   <li>
                     <p>Brand</p>
-                    <h4>Brand Name</h4>
+                    <h4>{product.variants[0].brand}</h4>
                   </li>
                   <li>
                     <p>SKU</p>
-                    <h4>66910-Brown</h4>
+                    <h4>{product.sku}</h4>
                   </li>
                   <li>
                     <p>Type</p>
-                    <h4>Formal</h4>
+                    <h4>{product.variants[0].type}</h4>
                   </li>
                   <li>
                     <p>Sole Material</p>
-                    <h4>TPR</h4>
+                    <h4>{product.variants[0].sole_material}</h4>
                   </li>
                   <li>
                     <p>Toe Shape</p>
-                    <h4>Round</h4>
+                    <h4>{product.variants[0].toe_shape}</h4>
                   </li>
                   <li>
-                    <p>FASTENING</p>
-                    <h4>Slip-Ons</h4>
+                    <p>Fastening</p>
+                    <h4>{product.variants[0].fastening}</h4>
                   </li>
                 </ul>
-              </div>
-
-              <div className={style.userComments}>
-                <div className={style.commentBar}>
-                  <h4>User Comments</h4>
-                  <div className={style.dropdown} onClick={ratingToggleClass}>
-                    5 Star Rating <img src="/down.svg" alt="" />
-                    <ul
-                      className={
-                        isRatingActive ? style.activeRating : style.ratingDrop
-                      }
-                    >
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                    </ul>
-                  </div>
-                </div>
-                <ul>
-                  {userCommentData.map(
-                    ({ id, userName, commTime, descrip, profile, rating }) => {
-                      return (
-                        <li key={id}>
-                          <div className={style.commLeft}>
-                            <figure className={style.userProfile}>
-                              <img src={profile} alt="" />
-                            </figure>
-                          </div>
-                          <div className={style.commRight}>
-                            <div className={style.userReview}>
-                              <div className={style.userDetailBar}>
-                                <h4>{userName}</h4>
-                                <p>{commTime}</p>
-                              </div>
-                              <div className={style.userRating}>{rating}</div>
-                              <p className={style.descrip}>{descrip}</p>
-                            </div>
-                          </div>
-                        </li>
-                      );
-                    }
-                  )}
-                </ul>
-
-                <div className={style.loadmoreCon}>
-                  <Link href="" className={style.loadmore}>
-                    Load More
-                  </Link>
-                </div>
               </div>
             </div>
 
             <div className={style.right}>
               <div className={style.productDetail}>
-                <p className={style.tag}>New Release</p>
-                <h2>ADIDAS 4DFWD X PARLEY RUNNING SHOES</h2>
-                <h3>$125.00</h3>
+                {product.isNewArrival && <p className={style.tag}>New Release</p>}
+                <h2>{product.product_name}</h2>
+                <h3>₹{product.variants[0].price}</h3>
+
                 <div className={style.colorOpt}>
-                  <h4>color</h4>
+                  <h4>Color</h4>
                   <ul>
-                    {colors.map(({ id, color }) => {
-                      return (
-                        <li
-                          key={id}
-                          onClick={() => handleClick(id)}
-                          className={
-                            selectedColor === id ? `${style.active}` : ""
-                          }
-                        >
-                          <i style={{ backgroundColor: `${color}` }}></i>
-                        </li>
-                      );
-                    })}
+                    {product.variants.map((variant, index) => (
+                      <li
+                        key={variant._id}
+                        onClick={() => handleColorClick(index)}
+                        className={selectedColor === index ? `${style.active}` : ""}
+                      >
+                        <i style={{ backgroundColor: variant.color }}></i>
+                      </li>
+                    ))}
                   </ul>
                 </div>
+
+                {/* Size options */}
                 <div className={style.sizeOpt}>
                   <div className={style.bar}>
                     <h4>Size</h4>
-                    <p onClick={toggleClass}>Size chart</p>
                   </div>
 
                   <ul>
-                    {size.map(({ id, size }) => {
-                      return (
-                        <li
-                          key={id}
-                          onClick={() => colorHandleClick(id)}
-                          className={
-                            setectSize === id ? `${style.selectSize}` : ""
-                          }
-                        >
-                          {size}
-                        </li>
-                      );
-                    })}
+                    {product.uniqueSizes.map((size, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleSizeClick(index)}
+                        className={selectedSize === index ? `${style.selectSize}` : ""}
+                      >
+                        {size}
+                      </li>
+                    ))}
                   </ul>
                 </div>
+
                 <div className={style.buyOpt}>
-                  <Link className={style.cartBtn} href="/cart">
+                  <button className={style.cartBtn} onClick={handleAddToCart}>
                     Add to cart
-                  </Link>
-                  <Link className={style.wishlist} href="">
-                    <img src="/wishlist.png" alt="" />
-                  </Link>
-                </div>
-                <div className={style.opt}>
-                  <ul>
-                    {options.map(({ id, img, optType }) => {
-                      return (
-                        <li key={id}>
-                          <i>
-                            <img src={img} alt="" />
-                          </i>
-                          <p>{optType}</p>
-                        </li>
-                      );
-                    })}
+                  </button>
+                  <ul className={style.actionOpt}>
+                    <li onClick={moveToWishlist}>
+                      <Link href="">
+                        <img src="/wishlist.svg" alt="Move to Wishlist" />
+                      </Link>
+                    </li>
                   </ul>
                 </div>
-
-                <div className={style.vedioSectionMain}>
-                  {!isPlaying ? (
-                    <div className="video-overlay" onClick={handlePlay}>
-                      <img src="/vid_img.png" alt="Video Thumbnail" />
-                      <button className="play-button">
-                        <svg
-                          width="64"
-                          height="64"
-                          viewBox="0 0 64 64"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle cx="32" cy="32" r="32" fill="white" />
-                          <path d="M25 20L45 32L25 44V20Z" fill="black" />
-                        </svg>
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="iframe-container">
-                      <ReactPlayer
-                        url="https://youtu.be/B_m8q9e9Osc"
-                        playing={isPlaying}
-                        controls
-                        width="100%"
-                        height="316px"
-                        className={style.reactPlayer}
-                        onEnded={handleEnded}
-                      />
-                    </div>
-                  )}
-
-                  <style jsx>{`
-                    .video-section {
-                      display: flex;
-                      flex-direction: column;
-                      align-items: center;
-                      text-align: center;
-                    }
-                    .video-overlay {
-                      position: relative;
-                      cursor: pointer;
-                      height: 100%;
-                    }
-                    .video-overlay img {
-                      width: 100%;
-                      height: 100%;
-                    }
-                    .play-button {
-                      position: absolute;
-                      top: 50%;
-                      left: 50%;
-                      transform: translate(-50%, -50%);
-                      background: none;
-                      border: none;
-                      cursor: pointer;
-                      animation: scaleUpDown 1.5s infinite ease-in-out;
-                    }
-                    .play-button svg {
-                      width: 64px;
-                      height: 64px;
-                    }
-                    @keyframes scaleUpDown {
-                      0%,
-                      100% {
-                        transform: translate(-50%, -50%) scale(1);
-                      }
-                      50% {
-                        transform: translate(-50%, -50%) scale(1.2);
-                      }
-                    }
-                    .iframe-container {
-                      width: 100%;
-                      position: relative;
-                      overflow: hidden;
-                    }
-                    .iframe-container iframe {
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 100%;
-                      border: 0;
-                    }
-                  `}</style>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={isActive ? style.activeFliter : style.sizeChartContainer}>
-        <div
-          className={style.crossBtn}
-          style={{ color: "#fff" }}
-          onClick={toggleClass}
-        >
-          ❌
-        </div>
-        <div className={style.sizeChartInner}>
-          <div className={style.sizeProduct}>
-            <div className={style.ProImg}>
-              <figure>
-                <img src="/cart.png" alt="" />
-              </figure>
-            </div>
-            <div className={style.proDesc}>
-              <h3>U.S. Polo Assn.</h3>
-              <p>U.S. Polo Assn. Men Textured Sneakers</p>
-
-              <div className={style.price}>
-                {/* <h5>₹ 2699</h5> */}
-                <h4>₹ 2699</h4>
-              </div>
-            </div>
-          </div>
-
-          <div className={style.sizeChartList}>
-            <div className={style.sizeOpt}>
-              <div className={style.opt}>
-                <input type="checkbox" />
-                <p>US</p>
-              </div>
-
-              <div className={style.opt}>
-                <input type="checkbox" />
-                <p>EURO</p>
-              </div>
-            </div>
-
-            <table>
-              <tr key="">
-                <th>Select</th>
-                <th>UK</th>
-                <th>US</th>
-                <th>EURO</th>
-                <th>To Fit Foot Length (cm)</th>
-              </tr>
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-
-              <tr key="">
-                <td>
-                  <input name="size" type="radio" />
-                </td>
-                <td>3</td>
-                <td>4</td>
-                <td>36</td>
-                <td>23.9</td>
-              </tr>
-            </table>
           </div>
         </div>
       </div>

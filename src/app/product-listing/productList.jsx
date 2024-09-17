@@ -13,6 +13,9 @@ const ProductList = ({ products }) => {
     });
   }, []);
 
+  const handleProductClick = (products) => {
+    console.log("Product clicked: ", products.product_name);
+  };
   return (
     <div className="productListMain">
       <div className={style.productListItems}>
@@ -22,7 +25,7 @@ const ProductList = ({ products }) => {
           products.map(product => {
             const { _id, product_name, images, product_slug, isNewArrival, variants } = product;
 
-            const productUrl = product_slug ? `/product/${product_slug}` : "#";
+            const productUrl = product_slug ? `/product-details/${product_slug}` : "#";
 
             const mainImage = images[0]?.url || "/default-image.png";
             const secondImage = images[1]?.url || mainImage;
@@ -36,6 +39,7 @@ const ProductList = ({ products }) => {
                 href={productUrl}
                 className={style.card}
                 key={_id}
+                onClick={() => handleProductClick(product)}
               >
                 <div className={style.tag}>{isNewArrival ? 'New' : ''}</div>
                 <div className={style.proImg}>

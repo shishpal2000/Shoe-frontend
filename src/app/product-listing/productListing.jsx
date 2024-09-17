@@ -15,31 +15,27 @@ const ProductListing = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchFilterOptions = async () => {
+    const fetchProductsAndFilters = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/product/filters");
-        setFilterOptions(response.data.data.filters);
-      } catch (error) {
-        console.error("Error fetching filter options:", error);
-      }
-    };
-
-    fetchFilterOptions();
-  }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/product/get-all-products", {
-          params: selectedFilters
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products`, {
+          params: selectedFilters, 
         });
-        setProducts(response.data.data || []); 
+
+        const { products: fetchedProducts, filters: fetchedFilters } = response.data.data;
+
+        if (Object.keys(fetchedFilters).length > 0) {
+          setFilterOptions(fetchedFilters);
+        }
+
+        setProducts(fetchedProducts || []);
+
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching products and filters:", error);
       }
     };
+
     console.log("Fetching products with filters:", selectedFilters);
-    fetchProducts();
+    fetchProductsAndFilters();
   }, [selectedFilters]);
 
   const toggleClass = () => {
