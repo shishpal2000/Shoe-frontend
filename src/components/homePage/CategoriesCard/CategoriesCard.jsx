@@ -18,7 +18,7 @@ const CategoriesCard = () => {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/category/get-all-categories?showOnFrontend=true`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/get-all-categories?showOnFrontend=true`);
         if (response.status === 200) {
           setCategories(response.data.data);
         }

@@ -40,7 +40,7 @@ const AddAddress = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/address/add-addresses", address, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/address/add-addresses`, address, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

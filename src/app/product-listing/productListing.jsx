@@ -64,18 +64,7 @@ const ProductListing = () => {
           <div className={style.topBar}>
             <div className={style.content}>
               <h2>Life Style Shoes</h2>
-              <p>{products.length} items</p> {/* Ensure products is always an array */}
-            </div>
-            <div className={style.trendingDrop} onClick={trendtoggleClass}>
-              Trending <img src="/down.svg" alt="" />
-              <ul className={istrendActive ? style.activetrendDrop : style.trendDrop}>
-                <li>9</li>
-                <li>9</li>
-                <li>9</li>
-                <li>9</li>
-                <li>9</li>
-                <li>9</li>
-              </ul>
+              <p>{products.length} items</p> 
             </div>
           </div>
           <div className={style.productListingItems}>

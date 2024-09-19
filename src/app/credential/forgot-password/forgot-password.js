@@ -1,11 +1,46 @@
 "use client";
 
+import { useState } from "react";
 import CredentialHero from "@/components/CredentialHero/CredentialHero";
 import OtherLoginOpts from "@/components/OtherLoginOpts/OtherLoginOpts";
 import style from "@/styles/credentail.module.css";
 import Link from "next/link";
 
 const ForgotPassword = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setMessage("");
+    setError("");
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage(data.message || "Password reset email sent successfully.");
+      } else {
+        setError(data.message || "Failed to send password reset email.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className={style.credentailMainContainer}>
@@ -22,21 +57,30 @@ const ForgotPassword = () => {
             <div className={style.right}>
               <h3>Forgot Your Password?</h3>
 
-              <form>
+              <form onSubmit={handleSubmit}>
                 <ul>
                   <li>
                     <label>Email Address</label>
-                    <input type="email" placeholder="Email" required />
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
                   </li>
 
                   <li className={style.formSubOpts}>
-                    <input type="submit" value="Sign up" />
+                    <input type="submit" value={loading ? "Sending..." : "Send Password Reset Email"} disabled={loading} />
                     <p>
                       Back to? <Link href="/credential/log-in">Log in</Link>
                     </p>
                   </li>
                 </ul>
               </form>
+
+              {message && <p className={style.successMessage}>{message}</p>}
+              {error && <p className={style.errorMessage}>{error}</p>}
 
               <OtherLoginOpts />
             </div>

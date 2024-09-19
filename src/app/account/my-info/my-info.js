@@ -28,7 +28,7 @@ const MyInfo = () => {
           throw new Error("No authentication token or user ID found");
         }
 
-        const response = await axios.get("http://localhost:8000/api/user/profile", {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,7 +44,7 @@ const MyInfo = () => {
 
   const handleDelete = async (addressId) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/address/delete-addresses/${addressId}`, {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/address/delete-addresses/${addressId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

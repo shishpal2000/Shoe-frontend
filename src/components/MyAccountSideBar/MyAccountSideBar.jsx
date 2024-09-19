@@ -13,7 +13,7 @@ const MyAccountSideBar = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await axios.get('http://localhost:8000/api/user/profile', {
+          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, {
             headers: { Authorization: `Bearer ${token}` }
           });
           const user = response.data;
@@ -29,7 +29,7 @@ const MyAccountSideBar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8000/api/auth/logout/user', {},
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout/user`, {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });

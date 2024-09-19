@@ -47,6 +47,8 @@ const Cart = () => {
   }, []);
 
   const updateQuantity = async (productId, variantId, newQuantity) => {
+    if (newQuantity < 1) return;
+
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
@@ -66,7 +68,15 @@ const Cart = () => {
       );
 
       if (response.status === 200 && response.data.cart) {
-        setCartData(response.data.cart);
+        setCartData((prevCart) => ({
+          ...prevCart,
+          items: prevCart.items.map((item) =>
+            item.product._id === productId && item.variant._id === variantId
+              ? { ...item, quantity: newQuantity }
+              : item
+          ),
+        }));
+        await applyCoupon();
       } else {
         console.error("Unexpected response:", response);
       }
@@ -101,6 +111,7 @@ const Cart = () => {
               !(item.product._id === productId && item.variant._id === variantId)
           ),
         }));
+        await applyCoupon();
       } else {
         console.error("Failed to remove item from cart:", response);
       }
@@ -127,7 +138,7 @@ const Cart = () => {
         }
       );
 
-      removeFromCart(productId, variantId); // After adding to wishlist, remove from cart
+      removeFromCart(productId, variantId);
     } catch (error) {
       console.error("Error moving item to wishlist:", error);
     }
@@ -154,7 +165,7 @@ const Cart = () => {
       });
 
       if (response.data.success) {
-        console.log("Discounted Total:", cartData.discountedTotal);  // Add this line for debugging
+        console.log("Discounted Total:", cartData.discountedTotal);
         setCouponDiscount(response.data.discount);
         setCartData((prevCart) => ({
           ...prevCart,
@@ -170,26 +181,14 @@ const Cart = () => {
 
   const calculateSubtotal = () => {
     const subtotal = cartData.items.reduce((total, item) => total + (item.variant.price || 0) * (item.quantity || 0), 0);
-    console.log("Subtotal:", subtotal);  // Add this line for debugging
     return subtotal.toFixed(2);
   };
 
-
-
   const calculateTotal = () => {
-    // Ensure subtotal is a valid number
     const subtotal = parseFloat(calculateSubtotal()) || 0;
-
-    // Delivery cost
     const delivery = 6.99;
-
-    // Total before discount
     const totalBeforeDiscount = subtotal + delivery;
-
-    // Total with discount
     const totalWithDiscount = typeof cartData.discountedTotal === 'number' ? cartData.discountedTotal : totalBeforeDiscount;
-
-    // Return formatted total
     return totalWithDiscount.toFixed(2);
   };
 
@@ -282,7 +281,7 @@ const Cart = () => {
                     {cartData.items.length} ITEM(S)
                   </div>
                   <div className={style.val}>
-                  ₹{cartData.items.reduce((total, item) => total + item.variant.price * item.quantity, 0).toFixed(2)}
+                    ₹{cartData.items.reduce((total, item) => total + item.variant.price * item.quantity, 0).toFixed(2)}
                   </div>
                 </li>
                 <li>

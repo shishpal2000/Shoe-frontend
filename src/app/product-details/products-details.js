@@ -1,36 +1,89 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import style from "../../styles/productDetail.module.css";
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import ProductGallery from "./productGallery";
 import axios from "axios";
+import ReactPlayer from 'react-player';
 
 const ProductDetails = ({ slug }) => {
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(1);
   const [selectedSize, setSelectedSize] = useState(1);
+  const [isActive, setIsActive] = useState(false);
+  const [isRatingActive, setRatingIsActive] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [ratings, setRatings] = useState([]);
 
-  useEffect(() => {
+  const userCommentData = [
+    {
+      id: 1,
+      profile: "/user.png",
+      userName: "Guy Hawkins",
+      commTime: "1 week ago",
+      rating: ":star::star::star::star::star:",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+    {
+      id: 2,
+      profile: "/user4.png",
+      userName: "Dianne Russell",
+      commTime: "51 mins ago",
+      rating: ":star::star::star::star::star:",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+    {
+      id: 3,
+      profile: "/user3.png",
+      userName: "Bessie Cooper",
+      commTime: "6 hours ago",
+      rating: ":star::star::star::star::star:",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+    {
+      id: 4,
+      profile: "/user2.png",
+      userName: "Eleanor Pena",
+      commTime: "1 days ago",
+      rating: ":star::star::star::star::star:",
+      descrip:
+        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
+    },
+  ];
+
+  const fetchProductData = useCallback(async () => {
     if (slug) {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products`, {
+      try {
+        const productResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products`, {
           params: { product_slug: slug }
-        })
-        .then((response) => {
-          const { data } = response;
-          if (data.success) {
-            const allSizes = data.data.variants.map(variant => variant.size);
-            const uniqueSizes = [...new Set(allSizes)];
-
-            setProduct({ ...data.data, uniqueSizes });
-          }
-        })
-        .catch((err) => {
-          console.error("Error fetching product data: ", err);
         });
+
+        const { data: productData } = productResponse;
+        if (productData.success) {
+          const allSizes = productData.data.variants.map(variant => variant.size);
+          const uniqueSizes = [...new Set(allSizes)];
+
+          setProduct({ ...productData.data, uniqueSizes });
+
+          const ratingsResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/rating/ratings/${productData.data._id}`);
+          if (ratingsResponse.data.success) {
+            setRatings(ratingsResponse.data.ratings);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching product data: ", err);
+      }
     }
   }, [slug]);
+
+
+  useEffect(() => {
+    fetchProductData();
+  }, [fetchProductData]);
 
   const handleAddToCart = async () => {
     if (!product) return;
@@ -45,7 +98,6 @@ const ProductDetails = ({ slug }) => {
     }
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add-cart`, {
-
         userId: userId,
         productId: product._id,
         variantId: variant._id,
@@ -81,7 +133,6 @@ const ProductDetails = ({ slug }) => {
     }
 
     try {
-
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/wishlist/add-wishlist`, {
         userId,
         productId: product._id,
@@ -103,13 +154,12 @@ const ProductDetails = ({ slug }) => {
     }
   };
 
-  const handleColorClick = (id) => {
-    setSelectedColor(id);
-  };
-
-  const handleSizeClick = (id) => {
-    setSelectedSize(id);
-  };
+  const handleColorClick = (index) => setSelectedColor(index);
+  const handleSizeClick = (index) => setSelectedSize(index);
+  const toggleClass = () => setIsActive(!isActive);
+  const ratingToggleClass = () => setRatingIsActive(!isRatingActive);
+  const handlePlay = () => setIsPlaying(true);
+  const handleEnded = () => setIsPlaying(false);
 
   if (!product) {
     return <p>Loading...</p>;
@@ -124,7 +174,6 @@ const ProductDetails = ({ slug }) => {
           <div className={style.productDetailInnerItems}>
             <div className={style.left}>
               <div className={style.proImgGall}>
-                {/* Product Gallery */}
                 <ProductGallery images={product.images.map(img => img.url)} />
               </div>
 
@@ -159,6 +208,56 @@ const ProductDetails = ({ slug }) => {
                   </li>
                 </ul>
               </div>
+              <div className={style.userComments}>
+                <div className={style.commentBar}>
+                  <h4>User Comments</h4>
+                  <div className={style.dropdown} onClick={ratingToggleClass}>
+                    5 Star Rating <img src="/down.svg" alt="" />
+                    <ul
+                      className={
+                        isRatingActive ? style.activeRating : style.ratingDrop
+                      }
+                    >
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                      <li>5 Star Rating</li>
+                    </ul>
+                  </div>
+                </div>
+                <ul>
+                  {userCommentData.map(
+                    ({ id, userName, commTime, descrip, profile, rating }) => {
+                      return (
+                        <li key={id}>
+                          <div className={style.commLeft}>
+                            <figure className={style.userProfile}>
+                              <img src={profile} alt="" />
+                            </figure>
+                          </div>
+                          <div className={style.commRight}>
+                            <div className={style.userReview}>
+                              <div className={style.userDetailBar}>
+                                <h4>{userName}</h4>
+                                <p>{commTime}</p>
+                              </div>
+                              <div className={style.userRating}>{rating}</div>
+                              <p className={style.descrip}>{descrip}</p>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+                <div className={style.loadmoreCon}>
+                  <Link href="" className={style.loadmore}>
+                    Load More
+                  </Link>
+                </div>
+              </div>
             </div>
 
             <div className={style.right}>
@@ -186,6 +285,7 @@ const ProductDetails = ({ slug }) => {
                 <div className={style.sizeOpt}>
                   <div className={style.bar}>
                     <h4>Size</h4>
+                    <p onClick={toggleClass}>Size chart</p>
                   </div>
 
                   <ul>
@@ -214,7 +314,264 @@ const ProductDetails = ({ slug }) => {
                   </ul>
                 </div>
               </div>
+              <div className={style.vedioSectionMain}>
+                {!isPlaying ? (
+                  <div className="video-overlay" onClick={handlePlay}>
+                    <img src="/vid_img.png" alt="Video Thumbnail" />
+                    <button className="play-button">
+                      <svg
+                        width="64"
+                        height="64"
+                        viewBox="0 0 64 64"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="32" cy="32" r="32" fill="white" />
+                        <path d="M25 20L45 32L25 44V20Z" fill="black" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="iframe-container">
+                    <ReactPlayer
+                      url={product.videoUrl}
+                      playing={isPlaying}
+                      controls
+                      width="100%"
+                      height="316px"
+                      className={style.reactPlayer}
+                      onEnded={handleEnded}
+                    />
+                  </div>
+                )}
+                <style jsx>{`
+                    .video-section {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      text-align: center;
+                    }
+                    .video-overlay {
+                      position: relative;
+                      cursor: pointer;
+                      height: 100%;
+                    }
+                    .video-overlay img {
+                      width: 100%;
+                      height: 100%;
+                    }
+                    .play-button {
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                      background: none;
+                      border: none;
+                      cursor: pointer;
+                      animation: scaleUpDown 1.5s infinite ease-in-out;
+                    }
+                    .play-button svg {
+                      width: 64px;
+                      height: 64px;
+                    }
+                    @keyframes scaleUpDown {
+                      0%,
+                      100% {
+                        transform: translate(-50%, -50%) scale(1);
+                      }
+                      50% {
+                        transform: translate(-50%, -50%) scale(1.2);
+                      }
+                    }
+                    .iframe-container {
+                      width: 100%;
+                      position: relative;
+                      overflow: hidden;
+                    }
+                    .iframe-container iframe {
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                      border: 0;
+                    }
+                  `}</style>
+              </div>
+              <div>
+                <h1>{product.name}</h1>
+                {/* Display product details */}
+
+                <div>
+                  <h2>Ratings and Reviews</h2>
+                  {ratings.length > 0 ? (
+                    <ul>
+                      {ratings.map(rating => (
+                        <li key={rating._id}>
+                          <div>
+                            <h4>{rating.user.firstName}</h4>
+                            <p>{rating.rating} Stars</p>
+                            <p>{rating.comment}</p>
+                            <p>{new Date(rating.createdAt).toLocaleDateString()}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No ratings yet.</p>
+                  )}
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className={isActive ? style.activeFliter : style.sizeChartContainer}>
+        <div
+          className={style.crossBtn}
+          style={{ color: "#fff" }}
+          onClick={toggleClass}
+        >
+          ❌
+        </div>
+        <div className={style.sizeChartInner}>
+          <div className={style.sizeProduct}>
+            <div className={style.ProImg}>
+              <figure>
+                <img src="/cart.png" alt="" />
+              </figure>
+            </div>
+            <div className={style.proDesc}>
+              <h3>U.S. Polo Assn.</h3>
+              <p>U.S. Polo Assn. Men Textured Sneakers</p>
+
+              <div className={style.price}>
+                {/* <h5>₹ 2699</h5> */}
+                <h4>₹ 2699</h4>
+              </div>
+            </div>
+          </div>
+
+          <div className={style.sizeChartList}>
+            <div className={style.sizeOpt}>
+              <div className={style.opt}>
+                <input type="checkbox" />
+                <p>US</p>
+              </div>
+
+              <div className={style.opt}>
+                <input type="checkbox" />
+                <p>EURO</p>
+              </div>
+            </div>
+
+            <table>
+              <tr key="">
+                <th>Select</th>
+                <th>UK</th>
+                <th>US</th>
+                <th>EURO</th>
+                <th>To Fit Foot Length (cm)</th>
+              </tr>
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+
+              <tr key="">
+                <td>
+                  <input name="size" type="radio" />
+                </td>
+                <td>3</td>
+                <td>4</td>
+                <td>36</td>
+                <td>23.9</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

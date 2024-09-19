@@ -27,7 +27,7 @@ const EditInfo = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/user/profile", {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
@@ -50,7 +50,7 @@ const EditInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put("http://localhost:8000/api/user/profile", userInfo, {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, userInfo, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }

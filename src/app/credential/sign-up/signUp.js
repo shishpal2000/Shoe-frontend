@@ -32,7 +32,7 @@ const SignUp = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/api/auth/register/user", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const SignUp = () => {
       });
 
       const result = await response.json();
-       if (response.ok) {
+      if (response.ok) {
         router.push(`/credential/verify-code?email=${encodeURIComponent(email)}`);
       } else {
         setError(result.message || "Registration failed");
