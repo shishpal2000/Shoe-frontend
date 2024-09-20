@@ -53,20 +53,12 @@ const Checkout = () => {
           const cartData = cartResponse.data.data.cart;
           setCartItems(cartData.items);
 
-          // Correct total calculation logic
-          const subtotal = cartData.subtotal;
-          const discount = cartData.discount || 0;
-          const discountedTotal = subtotal - discount; // Subtract discount from subtotal
-          const shipping = 5.00; // Add your shipping logic here
-          const tax = discountedTotal * 0.07; // Tax calculation (optional)
-
-          // Update the order summary with the correct calculation
           setOrderSummary({
-            itemTotal: subtotal,
-            discount: discount,
-            discountedTotal: discountedTotal,
-            shipping: shipping,
-            tax: tax,
+            itemTotal: cartData.subtotal,
+            discount: cartData.discount || 0,
+            discountedTotal: cartData.total,
+            shipping: cartData.shipping || 5.00,
+            tax: cartData.tax || 0,
           });
         }
       } catch (error) {
@@ -80,18 +72,6 @@ const Checkout = () => {
     fetchData();
   }, []);
 
-
-
-  const calculateOrderSummary = (items) => {
-    const itemTotal = items.reduce((total, item) => total + item.variant.price * item.quantity, 0);
-    const discount = items.reduce((acc, item) => acc + (item.discount || 0), 0);
-
-    setOrderSummary((prevSummary) => ({
-      ...prevSummary,
-      itemTotal,
-      discount,
-    }));
-  };
 
   const handleNewAddressSubmit = async (address, type) => {
     try {
@@ -161,19 +141,6 @@ const Checkout = () => {
     setUseSameAddressForBilling(!useSameAddressForBilling);
   };
 
-  const calculateFinalTotal = (subtotal, discount, shipping) => {
-    const discountedTotal = subtotal - discount; // Subtract discount 
-    const finalTotal = discountedTotal + shipping; // Add shipping and tax
-    return finalTotal.toFixed(2); // Return the final total
-  };
-
-  const finalTotal = calculateFinalTotal(
-    orderSummary.itemTotal,
-    orderSummary.discount,
-    orderSummary.shipping,
-  );
-  console.log(finalTotal);
-
   const handleSubmitOrder = async (event) => {
     event.preventDefault();
 
@@ -185,7 +152,6 @@ const Checkout = () => {
         throw new Error("No authentication token or user ID found");
       }
 
-      // Retrieve shipping and billing addresses
       const shippingAddress = selectedShippingAddress
         ? addresses.find((address) => address._id === selectedShippingAddress)
         : newShippingAddress;
@@ -196,7 +162,6 @@ const Checkout = () => {
           ? addresses.find((address) => address._id === selectedBillingAddress)
           : newBillingAddress;
 
-      // Prepare order data
       const orderData = {
         userId,
         shippingAddress: {
@@ -212,7 +177,8 @@ const Checkout = () => {
           variantId: item.variant._id,
           quantity: item.quantity,
         })),
-        totalAmount: orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax,
+        // Reflect total after discount
+        totalAmount: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
         discount: orderSummary.discount,
         finalTotal: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
       };
@@ -229,7 +195,7 @@ const Checkout = () => {
         const paymentResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/create-payment-order`, {
           orderId,
           userId,
-          amount: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
+          amount: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax, // Corrected amount
         }, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -250,6 +216,7 @@ const Checkout = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <>
@@ -452,23 +419,23 @@ const Checkout = () => {
                   <ul>
                     <li>
                       <p>Item Total</p>
-                      <p>${orderSummary.itemTotal.toFixed(2)}</p>
+                      <p>₹{orderSummary.itemTotal.toFixed(2)}</p>
                     </li>
                     <li>
                       <p>Discount</p>
-                      <p>-${orderSummary.discount.toFixed(2)}</p>
+                      <p>-₹{orderSummary.discount.toFixed(2)}</p>
                     </li>
                     <li>
                       <p>Shipping</p>
-                      <p>${orderSummary.shipping.toFixed(2)}</p>
+                      <p>₹{orderSummary.shipping.toFixed(2)}</p>
                     </li>
                     <li>
                       <p>Tax</p>
-                      <p>${orderSummary.tax.toFixed(2)}</p>
+                      <p>₹{orderSummary.tax.toFixed(2)}</p>
                     </li>
                     <li>
                       <h3>Total</h3>
-                      <p>${(orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}</p>
+                      <p>₹{(orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}</p>
                     </li>
                   </ul>
                 )}
@@ -492,7 +459,7 @@ const Checkout = () => {
                           <li>Size {item.variant.size}</li>
                           <li>Quantity {item.quantity || 0}</li>
                         </ul>
-                        <h3>${item.variant.price.toFixed(2)}</h3>
+                        <h3>₹{item.variant.price.toFixed(2)}</h3>
                       </div>
                     </div>
                   ))

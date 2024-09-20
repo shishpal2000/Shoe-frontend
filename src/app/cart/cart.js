@@ -291,7 +291,7 @@ const Cart = () => {
                             </li>
                           </ul>
                         </div>
-                        <h3>${(item.variant?.price * item.quantity || 0).toFixed(2)}</h3>
+                        <h3>₹{(item.variant?.price * item.quantity || 0).toFixed(2)}</h3>
                       </div>
                     </div>
                   ))
