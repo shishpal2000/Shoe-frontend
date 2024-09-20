@@ -8,7 +8,12 @@ import style from "../../styles/cart.module.css";
 import Link from "next/link";
 
 const Cart = () => {
-  const [cartData, setCartData] = useState({ items: [], discountedTotal: null });
+  const [cartData, setCartData] = useState({
+    items: [],
+    discountedTotal: 0,
+    couponCode: "",
+    discountAmount: 0
+  });
   const [isActive, setIsActive] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
@@ -23,10 +28,6 @@ const Cart = () => {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
 
-        if (!token || !userId) {
-          throw new Error("No authentication token or user ID found");
-        }
-
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/get-user-cart/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,6 +35,7 @@ const Cart = () => {
         });
 
         if (response.data.success && response.data.data && response.data.data.cart) {
+          console.log("Fetched Cart Data:", response.data.data.cart);
           setCartData(response.data.data.cart);
         } else {
           console.error("Unexpected response format:", response.data);
@@ -45,6 +47,7 @@ const Cart = () => {
 
     fetchCartData();
   }, []);
+
 
   const updateQuantity = async (productId, variantId, newQuantity) => {
     if (newQuantity < 1) return;
@@ -169,7 +172,9 @@ const Cart = () => {
         setCouponDiscount(response.data.discount);
         setCartData((prevCart) => ({
           ...prevCart,
-          discountedTotal: response.data.finalAmount
+          discountedTotal: response.data.finalAmount,
+          couponCode: response.data.couponCode,
+          discountAmount: response.data.discount,
         }));
       } else {
         console.error("Failed to apply coupon:", response.data.message);
@@ -179,22 +184,44 @@ const Cart = () => {
     }
   };
 
-  const calculateSubtotal = () => {
-    const subtotal = cartData.items.reduce((total, item) => total + (item.variant.price || 0) * (item.quantity || 0), 0);
-    return subtotal.toFixed(2);
+  const calculateSubtotal = (items) => {
+    if (!Array.isArray(items) || items.length === 0) {
+      console.log("No items to calculate subtotal.");
+      return 0;
+    }
+
+    const subtotal = items.reduce((total, item) => {
+      const itemTotal = (item.variant?.price || 0) * (item.quantity || 0);
+      return total + itemTotal;
+    }, 0);
+
+    console.log("Calculated Subtotal:", subtotal);
+    return subtotal;
   };
 
   const calculateTotal = () => {
-    const subtotal = parseFloat(calculateSubtotal()) || 0;
+    const subtotal = parseFloat(calculateSubtotal(cartData.items)) || 0;
     const delivery = 6.99;
     const totalBeforeDiscount = subtotal + delivery;
-    const totalWithDiscount = typeof cartData.discountedTotal === 'number' ? cartData.discountedTotal : totalBeforeDiscount;
+  
+    // Check if there's a valid discounted total; otherwise use totalBeforeDiscount
+    const totalWithDiscount = (typeof cartData.discountedTotal === 'number' && cartData.discountedTotal > 0)
+      ? cartData.discountedTotal + delivery
+      : totalBeforeDiscount;
+  
+    console.log("Subtotal:", subtotal);
+    console.log("Total before discount:", totalBeforeDiscount);
+    console.log("Total with discount:", totalWithDiscount);
+    
     return totalWithDiscount.toFixed(2);
   };
+  
 
   if (!cartData || !cartData.items) {
     return <div>Loading...</div>;
   }
+
+  console.log("Cart Data Items:", cartData.items);
 
   return (
     <>
@@ -286,7 +313,7 @@ const Cart = () => {
                 </li>
                 <li>
                   <div className={style.type}>Subtotal</div>
-                  <div className={style.val}><span>₹{calculateSubtotal()}</span></div>
+                  <div className={style.val}>₹{calculateSubtotal(cartData.items).toFixed(2)}</div>
                 </li>
                 <li>
                   <div className={style.type}>Delivery</div>

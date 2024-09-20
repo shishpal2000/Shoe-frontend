@@ -19,7 +19,7 @@ const Checkout = () => {
   const [newBillingAddress, setNewBillingAddress] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [orderSummary, setOrderSummary] = useState({ itemTotal: 0, shipping: 0, tax: 0 });
+  const [orderSummary, setOrderSummary] = useState({ itemTotal: 0, shipping: 0, tax: 0, discount: 0 });
   const router = useRouter();
 
   useEffect(() => {
@@ -50,9 +50,24 @@ const Checkout = () => {
         }
 
         if (cartResponse.data.success && cartResponse.data.data) {
-          const items = cartResponse.data.data.cart.items;
-          setCartItems(items);
-          calculateOrderSummary(items);
+          const cartData = cartResponse.data.data.cart;
+          setCartItems(cartData.items);
+
+          // Correct total calculation logic
+          const subtotal = cartData.subtotal;
+          const discount = cartData.discount || 0;
+          const discountedTotal = subtotal - discount; // Subtract discount from subtotal
+          const shipping = 5.00; // Add your shipping logic here
+          const tax = discountedTotal * 0.07; // Tax calculation (optional)
+
+          // Update the order summary with the correct calculation
+          setOrderSummary({
+            itemTotal: subtotal,
+            discount: discount,
+            discountedTotal: discountedTotal,
+            shipping: shipping,
+            tax: tax,
+          });
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -65,11 +80,16 @@ const Checkout = () => {
     fetchData();
   }, []);
 
+
+
   const calculateOrderSummary = (items) => {
     const itemTotal = items.reduce((total, item) => total + item.variant.price * item.quantity, 0);
+    const discount = items.reduce((acc, item) => acc + (item.discount || 0), 0);
+
     setOrderSummary((prevSummary) => ({
       ...prevSummary,
       itemTotal,
+      discount,
     }));
   };
 
@@ -141,6 +161,19 @@ const Checkout = () => {
     setUseSameAddressForBilling(!useSameAddressForBilling);
   };
 
+  const calculateFinalTotal = (subtotal, discount, shipping) => {
+    const discountedTotal = subtotal - discount; // Subtract discount 
+    const finalTotal = discountedTotal + shipping; // Add shipping and tax
+    return finalTotal.toFixed(2); // Return the final total
+  };
+
+  const finalTotal = calculateFinalTotal(
+    orderSummary.itemTotal,
+    orderSummary.discount,
+    orderSummary.shipping,
+  );
+  console.log(finalTotal);
+
   const handleSubmitOrder = async (event) => {
     event.preventDefault();
 
@@ -152,6 +185,7 @@ const Checkout = () => {
         throw new Error("No authentication token or user ID found");
       }
 
+      // Retrieve shipping and billing addresses
       const shippingAddress = selectedShippingAddress
         ? addresses.find((address) => address._id === selectedShippingAddress)
         : newShippingAddress;
@@ -162,28 +196,40 @@ const Checkout = () => {
           ? addresses.find((address) => address._id === selectedBillingAddress)
           : newBillingAddress;
 
+      // Prepare order data
       const orderData = {
         userId,
-        shippingAddress,
-        billingAddress,
+        shippingAddress: {
+          _id: shippingAddress._id,
+          ...shippingAddress,
+        },
+        billingAddress: {
+          _id: billingAddress._id,
+          ...billingAddress,
+        },
         cartItems: cartItems.map(item => ({
           product: item.product._id,
-          variant: item.variant._id,
+          variantId: item.variant._id,
           quantity: item.quantity,
         })),
         totalAmount: orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax,
+        discount: orderSummary.discount,
+        finalTotal: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
       };
 
+      // Send order data to the backend
       const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create-order`, orderData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (orderResponse.status === 201) {
         const { orderId } = orderResponse.data;
+
+        // Proceed with payment
         const paymentResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/create-payment-order`, {
           orderId,
           userId,
-          amount: orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax,
+          amount: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
         }, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -409,6 +455,10 @@ const Checkout = () => {
                       <p>${orderSummary.itemTotal.toFixed(2)}</p>
                     </li>
                     <li>
+                      <p>Discount</p>
+                      <p>-${orderSummary.discount.toFixed(2)}</p>
+                    </li>
+                    <li>
                       <p>Shipping</p>
                       <p>${orderSummary.shipping.toFixed(2)}</p>
                     </li>
@@ -418,7 +468,7 @@ const Checkout = () => {
                     </li>
                     <li>
                       <h3>Total</h3>
-                      <p>${(orderSummary.itemTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}</p>
+                      <p>${(orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}</p>
                     </li>
                   </ul>
                 )}

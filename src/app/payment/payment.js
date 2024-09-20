@@ -1,6 +1,7 @@
 "use client"; // Ensure this is at the top
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const RazorpayPayment = () => {
     const searchParams = useSearchParams();
@@ -19,7 +20,7 @@ const RazorpayPayment = () => {
             }
 
             try {
-                const token = localStorage.getItem("token"); // If your API requires authentication
+                const token = localStorage.getItem("token");
                 if (!token) {
                     throw new Error("No authentication token found");
                 }
@@ -63,37 +64,64 @@ const RazorpayPayment = () => {
                     order_id: orderDetails.razorpayOrderId,
                     handler: async (response) => {
                         console.log("Payment Success:", response);
-                        window.location.href = `/payment-success?paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}`;
+
                         try {
                             const token = localStorage.getItem("token");
                             if (!token) {
                                 throw new Error("No authentication token found");
                             }
 
-                            const verifyResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/verify-payment`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token}`
-                                },
-                                body: JSON.stringify({
+                            const verifyResponse = await axios.post(
+                                `${process.env.NEXT_PUBLIC_API_URL}/api/payment/verify-payment`,
+                                {
                                     razorpayOrderId: response.razorpay_order_id,
                                     razorpayPaymentId: response.razorpay_payment_id,
                                     razorpaySignature: response.razorpay_signature
-                                })
-                            });
+                                },
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    }
+                                }
+                            );
 
-                            const result = await verifyResponse.json();
-                            if (result.success) {
+                            if (verifyResponse.data.success) {
                                 alert('Payment verified successfully');
+
+                                const shippingResponse = await axios.post(
+                                    `${process.env.NEXT_PUBLIC_API_URL}/api/shipping/create-shipping`,
+                                    {
+                                        orderId: orderId,
+                                        shipmentAddress: orderDetails.shippingAddress._id,
+                                        totalQuantity: orderDetails.cartItems.reduce((acc, item) => acc + item.quantity, 0),
+                                        shippingDate: new Date()
+                                    },
+                                    {
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Authorization': `Bearer ${token}` // Include token if required
+                                        }
+                                    }
+                                );
+
+                                if (shippingResponse.data.success) {
+                                    console.log('Shipping details saved successfully');
+                                    // Redirect only after successful shipping
+                                    window.location.href = `/payment-success?paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}`;
+                                } else {
+                                    alert('Failed to save shipping details');
+                                    console.error('Shipping response:', shippingResponse.data);
+                                }
                             } else {
                                 alert('Payment verification failed');
                             }
                         } catch (error) {
-                            console.error("Error verifying payment:", error);
-                            alert('Error verifying payment');
+                            console.error("Error processing payment:", error);
+                            alert('Error processing payment');
                         }
                     },
+
                     prefill: {
                         name: `${orderDetails?.shippingAddress?.firstName} ${orderDetails?.shippingAddress?.lastName}`,
                         email: orderDetails?.userEmail || '',

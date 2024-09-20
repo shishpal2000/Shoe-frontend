@@ -17,6 +17,7 @@ const MyAccountSideBar = () => {
             headers: { Authorization: `Bearer ${token}` }
           });
           const user = response.data;
+          console.log(response.data);
           setUserName(`${user.firstName} ${user.lastName}`);
         }
       } catch (error) {
@@ -45,7 +46,7 @@ const MyAccountSideBar = () => {
       <div className={style.sideBarMainContainer}>
         <div className={style.sideBarItems}>
           <div className={style.tittle}>
-            <h3>Hey, {userName}</h3> {/* Display user name */}
+            <h3>Hey, {userName}</h3>
             <p>Welcome to your Account</p>
           </div>
 
