@@ -1,6 +1,7 @@
-
-
+import { Suspense } from 'react';
 import PaymentPage from "./payment";
+
+const Loading = () => <div>Loading payment details...</div>;
 
 export const metadata = {
   title: "Shoe | Payments",
@@ -14,9 +15,9 @@ export const metadata = {
 };
 const page = () => {
   return (
-    <>
-      <PaymentPage />
-    </>
+      <Suspense fallback={<Loading />}>
+        <PaymentPage />
+      </Suspense>
   );
 };
 

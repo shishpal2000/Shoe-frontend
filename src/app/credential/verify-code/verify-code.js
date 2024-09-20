@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+
 const VerifyCode = () => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");

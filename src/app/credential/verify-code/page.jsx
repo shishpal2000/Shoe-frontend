@@ -1,4 +1,7 @@
 import VerifyCode from "./verify-code";
+import { Suspense } from "react";
+
+const Loading = () => <div>Loading payment details...</div>;
 
 export const metadata = {
   title: "Shoe | Verify Code",
@@ -13,7 +16,9 @@ export const metadata = {
 const page = () => {
   return (
     <>
-      <VerifyCode />
+      <Suspense fallback={<Loading />}>
+        <VerifyCode />
+      </Suspense >
     </>
   );
 };
