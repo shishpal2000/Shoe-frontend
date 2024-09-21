@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
-import Collection from "@/components/homePage/ShoeCollection/Collection";
 import style from "../../styles/cart.module.css";
 import Link from "next/link";
 
@@ -11,12 +10,13 @@ const Cart = () => {
   const [cartData, setCartData] = useState({
     items: [],
     discountedTotal: 0,
+    subtotal: 0,
     couponCode: "",
-    discountAmount: 0
+    discountAmount: 0,
+    totalItems: 0,
   });
   const [isActive, setIsActive] = useState(false);
   const [couponCode, setCouponCode] = useState("");
-  const [couponDiscount, setCouponDiscount] = useState(0);
 
   const toggleClass = () => {
     setIsActive(!isActive);
@@ -34,9 +34,12 @@ const Cart = () => {
           },
         });
 
-        if (response.data.success && response.data.data && response.data.data.cart) {
-          console.log("Fetched Cart Data:", response.data.data.cart);
-          setCartData(response.data.data.cart);
+        if (response.data.success && response.data.data.cart) {
+          const updatedCart = response.data.data.cart;
+          setCartData({
+            ...updatedCart,
+            totalItems: updatedCart.items.length,
+          });
         } else {
           console.error("Unexpected response format:", response.data);
         }
@@ -55,36 +58,37 @@ const Cart = () => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
-    try {
-      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/update-item-quantity`,
-        {
-          userId,
-          productId,
-          variantId,
-          quantity: newQuantity,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    console.log("User ID:", userId);
+    console.log("Product ID:", productId);
+    console.log("Variant ID:", variantId);
 
-      if (response.status === 200 && response.data.cart) {
-        setCartData((prevCart) => ({
-          ...prevCart,
-          items: prevCart.items.map((item) =>
-            item.product._id === productId && item.variant._id === variantId
-              ? { ...item, quantity: newQuantity }
-              : item
-          ),
-        }));
-        await applyCoupon();
-      } else {
-        console.error("Unexpected response:", response);
+    try {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/update-item-quantity`, {
+        userId,
+        productId,
+        variantId,
+        quantity: newQuantity,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log('Updated Cart Response:', response.data);
+
+      if (response.data.success && response.data.cart) {
+        const updatedCart = response.data.cart;
+        setCartData({
+          ...updatedCart,
+          totalItems: updatedCart.items.reduce((acc, item) => acc + item.quantity, 0),
+        });
+      }
+      else {
+        console.error("Cart update failed, resetting cart data");
+        setCartData({ items: [] });
       }
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      console.error("Error updating quantity:", error.response ? error.response.data : error.message);
     }
   };
 
@@ -98,30 +102,28 @@ const Cart = () => {
     }
 
     try {
-      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove-cart/${userId}/${productId}/${variantId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove-cart/${userId}/${productId}/${variantId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      if (response.status === 200) {
-        setCartData((prevCart) => ({
-          ...prevCart,
-          items: prevCart.items.filter(
-            (item) =>
-              !(item.product._id === productId && item.variant._id === variantId)
-          ),
-        }));
-        await applyCoupon();
-      } else {
-        console.error("Failed to remove item from cart:", response);
+      if (response.data.success && response.data.cart) {
+        const updatedCart = response.data.cart;
+        setCartData({
+          ...updatedCart,
+          totalItems: updatedCart.items.reduce((acc, item) => acc + item.quantity, 0), // Ensure totalItems is updated based on quantity
+        });
+      }
+      else {
+        console.error("Cart update failed, resetting cart data");
+        setCartData({ items: [] });
       }
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
   };
+
 
   const moveToWishlist = async (productId, variantId) => {
     const token = localStorage.getItem("token");
@@ -159,8 +161,7 @@ const Cart = () => {
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/apply-coupon`, {
         couponCode,
-        cartItems: cartData.items,
-        userId
+        userId,
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -168,13 +169,12 @@ const Cart = () => {
       });
 
       if (response.data.success) {
-        console.log("Discounted Total:", cartData.discountedTotal);
-        setCouponDiscount(response.data.discount);
         setCartData((prevCart) => ({
           ...prevCart,
           discountedTotal: response.data.finalAmount,
-          couponCode: response.data.couponCode,
           discountAmount: response.data.discount,
+          couponCode: response.data.couponCode || "",
+          totalItems: prevCart.items.reduce((acc, item) => acc + item.quantity, 0),
         }));
       } else {
         console.error("Failed to apply coupon:", response.data.message);
@@ -184,41 +184,22 @@ const Cart = () => {
     }
   };
 
-  const calculateSubtotal = (items) => {
-    if (!Array.isArray(items) || items.length === 0) {
-      console.log("No items to calculate subtotal.");
-      return 0;
-    }
-
-    const subtotal = items.reduce((total, item) => {
-      const itemTotal = (item.variant?.price || 0) * (item.quantity || 0);
-      return total + itemTotal;
+  const calculateSubtotal = (items = []) => {
+    return items.reduce((total, item) => {
+      const itemPrice = item?.variant?.price || 0;
+      const itemQuantity = item?.quantity || 0;
+      return total + itemPrice * itemQuantity;
     }, 0);
-
-    console.log("Calculated Subtotal:", subtotal);
-    return subtotal;
   };
 
   const calculateTotal = () => {
     const subtotal = parseFloat(calculateSubtotal(cartData.items)) || 0;
     const delivery = 6.99;
-    const totalBeforeDiscount = subtotal + delivery;
-  
-    // Check if there's a valid discounted total; otherwise use totalBeforeDiscount
-    const totalWithDiscount = (typeof cartData.discountedTotal === 'number' && cartData.discountedTotal > 0)
-      ? cartData.discountedTotal + delivery
-      : totalBeforeDiscount;
-  
-    console.log("Subtotal:", subtotal);
-    console.log("Total before discount:", totalBeforeDiscount);
-    console.log("Total with discount:", totalWithDiscount);
-    
-    return totalWithDiscount.toFixed(2);
+    return (cartData.discountedTotal > 0 ? cartData.discountedTotal : subtotal + delivery).toFixed(2);
   };
-  
 
-  if (!cartData || !cartData.items) {
-    return <div>Loading...</div>;
+  if (!cartData.items || cartData.items.length === 0) {
+    return <div>Your cart is empty.</div>;
   }
 
   console.log("Cart Data Items:", cartData.items);
@@ -235,7 +216,7 @@ const Cart = () => {
                 <p className={style.cardLine}>
                   Items in your bag not reserved - check out now to make them yours.
                 </p>
-                {cartData.items && cartData.items.length > 0 ? (
+                {cartData?.items?.length > 0 ? (
                   cartData.items.map((item) => (
                     <div key={item.variant._id} className={style.shortProDescrip}>
                       <div className={style.ProImg}>
@@ -252,14 +233,18 @@ const Cart = () => {
                           <p>{item.product?.description || 'Product Description'}</p>
                           <ul className={style.selectOpt}>
                             <li>
-                              <div className={`${style.sizeDropdown} ${isActive ? style.active : ""}`} onClick={toggleClass}>
+                              <div className={style.sizeDropdown}>
                                 SIZE {item.variant?.size || 'N/A'}
                                 <ul className={style.sizeOptions}>
-                                  {item.product.variants.map((variant) => (
-                                    <li key={variant._id} onClick={() => updateQuantity(item.product._id, variant._id, item.quantity)}>
-                                      {variant.size}
-                                    </li>
-                                  ))}
+                                  {item.product.variants && Array.isArray(item.product.variants) && item.product.variants.length > 0 ? (
+                                    item.product.variants.map((variant) => (
+                                      <li key={variant._id} onClick={() => updateQuantity(item.product._id, variant._id, item.quantity)}>
+                                        {variant.size}
+                                      </li>
+                                    ))
+                                  ) : (
+                                    <li>No variants available</li>
+                                  )}
                                 </ul>
                                 <figure>
                                   <img src="/down.svg" alt="" />
@@ -305,24 +290,20 @@ const Cart = () => {
               <ul>
                 <li>
                   <div className={style.type}>
-                    {cartData.items.length} ITEM(S)
+                    {Array.isArray(cartData.items) ? cartData.items.length : 0} ITEM(S)
                   </div>
                   <div className={style.val}>
-                    ₹{cartData.items.reduce((total, item) => total + item.variant.price * item.quantity, 0).toFixed(2)}
+                    ₹{calculateSubtotal(cartData.items).toFixed(2)}
                   </div>
-                </li>
-                <li>
-                  <div className={style.type}>Subtotal</div>
-                  <div className={style.val}>₹{calculateSubtotal(cartData.items).toFixed(2)}</div>
                 </li>
                 <li>
                   <div className={style.type}>Delivery</div>
                   <div className={style.val}>₹6.99</div>
                 </li>
-                {couponDiscount > 0 && (
+                {cartData.discountAmount > 0 && (
                   <li>
                     <div className={style.type}>Discount</div>
-                    <div className={style.val}><span>₹{couponDiscount.toFixed(2) || '0.00'}</span></div>
+                    <div className={style.val}><span>₹{cartData.discountAmount.toFixed(2) || '0.00'}</span></div>
                   </li>
                 )}
                 <li>
@@ -335,20 +316,17 @@ const Cart = () => {
                   <button>Checkout</button>
                 </Link>
               </div>
-              <div className={style.promo}>
+              <div className={style.coupon}>
+                <h4>Apply Coupon</h4>
                 <input
                   type="text"
+                  placeholder="Enter coupon code"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
-                  placeholder="Enter coupon code"
                 />
-                <button onClick={applyCoupon}>Apply Coupon</button>
+                <button onClick={applyCoupon}>Apply</button>
               </div>
             </div>
-          </div>
-          <div className={style.relatedProduct}>
-            <h2>Related Products</h2>
-            <Collection />
           </div>
         </div>
       </div>

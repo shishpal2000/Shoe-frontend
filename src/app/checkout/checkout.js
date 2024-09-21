@@ -19,7 +19,13 @@ const Checkout = () => {
   const [newBillingAddress, setNewBillingAddress] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [orderSummary, setOrderSummary] = useState({ itemTotal: 0, shipping: 0, tax: 0, discount: 0 });
+  const [orderSummary, setOrderSummary] = useState({
+    itemTotal: 0,
+    shipping: 0,
+    tax: 0,
+    discount: 0,
+    discountedTotal: 0,
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -56,7 +62,7 @@ const Checkout = () => {
           setOrderSummary({
             itemTotal: cartData.subtotal,
             discount: cartData.discount || 0,
-            discountedTotal: cartData.total,
+            discountedTotal: cartData.discountedTotal || 0,
             shipping: cartData.shipping || 5.00,
             tax: cartData.tax || 0,
           });
@@ -162,6 +168,8 @@ const Checkout = () => {
           ? addresses.find((address) => address._id === selectedBillingAddress)
           : newBillingAddress;
 
+      const totalAmount = (orderSummary.discountedTotal || 0) + (orderSummary.shipping || 0) + (orderSummary.tax || 0);
+
       const orderData = {
         userId,
         shippingAddress: {
@@ -178,9 +186,9 @@ const Checkout = () => {
           quantity: item.quantity,
         })),
         // Reflect total after discount
-        totalAmount: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
+        totalAmount: totalAmount,
         discount: orderSummary.discount,
-        finalTotal: orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax,
+        finalTotal: totalAmount,
       };
 
       // Send order data to the backend
@@ -435,7 +443,8 @@ const Checkout = () => {
                     </li>
                     <li>
                       <h3>Total</h3>
-                      <p>₹{(orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}</p>
+                      <p>₹{(orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}
+                      </p>
                     </li>
                   </ul>
                 )}

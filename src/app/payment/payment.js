@@ -34,8 +34,7 @@ const RazorpayPayment = () => {
                 const data = await response.json();
 
                 if (data.success) {
-                    setOrderDetails(data.data);
-                    console.log("Order Details:", data.data);
+                    setOrderDetails(data.order);
                 } else {
                     setError('Failed to fetch order details');
                 }
@@ -63,7 +62,6 @@ const RazorpayPayment = () => {
                     name: 'Shoe',
                     order_id: orderDetails.razorpayOrderId,
                     handler: async (response) => {
-                        console.log("Payment Success:", response);
 
                         try {
                             const token = localStorage.getItem("token");
@@ -89,13 +87,23 @@ const RazorpayPayment = () => {
                             if (verifyResponse.data.success) {
                                 alert('Payment verified successfully');
 
+                                const totalQuantity = orderDetails.cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+                                // Check if shippingAddress ID is present
+                                if (!orderDetails.shippingAddress) {
+                                    alert('Shipping address is not available');
+                                    return;
+                                }
+
+                                const shippingAddressId = orderDetails.shippingAddress.toString(); // Ensure it's a string
+
                                 const shippingResponse = await axios.post(
                                     `${process.env.NEXT_PUBLIC_API_URL}/api/shipping/create-shipping`,
                                     {
                                         orderId: orderId,
-                                        shipmentAddress: orderDetails.shippingAddress._id,
-                                        totalQuantity: orderDetails.cartItems.reduce((acc, item) => acc + item.quantity, 0),
-                                        shippingDate: new Date()
+                                        shipmentAddress: shippingAddressId,
+                                        totalQuantity: totalQuantity,
+                                        shippingDate: new Date() // Assuming you want the current date for shipping date
                                     },
                                     {
                                         headers: {
@@ -106,8 +114,6 @@ const RazorpayPayment = () => {
                                 );
 
                                 if (shippingResponse.data.success) {
-                                    console.log('Shipping details saved successfully');
-                                    // Redirect only after successful shipping
                                     window.location.href = `/payment-success?paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}`;
                                 } else {
                                     alert('Failed to save shipping details');
@@ -116,6 +122,7 @@ const RazorpayPayment = () => {
                             } else {
                                 alert('Payment verification failed');
                             }
+
                         } catch (error) {
                             console.error("Error processing payment:", error);
                             alert('Error processing payment');
@@ -138,8 +145,6 @@ const RazorpayPayment = () => {
                 const razorpayObject = new window.Razorpay(options);
 
                 razorpayObject.on('payment.failed', function (response) {
-                    console.log("Payment Failed:", response);
-                    console.error("Payment Failed:", response);
                     window.location.href = `/payment-failed?reason=${response.error.description}`;
                     alert('Payment Failed');
                 });
@@ -153,7 +158,6 @@ const RazorpayPayment = () => {
             document.body.appendChild(script);
 
             return () => {
-                // Clean up the script
                 document.body.removeChild(script);
             };
         }
@@ -165,23 +169,45 @@ const RazorpayPayment = () => {
     return (
         <div style={{ padding: '20px' }}>
             <hr />
-            <h2>{orderDetails?.courseName || 'Advanced Data Structures & Algorithms Course'}</h2>
-            <h3>Description</h3>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr style={{ backgroundColor: '#f4f4f4' }}>
+                        <th style={{ padding: '10px', border: '1px solid #ddd' }}>Item</th>
+                        <th style={{ padding: '10px', border: '1px solid #ddd' }}>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {orderDetails?.cartItems.map((item, index) => (
+                        <tr key={index}>
+                            <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                                {item.productName || 'Product Name'}
+                            </td>
+                            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{item.quantity}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
 
-            <ul>
-                <li>Best Course for SDE placements</li>
-                <li>Available in 4 major Languages: JAVA, C/C++, Python, JavaScript</li>
-                <li>Lifetime Access</li>
-            </ul>
-
-            <span>
-                Cost: {orderDetails ? `${(orderDetails.totalAmount)} Rupees` : 'Loading...'}
-                <button id="pay-button" style={{ marginLeft: '10px', padding: '10px 20px', backgroundColor: '#2300a3', color: '#fff', border: 'none', cursor: 'pointer' }}>
+            <div style={{ marginTop: '20px' }}>
+                <h4>Total Amount: {orderDetails ? `${orderDetails.finalTotal} Rupees` : 'Loading...'}</h4>
+                <br />
+                <button
+                    id="pay-button"
+                    style={{
+                        marginLeft: '0px',
+                        padding: '20px 30px',
+                        backgroundColor: '#2300a3',
+                        color: '#fff',
+                        border: 'none',
+                        cursor: 'pointer'
+                    }}
+                >
                     Pay Now & Get Access
                 </button>
-            </span>
+            </div>
             <hr />
         </div>
+
     );
 };
 
