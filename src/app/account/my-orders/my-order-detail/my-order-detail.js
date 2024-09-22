@@ -3,89 +3,92 @@ import MyAccountSideBar from "@/components/MyAccountSideBar/MyAccountSideBar";
 import { MyAccoutPageLinkBar } from "@/components/PageLinkBar/PageLinkBar";
 import style from "../../../../styles/myAccount.module.css";
 import styles from "../../../../styles/myOrder.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 const OrderTrackDetail = () => {
+  const router = useRouter();
+  const { orderId } = router.query; // Get the orderId from the URL
+  const [order, setOrder] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
   const toggleClass = () => {
     setIsActive(!isActive);
   };
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      if (!orderId) return; // Ensure orderId is defined
+      try {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        if (!token || !userId) {
+          throw new Error("No authentication token or user ID found");
+        }
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${orderId}`);
+        setOrder(response.data.order); // Assuming the API returns the specific order
+      } catch (error) {
+        console.error("Error fetching order details:", error);
+      }
+    };
+
+    fetchOrder();
+  }, [orderId]);
+
+  if (!order) {
+    return <div>Loading...</div>; // Optionally handle loading state
+  }
+
   return (
-    <>
-      <div className={style.myAccountMainContainer}>
-        <MyAccoutPageLinkBar currentPage="My Orders" />
-        <div className="container">
-          <div className={style.myAccountInnerItems}>
-            <div className={style.phoneFilterButton} onClick={toggleClass}>
-              <figure>
-                <img src="/user.svg" alt="" />
-              </figure>
-            </div>
-            <div className={isActive ? style.activeFliter : style.left}>
-              <MyAccountSideBar />
-            </div>
-            <div className={style.right}>
-              <div className={styles.myOrderDetailBar}>
-                <h4>My Orders</h4>
-                <div className={styles.orderDetail}>
-                  <div className={styles.left}>
-                    <h4>Order no: #123456789</h4>
-                    <p>
-                      <span>Order Date :</span> 2 June 2023 2:40 PM
-                    </p>
-                    <p>
-                      <span>Estimated Delivery Date :</span> 8 June 2023
-                    </p>
-                  </div>
-                  <div className={styles.right}>
-                    <div className={styles.trackTag}>
-                      Track order{" "}
-                      <figure>
-                        <img src="/trackLoc.svg" alt="" />
-                      </figure>
-                    </div>
-                    <p>
-                      <span>Order Status :</span> Inprogress
-                    </p>
-                    <p>
-                      <span>Payment Method :</span> Cash on delivery
-                    </p>
-                  </div>
+    <div className={style.myAccountMainContainer}>
+      <MyAccoutPageLinkBar currentPage="Order Details" />
+      <div className="container">
+        <div className={style.myAccountInnerItems}>
+          <div className={style.phoneFilterButton} onClick={toggleClass}>
+            <figure>
+              <img src="/user.svg" alt="" />
+            </figure>
+          </div>
+          <div className={isActive ? style.activeFliter : style.left}>
+            <MyAccountSideBar />
+          </div>
+          <div className={style.right}>
+            <div className={styles.myOrderDetailBar}>
+              <h4>Order Details</h4>
+              <div className={styles.orderDetail}>
+                <div className={styles.left}>
+                  <h4>Order no: {order.orderNumber}</h4>
+                  <p>
+                    <span>Order Date :</span> {new Date(order.createdAt).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <span>Total Amount :</span> ${order.finalTotal}
+                  </p>
+                </div>
+                <div className={styles.right}>
+                  <p>
+                    <span>Order Status :</span> {order.status}
+                  </p>
                 </div>
               </div>
 
               <div className={styles.orderTrackBar}>
                 <ul>
-                  <li>
-                    <h3>Order Confirmed</h3>
-                    <i></i>
-                    <p>Wed, 11 th Jan</p>
-                  </li>
-
-                  <li>
-                    <h3>Shipped</h3>
-                    <i></i>
-                    <p>Wed, 11 th Jan</p>
-                  </li>
-
-                  <li>
-                    <h3>Out For Delivery</h3>
-                    <i></i>
-                    <p>Wed, 11 th Jan</p>
-                  </li>
-
-                  <li>
-                    <h3>Delivered</h3>
-                    <i></i>
-                    <p>Expected by, Mon 16th</p>
-                  </li>
+                  {order.cartItems.map((item, idx) => (
+                    <li key={idx}>
+                      <h3>{item.productName}</h3>
+                      <p>Price: ${item.price}</p>
+                      <p>Quantity: {item.quantity}</p>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
