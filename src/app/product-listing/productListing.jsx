@@ -23,10 +23,7 @@ const ProductListing = () => {
 
         const { products: fetchedProducts, filters: fetchedFilters } = response.data.data;
 
-        if (Object.keys(fetchedFilters).length > 0) {
-          setFilterOptions(fetchedFilters);
-        }
-
+        setFilterOptions(fetchedFilters || {});
         setProducts(fetchedProducts || []);
 
       } catch (error) {

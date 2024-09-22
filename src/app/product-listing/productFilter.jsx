@@ -26,14 +26,14 @@ const ProductFilter = ({ filterOptions = {}, onFilterChange }) => {
           newFilters[filterType] = newFilters[filterType].filter(item => item !== value);
         }
       } else {
-        newFilters[filterType] = value;
+        newFilters[filterType] = value; // For single select inputs (like radio buttons)
       }
 
+      console.log('Updated filters:', newFilters); // Log updated filters
       onFilterChange(newFilters);
       return newFilters;
     });
   };
-
 
   const categories = [
     {

@@ -54,7 +54,7 @@ const ProductList = ({ products }) => {
                     <div className={style.price}>
                       {price && (
                         <p className={style.productPrice}>
-                          ${price.toFixed(2)}
+                           ₹{price.toFixed(2)}
                         </p>
                       )}
                     </div>
