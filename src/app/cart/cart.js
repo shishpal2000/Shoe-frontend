@@ -102,22 +102,27 @@ const Cart = () => {
     }
 
     try {
-      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove-cart/${userId}/${productId}/${variantId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove-cart/${userId}/${productId}/${variantId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data.success && response.data.cart) {
         const updatedCart = response.data.cart;
-        setCartData({
-          ...updatedCart,
-          totalItems: updatedCart.items.reduce((acc, item) => acc + item.quantity, 0), // Ensure totalItems is updated based on quantity
-        });
-      }
-      else {
+
+        // Update the cart state
+        setCartData((prevCart) => ({
+          ...prevCart,
+          items: updatedCart.items, // Update with remaining items
+          totalItems: updatedCart.items.reduce((acc, item) => acc + item.quantity, 0),
+        }));
+      } else {
         console.error("Cart update failed, resetting cart data");
-        setCartData({ items: [] });
+        setCartData({ items: [] }); // You might want to handle this differently
       }
     } catch (error) {
       console.error("Error removing item from cart:", error);
@@ -216,7 +221,7 @@ const Cart = () => {
                 <p className={style.cardLine}>
                   Items in your bag not reserved - check out now to make them yours.
                 </p>
-                {cartData?.items?.length > 0 ? (
+                {cartData.items?.length > 0 ? (
                   cartData.items.map((item) => (
                     <div key={item.variant._id} className={style.shortProDescrip}>
                       <div className={style.ProImg}>
@@ -283,6 +288,7 @@ const Cart = () => {
                 ) : (
                   <div>Your cart is empty</div>
                 )}
+
               </div>
             </div>
             <div className={style.right}>

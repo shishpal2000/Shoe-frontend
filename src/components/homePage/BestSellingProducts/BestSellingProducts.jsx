@@ -9,21 +9,39 @@ import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 import Link from "next/link";
 
 const BestSellingProducts = () => {
-  const [activeTab, setActiveTab] = useState("Men");
+  const [activeTab, setActiveTab] = useState(null); 
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [categoryLoading, setCategoryLoading] = useState(true); 
 
-  const TabOptionData = [
-    { id: 1, tabName: "Men" },
-    { id: 2, tabName: "Women" },
-    { id: 3, tabName: "Boy" },
-    { id: 4, tabName: "Child" },
-  ];
+  const fetchCategories = async () => {
+    setCategoryLoading(true);
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/get-all-categories`, {
+        params: { includeParents: true } 
+      });
+      const fetchedCategories = response.data.data;
+
+      if (fetchedCategories.length > 0) {
+        setCategories(fetchedCategories);
+        setActiveTab(fetchedCategories[0].slug); 
+      } else {
+        console.error("No parent categories found");
+      }
+    } catch (error) {
+      console.error("Error fetching categories", error);
+    } finally {
+      setCategoryLoading(false);
+    }
+  };
 
   const fetchProducts = async (category) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products?isNewArrival=true`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products`, {
+        params: { category: category.toLowerCase(), isNewArrival: true },
+      });
       setProducts(response.data.data.products);
     } catch (error) {
       console.error("Error fetching products", error);
@@ -33,48 +51,58 @@ const BestSellingProducts = () => {
   };
 
   useEffect(() => {
-    fetchProducts(activeTab);
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (activeTab) {
+      fetchProducts(activeTab);
+    }
   }, [activeTab]);
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const handleTabClick = (tabSlug) => {
+    setActiveTab(tabSlug);
   };
 
   return (
-    <>
-      <div className={styles.tab_main_container}>
-        <div className={styles.tabContainer}>
-          <SectionTittle secTittle="New Arrivals" />
-          <div className="container">
-            <div className={styles.tab_btn_container}>
-              {TabOptionData.map((data) => (
-                <div
-                  key={data.id}
-                  className={`${styles.tab} ${activeTab === data.tabName ? styles.active : ""}`}
-                  onClick={() => handleTabClick(data.tabName)}
-                >
-                  {data.tabName}
-                </div>
-              ))}
-            </div>
-            <div className={styles.content}>
-              {loading ? (
-                <p>Loading...</p>
-              ) : (
-                <>
-                  <Collection products={products} /> 
-                  <div style={{ textAlign: "center", marginTop: "56.29px" }}>
-                    <Link href="/product-listing">
-                      <SecondaryBtn btnText="explore more" />
-                    </Link>
+    <div className={styles.tab_main_container}>
+      <div className={styles.tabContainer}>
+        <SectionTittle secTittle="New Arrivals" />
+        <div className="container">
+          {categoryLoading ? (
+            <p>Loading Categories...</p>
+          ) : (
+            <>
+              <div className={styles.tab_btn_container}>
+                {categories.map((category) => (
+                  <div
+                    key={category.slug} 
+                    className={`${styles.tab} ${activeTab === category.slug ? styles.active : ""}`}
+                    onClick={() => handleTabClick(category.slug)} 
+                  >
+                    {category.name} 
                   </div>
-                </>
-              )}
-            </div>
-          </div>
+                ))}
+              </div>
+              <div className={styles.content}>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <>
+                    <Collection products={products} />
+                    <div style={{ textAlign: "center", marginTop: "56.29px" }}>
+                      <Link href="/product-listing">
+                        <SecondaryBtn btnText="Explore More" />
+                      </Link>
+                    </div>
+                  </>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
