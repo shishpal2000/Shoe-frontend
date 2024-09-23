@@ -302,7 +302,7 @@ const ProductDetails = ({ slug }) => {
                 ) : (
                   <div className="iframe-container">
                     <ReactPlayer
-                      url={product.videoUrl}
+                      url={product.video_url}
                       playing={isPlaying}
                       controls
                       width="100%"
@@ -313,58 +313,45 @@ const ProductDetails = ({ slug }) => {
                   </div>
                 )}
                 <style jsx>{`
-                    .video-section {
-                      display: flex;
-                      flex-direction: column;
-                      align-items: center;
-                      text-align: center;
-                    }
-                    .video-overlay {
-                      position: relative;
-                      cursor: pointer;
-                      height: 100%;
-                    }
-                    .video-overlay img {
-                      width: 100%;
-                      height: 100%;
-                    }
-                    .play-button {
-                      position: absolute;
-                      top: 50%;
-                      left: 50%;
-                      transform: translate(-50%, -50%);
-                      background: none;
-                      border: none;
-                      cursor: pointer;
-                      animation: scaleUpDown 1.5s infinite ease-in-out;
-                    }
-                    .play-button svg {
-                      width: 64px;
-                      height: 64px;
-                    }
-                    @keyframes scaleUpDown {
-                      0%,
-                      100% {
-                        transform: translate(-50%, -50%) scale(1);
-                      }
-                      50% {
-                        transform: translate(-50%, -50%) scale(1.2);
-                      }
-                    }
-                    .iframe-container {
-                      width: 100%;
-                      position: relative;
-                      overflow: hidden;
-                    }
-                    .iframe-container iframe {
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 100%;
-                      border: 0;
-                    }
-                  `}</style>
+        .video-overlay {
+          position: relative;
+          cursor: pointer;
+          height: 100%;
+        }
+        .video-overlay img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* Ensures the image covers the area without distortion */
+        }
+        .play-button {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          animation: scaleUpDown 1.5s infinite ease-in-out;
+        }
+        .play-button svg {
+          width: 64px;
+          height: 64px;
+        }
+        @keyframes scaleUpDown {
+          0%,
+          100% {
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% {
+            transform: translate(-50%, -50%) scale(1.2);
+          }
+        }
+        .iframe-container {
+          width: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+      `}</style>
               </div>
             </div>
           </div>
