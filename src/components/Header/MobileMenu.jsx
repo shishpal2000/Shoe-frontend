@@ -64,7 +64,7 @@ const MobileNav = () => {
         </Link>
 
         <Link onClick={toggleMenu} href="/product-listing">
-          New Arrivals
+          Shoes
         </Link>
 
         {/* <div className={styles.dropdown}>
