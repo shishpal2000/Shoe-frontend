@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import style from "../../../styles/categoriesCard.module.css";
 import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";
-import axios from "axios";  // Assuming axios is used for API calls
-
+import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Link from "next/link";
 
 const CategoriesCard = () => {
   const [categories, setCategories] = useState([]);
@@ -47,7 +47,9 @@ const CategoriesCard = () => {
             </figure>
           </div>
           <div className={style.cardBtn_container}>
-            <PrimaryBtn btnText="Buy Now" />
+            <Link href={`/products?category=${category._id}`}>
+              <PrimaryBtn btnText="Buy Now" />
+            </Link>
           </div>
         </div>
       ))}

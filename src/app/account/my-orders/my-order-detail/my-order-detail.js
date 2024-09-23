@@ -26,12 +26,16 @@ const OrderTrackDetail = () => {
         if (!token || !userId) {
           throw new Error("No authentication token or user ID found");
         }
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${orderId}`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/orders/get-order/${orderId}`,
+          { headers: { Authorization: `Bearer ${token}` } } // Add token in headers
+        );
         setOrder(response.data.order); // Assuming the API returns the specific order
       } catch (error) {
         console.error("Error fetching order details:", error);
       }
     };
+
 
     fetchOrder();
   }, [orderId]);

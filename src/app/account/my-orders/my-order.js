@@ -20,7 +20,9 @@ const MyOrders = () => {
         if (!token || !userId) {
           throw new Error("No authentication token or user ID found");
         }
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user-orders/${userId}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user-orders/${userId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setOrders(response.data.orders);
         console.log(response.data.orders);
         setLoading(false);

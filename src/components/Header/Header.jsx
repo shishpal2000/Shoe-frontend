@@ -1,7 +1,19 @@
+"use client"
+import { useState } from "react";
 import Link from "next/link";
 import style from "../../styles/header.module.css";
 
 const Header = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    if (searchTerm) {
+      // Redirect to the search results page
+      window.location.href = `/search?name=${encodeURIComponent(searchTerm)}`;
+    }
+  };
+
   return (
     <>
       <div className={style.header_main}>
@@ -13,16 +25,20 @@ const Header = () => {
               </h2>
             </div>
             <div className={style.search}>
-              <input
-                type="text"
-                placeholder="Search Product"
-                alt="search icon"
-              />
-              <div className={style.icon}>
-                <figure>
-                  <img src="/search.svg" alt="" />
-                </figure>
-              </div>
+              <form onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Search Product"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  alt="search icon"
+                />
+                <button type="submit" className={style.icon}>
+                  <figure>
+                    <img src="/search.svg" alt="search icon" />
+                  </figure>
+                </button>
+              </form>
             </div>
             <div className={style.contact}>
               <div className={style.icon}>
