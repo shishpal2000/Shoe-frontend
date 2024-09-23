@@ -63,14 +63,17 @@ const MobileNav = () => {
           Home
         </Link>
 
-        <div className={styles.dropdown}>
+        <Link onClick={toggleMenu} href="/product-listing">
+          New Arrivals
+        </Link>
+
+        {/* <div className={styles.dropdown}>
           <button onClick={() => toggleDropdown("shoes")}>
             Shoes <img src="/dropDownArrow.svg" alt="" />
           </button>
           <div
-            className={`${styles.dropdownContent} ${
-              dropdowns.shoes ? styles.open : ""
-            }`}
+            className={`${styles.dropdownContent} ${dropdowns.shoes ? styles.open : ""
+              }`}
           >
             <Link onClick={toggleMenu} href="/">
               Shoes 1
@@ -80,24 +83,24 @@ const MobileNav = () => {
               Shoes 2
             </Link>
           </div>
-        </div>
+        </div> */}
 
         <Link onClick={toggleMenu} href="/new-arrivals">
           New Arrivals
         </Link>
 
-        <Link onClick={toggleMenu} href="/">
+        <Link onClick={toggleMenu} href="/about-us">
           About Us
         </Link>
 
-        <Link onClick={toggleMenu} href="/">
+        <Link onClick={toggleMenu} href="/account/my-orders">
           <figure>
             <img src="/credential/log-in" alt="" />
             Users
           </figure>
         </Link>
 
-        <Link onClick={toggleMenu} href="/">
+        <Link onClick={toggleMenu} href="/cart">
           <figure>
             <img src="/cart.svg" alt="" />
             Cart
