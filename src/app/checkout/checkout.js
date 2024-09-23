@@ -431,7 +431,7 @@ const Checkout = () => {
                     </li>
                     <li>
                       <p>Discount</p>
-                      <p>-₹{orderSummary.discount.toFixed(2)}</p>
+                      <p>-₹{orderSummary.discount ? orderSummary.discount.toFixed(2) : '0.00'}</p>
                     </li>
                     <li>
                       <p>Shipping</p>
@@ -443,7 +443,7 @@ const Checkout = () => {
                     </li>
                     <li>
                       <h3>Total</h3>
-                      <p>₹{(orderSummary.discountedTotal + orderSummary.shipping + orderSummary.tax).toFixed(2)}
+                      <p>₹{((orderSummary.discountedTotal || orderSummary.itemTotal) + orderSummary.shipping + orderSummary.tax).toFixed(2)}
                       </p>
                     </li>
                   </ul>
