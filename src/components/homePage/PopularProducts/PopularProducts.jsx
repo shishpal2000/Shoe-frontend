@@ -1,46 +1,51 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
+import axios from "axios";
+import Link from "next/link"; // Import Link for navigation
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 import style from "../../../styles/popularProduct.module.css";
 
 const PopularProducts = () => {
-  const ShoesData = [
-    {
-      id: 1,
-      name: "Running sport shoe",
-      price: "₹ 3999.00",
-      img: "shoe-2.png",
-    },
-    {
-      id: 2,
-      name: "Running sport shoe",
-      price: "₹ 3999.00",
-      img: "shoe-2.png",
-    },
-    {
-      id: 3,
-      name: "Running sport shoe",
-      price: "₹ 3999.00",
-      img: "shoe-2.png",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/product/get-all-products`
+        );
+
+        const productsArray = response.data.data.products;
+
+        // Filter products with rating >= 4
+        const filteredProducts = productsArray.filter(
+          (product) => product.ratingsAverage >= 4
+        );
+
+        setProducts(filteredProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    arrows: true,
-    slidesToShow: 3, // Default number of slides to show
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
     responsive: [
       {
-        breakpoint: 1024, // Settings for screens <= 1024px
+        breakpoint: 1024,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -49,7 +54,7 @@ const PopularProducts = () => {
         },
       },
       {
-        breakpoint: 600, // Settings for screens <= 600px
+        breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -57,7 +62,7 @@ const PopularProducts = () => {
         },
       },
       {
-        breakpoint: 388, // Settings for screens <= 480px
+        breakpoint: 388,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -91,20 +96,48 @@ const PopularProducts = () => {
 
             <div className={`${style.right}`}>
               <Slider {...settings}>
-                {ShoesData.map((data) => (
-                  <div className={style.shoeSlideCard} key={data.id}>
-                    <figure>
-                      <img src={data.img} alt="shoeImg" />
-                    </figure>
-                    <h4>{data.name}</h4>
-                    <div className={style.bar}>
-                      <p className={style.price}>{data.price}</p>
-                      <div className={style.learnMore}>
-                        <img src="learnMore.svg" alt="" />
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <Link
+                      data-aos="fade-up"
+                      data-aos-anchor-placement="top-bottom"
+                      href={`/product-details/${product.product_slug}`} // Use the slug for dynamic routing
+                      key={product._id}
+                      className={style.productCard} // Ensure card styling
+                    >
+                      <div className={style.shoeSlideCard}>
+                        <figure>
+                          {product.images && product.images.length > 0 ? (
+                            <img
+                              src={product.images[0].url}
+                              alt={product.product_name}
+                            />
+                          ) : (
+                            <img
+                              src="/placeholder-image.png"
+                              alt="Placeholder Image"
+                            />
+                          )}
+                        </figure>
+                        <h4>{product.product_name}</h4>
+                        <div className={style.bar}>
+                          {product.variants && product.variants.length > 0 ? (
+                            <p className={style.price}>
+                              ₹ {product.variants[0].price}
+                            </p>
+                          ) : (
+                            <p className={style.price}>Price not available</p>
+                          )}
+                          <div className={style.learnMore}>
+                            <img src="/learnMore.svg" alt="Learn More" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </Link>
+                  ))
+                ) : (
+                  <p>No popular products found</p>
+                )}
               </Slider>
             </div>
           </div>

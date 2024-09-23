@@ -13,6 +13,8 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Link from "next/link";
+
 
 const Wishlist = () => {
   const [isActive, setIsActive] = useState(false);
@@ -143,6 +145,7 @@ const Wishlist = () => {
       });
       console.log("Response: ", response);
       fetchWishlist();
+      handleCloseModal();
     } catch (error) {
       console.error('Failed to remove item from wishlist:', error.response ? error.response.data.message : error.message);
     }
@@ -256,42 +259,49 @@ const Wishlist = () => {
             <div className={isActive ? style.activeFliter : style.left}>
               <MyAccountSideBar />
             </div>
-            <div className={style.right}>
-              <div className={styles.wishlistContainer}>
-                <h3>Wishlist</h3>
-                <ul className={styles.wishlistList}>
-                  {wishlistData.map(({ _id, product_name, brand, price = 0, images }) => {
-                    const formattedPrice = Number(price).toFixed(2);
-                    return (
-                      <li key={_id}>
-                        <div className={styles.left}>
-                          <figure>
-                            <img src={images[0]?.url} alt={product_name} />
-                          </figure>
-                          <div className={styles.proInfo}>
-                            <h4>{product_name}</h4>
-                            <p>Brand: {brand}</p>
-                            <p>Price: ₹{formattedPrice}</p>
-                          </div>
-                        </div>
-                        <div className={styles.right}>
-                          <button
-                            className={styles.cartBtn}
-                            onClick={() => handleOpenModal('add', _id)}
-                          >
-                            Add to Cart
-                          </button>
-                          <i className={styles.delBtn} onClick={() => handleOpenModal('remove', _id)}>
-                            <img src="/Bin.svg" alt="" />
-                          </i>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-
+            {wishlistData.length === 0 ? (
+              <div className={styles.emptyWishlist}>
+                <h4>Your wishlist is currently empty!</h4>
+                <p>Looks like you haven't added any items to your wishlist yet.</p>
+                <div style={{textAlign: "left", marginTop: "10px" }}>
+                  <Link style={{fontSize: "20px", fontWeight:"500", color: "black"}} href="/product-listing">
+                    {`Browse Product >`}
+                  </Link>
+                </div>
               </div>
-            </div>
+            ) : (
+              <ul className={styles.wishlistList}>
+                {wishlistData.map(({ _id, product_name, brand, price = 0, images }) => {
+                  const formattedPrice = Number(price).toFixed(2);
+                  return (
+                    <li key={_id}>
+                      <div className={styles.left}>
+                        <figure>
+                          <img src={images[0]?.url} alt={product_name} />
+                        </figure>
+                        <div className={styles.proInfo}>
+                          <h4>{product_name}</h4>
+                          <p>Brand: {brand}</p>
+                          <p>Price: ₹{formattedPrice}</p>
+                        </div>
+                      </div>
+                      <div className={styles.right}>
+                        <button
+                          className={styles.cartBtn}
+                          onClick={() => handleOpenModal('add', _id)}
+                        >
+                          Add to Cart
+                        </button>
+                        <i className={styles.delBtn} onClick={() => handleOpenModal('remove', _id)}>
+                          <img src="/Bin.svg" alt="" />
+                        </i>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
           </div>
         </div>
       </div>
