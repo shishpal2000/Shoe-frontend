@@ -6,6 +6,8 @@ import PageLinkBar from "@/components/PageLinkBar/PageLinkBar";
 import ProductGallery from "./productGallery";
 import axios from "axios";
 import ReactPlayer from 'react-player';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 
 const ProductDetails = ({ slug }) => {
   const [product, setProduct] = useState(null);
@@ -16,44 +18,19 @@ const ProductDetails = ({ slug }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [ratings, setRatings] = useState([]);
 
-  const userCommentData = [
-    {
-      id: 1,
-      profile: "/user.png",
-      userName: "Guy Hawkins",
-      commTime: "1 week ago",
-      rating: ":star::star::star::star::star:",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-    {
-      id: 2,
-      profile: "/user4.png",
-      userName: "Dianne Russell",
-      commTime: "51 mins ago",
-      rating: ":star::star::star::star::star:",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-    {
-      id: 3,
-      profile: "/user3.png",
-      userName: "Bessie Cooper",
-      commTime: "6 hours ago",
-      rating: ":star::star::star::star::star:",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-    {
-      id: 4,
-      profile: "/user2.png",
-      userName: "Eleanor Pena",
-      commTime: "1 days ago",
-      rating: ":star::star::star::star::star:",
-      descrip:
-        "I Have always found it difficult to find good quality shoes for my size UK 12. A friend recommended Whitemuds to order a custom-made shoe true to my size. Came here for my size but was more impressed by the designs. I loved the overall experience of my first Goodyear Welted Shoe.",
-    },
-  ];
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={i <= rating ? solidStar : regularStar}
+          className={i <= rating ? style.filled : style.empty}
+        />
+      );
+    }
+    return stars;
+  };
 
   const fetchProductData = useCallback(async () => {
     if (slug) {
@@ -219,37 +196,28 @@ const ProductDetails = ({ slug }) => {
                       }
                     >
                       <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
-                      <li>5 Star Rating</li>
+                      <li>4 Star Rating</li>
                     </ul>
                   </div>
                 </div>
                 <ul>
-                  {userCommentData.map(
-                    ({ id, userName, commTime, descrip, profile, rating }) => {
-                      return (
-                        <li key={id}>
-                          <div className={style.commLeft}>
-                            <figure className={style.userProfile}>
-                              <img src={profile} alt="" />
-                            </figure>
-                          </div>
-                          <div className={style.commRight}>
-                            <div className={style.userReview}>
-                              <div className={style.userDetailBar}>
-                                <h4>{userName}</h4>
-                                <p>{commTime}</p>
-                              </div>
-                              <div className={style.userRating}>{rating}</div>
-                              <p className={style.descrip}>{descrip}</p>
+                  {ratings.length > 0 ? (
+                    ratings.map(rating => (
+                      <li key={rating._id}>
+                        <div className={style.commRight}>
+                          <div className={style.userReview}>
+                            <div className={style.userDetailBar}>
+                              <h4>{rating.user.firstName}</h4>
+                              <p>{new Date(rating.createdAt).toLocaleDateString()}</p>
                             </div>
+                            <div className={style.userRating}> {renderStars(rating.rating)}</div>
+                            <p className={style.descrip}>{rating.comment}</p>
                           </div>
-                        </li>
-                      );
-                    }
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <p>No ratings yet.</p>
                   )}
                 </ul>
                 <div className={style.loadmoreCon}>
@@ -397,30 +365,6 @@ const ProductDetails = ({ slug }) => {
                       border: 0;
                     }
                   `}</style>
-              </div>
-              <div>
-                <h1>{product.name}</h1>
-                {/* Display product details */}
-
-                <div>
-                  <h2>Ratings and Reviews</h2>
-                  {ratings.length > 0 ? (
-                    <ul>
-                      {ratings.map(rating => (
-                        <li key={rating._id}>
-                          <div>
-                            <h4>{rating.user.firstName}</h4>
-                            <p>{rating.rating} Stars</p>
-                            <p>{rating.comment}</p>
-                            <p>{new Date(rating.createdAt).toLocaleDateString()}</p>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No ratings yet.</p>
-                  )}
-                </div>
               </div>
             </div>
           </div>

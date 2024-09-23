@@ -1,3 +1,15 @@
+.userRating {
+  display: flex;
+}
+
+.filled {
+  color: orange; 
+}
+
+.empty {
+  color: lightgray; 
+}
+
 .productDetailMainContainer {
   padding-bottom: 60px;
 }
