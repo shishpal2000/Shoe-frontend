@@ -62,7 +62,7 @@ const Checkout = () => {
           setOrderSummary({
             itemTotal: cartData.subtotal,
             discount: cartData.discount || 0,
-            discountedTotal: cartData.discountedTotal || 0,
+            discountedTotal: cartData.discountedTotal || cartData.subtotal,
             shipping: cartData.shipping || 5.00,
             tax: cartData.tax || 0,
           });
@@ -185,13 +185,11 @@ const Checkout = () => {
           variantId: item.variant._id,
           quantity: item.quantity,
         })),
-        // Reflect total after discount
         totalAmount: totalAmount,
-        discount: orderSummary.discount,
-        finalTotal: totalAmount,
+        discount: orderSummary.discount || 0,
+        finalTotal: orderSummary.discountedTotal || 0,
       };
 
-      // Send order data to the backend
       const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/create-order`, orderData, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -443,12 +441,18 @@ const Checkout = () => {
                     </li>
                     <li>
                       <h3>Total</h3>
-                      <p>₹{((orderSummary.discountedTotal || orderSummary.itemTotal) + orderSummary.shipping + orderSummary.tax).toFixed(2)}
+                      <p>
+                        ₹{(
+                          (orderSummary.discountedTotal || orderSummary.itemTotal) +
+                          orderSummary.shipping +
+                          orderSummary.tax
+                        ).toFixed(2)}
                       </p>
                     </li>
                   </ul>
                 )}
               </div>
+
               <div className={style.orderDetails}>
                 <h3>Order Details</h3>
                 {cartItems.length > 0 ? (

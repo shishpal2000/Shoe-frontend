@@ -25,16 +25,14 @@ const RazorpayPayment = () => {
                     throw new Error("No authentication token found");
                 }
 
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/get-order/${orderId}`, {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/get-order/${orderId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
-                const data = await response.json();
-
-                if (data.success) {
-                    setOrderDetails(data.order);
+                if (response.data.success) {
+                    setOrderDetails(response.data.order);
                 } else {
                     setError('Failed to fetch order details');
                 }
@@ -114,7 +112,7 @@ const RazorpayPayment = () => {
                                 );
 
                                 if (shippingResponse.data.success) {
-                                    window.location.href = `/payment-success?paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}`;
+                                    window.location.href = `/account/my-orders`;
                                 } else {
                                     alert('Failed to save shipping details');
                                     console.error('Shipping response:', shippingResponse.data);

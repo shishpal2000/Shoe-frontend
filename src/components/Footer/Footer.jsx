@@ -2,6 +2,7 @@
 import Link from "next/link";
 import style from "../../styles/footer.module.css";
 import { useState, useEffect } from "react";
+import axios from "axios";
 const Footer = () => {
 
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -10,11 +11,10 @@ const Footer = () => {
   useEffect(() => {
     const fetchContactInfo = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
-        const data = await response.json();
-        if (data.success && data.data) {
-          setPhoneNumber(data.data.phone);
-          setAddress(data.data.address);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
+        if (response.data.success && response.data.data) {
+          setPhoneNumber(response.data.data.phone);
+          setAddress(response.data.data.address);
         }
       } catch (error) {
         console.error("Error fetching contact info:", error);

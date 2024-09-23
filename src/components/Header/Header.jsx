@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import style from "../../styles/header.module.css";
+import axios from "axios";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,10 +19,9 @@ const Header = () => {
   useEffect(() => {
     const fetchContactInfo = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
-        const data = await response.json();
-        if (data.success && data.data) {
-          setPhoneNumber(data.data.phone);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
+        if (response.data.success && response.data.data) {
+          setPhoneNumber(response.data.data.phone);
         }
       } catch (error) {
         console.error("Error fetching contact info:", error);

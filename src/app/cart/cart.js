@@ -51,7 +51,7 @@ const Cart = () => {
     };
 
     fetchCartData();
-  }, []);
+  }, [cartData]);
 
 
   const updateQuantity = async (productId, variantId, newQuantity) => {
@@ -116,15 +116,14 @@ const Cart = () => {
       if (response.data.success && response.data.cart) {
         const updatedCart = response.data.cart;
 
-        // Update the cart state
         setCartData((prevCart) => ({
           ...prevCart,
-          items: updatedCart.items, // Update with remaining items
+          items: updatedCart.items,
           totalItems: updatedCart.items.reduce((acc, item) => acc + item.quantity, 0),
         }));
       } else {
         console.error("Cart update failed, resetting cart data");
-        setCartData({ items: [] }); // You might want to handle this differently
+        setCartData({ items: [] });
       }
     } catch (error) {
       console.error("Error removing item from cart:", error);
@@ -165,7 +164,10 @@ const Cart = () => {
         console.error("User not authenticated.");
         return;
       }
-
+      if (!couponCode.trim()) {
+        console.error("Please enter a valid coupon code.");
+        return;
+      }
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/apply-coupon`, {
         couponCode,
         userId,
@@ -185,6 +187,7 @@ const Cart = () => {
         }));
         setIsCouponApplied(true);
       } else {
+        alert(response.data.message || "Coupon application failed");
         console.error("Failed to apply coupon:", response.data.message);
       }
     } catch (error) {
@@ -236,9 +239,13 @@ const Cart = () => {
   };
 
   const calculateTotal = () => {
-    const subtotal = parseFloat(calculateSubtotal(cartData.items)) || 0;
+    const subtotal = calculateSubtotal(cartData.items);
+    const discount = Math.max(cartData.discountAmount || 0, 0); // Ensure discount is a valid number
     const delivery = 6.99;
-    return (cartData.discountedTotal > 0 ? cartData.discountedTotal : subtotal + delivery).toFixed(2);
+
+    const total = subtotal - discount + delivery;
+
+    return total >= 0 ? total.toFixed(2) : "0.00"; // Return a valid string
   };
 
   return (
@@ -261,6 +268,7 @@ const Cart = () => {
                           <img
                             src={item.product?.images?.[0]?.url || '/images/default-image.jpg'}
                             alt={item.product?.product_name || 'Product Image'}
+                            loading="lazy"
                           />
                         </figure>
                       </div>
@@ -351,7 +359,7 @@ const Cart = () => {
               </ul>
               <div className={style.checkoutBtn}>
                 <Link href="/checkout">
-                  <button>Checkout</button>
+                  <button disabled={cartData.items.length === 0}>Checkout</button>
                 </Link>
               </div>
               <div className={style.coupon}>

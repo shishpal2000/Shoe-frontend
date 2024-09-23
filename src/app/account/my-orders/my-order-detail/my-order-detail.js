@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 
 const OrderTrackDetail = () => {
   const router = useRouter();
-  const { orderId } = router.query; // Get the orderId from the URL
+  const { orderId } = router.query;
   const [order, setOrder] = useState(null);
   const [isActive, setIsActive] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const toggleClass = () => {
     setIsActive(!isActive);
@@ -19,7 +21,8 @@ const OrderTrackDetail = () => {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      if (!orderId) return; // Ensure orderId is defined
+      if (!orderId) return;
+      setLoading(true);
       try {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
@@ -28,21 +31,24 @@ const OrderTrackDetail = () => {
         }
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/api/orders/get-order/${orderId}`,
-          { headers: { Authorization: `Bearer ${token}` } } // Add token in headers
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        setOrder(response.data.order); // Assuming the API returns the specific order
+        setOrder(response.data.order);
       } catch (error) {
         console.error("Error fetching order details:", error);
+        setError("Failed to fetch order details.");
+      } finally {
+        setLoading(false);
       }
     };
-
 
     fetchOrder();
   }, [orderId]);
 
-  if (!order) {
-    return <div>Loading...</div>; // Optionally handle loading state
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
+  const { orderNumber, createdAt, finalTotal, status, cartItems } = order;
 
   return (
     <div className={style.myAccountMainContainer}>
@@ -62,24 +68,24 @@ const OrderTrackDetail = () => {
               <h4>Order Details</h4>
               <div className={styles.orderDetail}>
                 <div className={styles.left}>
-                  <h4>Order no: {order.orderNumber}</h4>
+                  <h4>Order no: {orderNumber}</h4>
                   <p>
-                    <span>Order Date :</span> {new Date(order.createdAt).toLocaleDateString()}
+                    <span>Order Date :</span> {new Date(createdAt).toLocaleDateString()}
                   </p>
                   <p>
-                    <span>Total Amount :</span> ${order.finalTotal}
+                    <span>Total Amount :</span> ${finalTotal}
                   </p>
                 </div>
                 <div className={styles.right}>
                   <p>
-                    <span>Order Status :</span> {order.status}
+                    <span>Order Status :</span> {status}
                   </p>
                 </div>
               </div>
 
               <div className={styles.orderTrackBar}>
                 <ul>
-                  {order.cartItems.map((item, idx) => (
+                  {cartItems.map((item, idx) => (
                     <li key={idx}>
                       <h3>{item.productName}</h3>
                       <p>Price: ${item.price}</p>
