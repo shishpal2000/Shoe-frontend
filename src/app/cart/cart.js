@@ -309,7 +309,7 @@ const Cart = () => {
                 {cartData.discountAmount > 0 && (
                   <li>
                     <div className={style.type}>Discount</div>
-                    <div className={style.val}><span>₹{cartData.discountAmount.toFixed(2) || '0.00'}</span></div>
+                    <div className={style.val}><span>-₹{cartData.discountAmount.toFixed(2) || '0.00'}</span></div>
                   </li>
                 )}
                 <li>
@@ -330,7 +330,9 @@ const Cart = () => {
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
                 />
-                <button onClick={applyCoupon}>Apply</button>
+                <button className={style.applyButton} onClick={applyCoupon}>
+                  Apply
+                </button>
               </div>
             </div>
           </div>

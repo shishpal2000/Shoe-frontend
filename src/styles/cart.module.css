@@ -1,5 +1,4 @@
-.cartMainContainer {
-}
+.cartMainContainer {}
 
 .cartItemsContainer {
   gap: 30px;
@@ -41,8 +40,7 @@
   align-items: flex-start;
 }
 
-.shortProDescrip .ProImg {
-}
+.shortProDescrip .ProImg {}
 
 .shortProDescrip .ProImg figure {
   width: 218.5px;
@@ -305,4 +303,53 @@
     width: 20px;
     height: 20px;
   }
+}
+
+/* coupon css */
+
+.coupon {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-top: 20px;
+}
+
+.coupon h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.coupon input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.coupon button {
+  background-color: #ff5722;
+  /* Primary color for your UI */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.coupon button:hover {
+  background-color: #e64a19;
+  /* Darken the button on hover */
+}
+
+.coupon button:active {
+  background-color: #d84315;
+  /* Active state color */
+  transform: scale(0.98);
+  /* Slight press effect */
 }
