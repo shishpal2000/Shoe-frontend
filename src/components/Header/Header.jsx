@@ -1,10 +1,11 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import style from "../../styles/header.module.css";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -13,6 +14,22 @@ const Header = () => {
       window.location.href = `/search?name=${encodeURIComponent(searchTerm)}`;
     }
   };
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
+        const data = await response.json();
+        if (data.success && data.data) {
+          setPhoneNumber(data.data.phone);
+        }
+      } catch (error) {
+        console.error("Error fetching contact info:", error);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
 
   return (
     <>
@@ -47,8 +64,8 @@ const Header = () => {
                 </figure>
               </div>
               <div className={style.detail}>
-                <Link href="tel:821730182123">
-                  <span>Call US :</span> (+62) 821730182123
+                <Link href={`tel:${phoneNumber}`}>
+                  <span>Call Us :</span> {phoneNumber}
                 </Link>
               </div>
             </div>

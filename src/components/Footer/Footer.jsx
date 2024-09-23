@@ -1,7 +1,29 @@
+"use client"
 import Link from "next/link";
 import style from "../../styles/footer.module.css";
-
+import { useState, useEffect } from "react";
 const Footer = () => {
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
+        const data = await response.json();
+        if (data.success && data.data) {
+          setPhoneNumber(data.data.phone);
+          setAddress(data.data.address);
+        }
+      } catch (error) {
+        console.error("Error fetching contact info:", error);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
+
   return (
     <>
       <div className={style.footerMainContainer}>
@@ -41,11 +63,12 @@ const Footer = () => {
 
               <div className={style.address}>
                 <h4>Address</h4>
-                <Link href="tel:654987877">+123 654 987 877</Link>
-                <p>
-                  The Bronx, NY <br />
-                  14568, USA
-                </p>
+                <Link href={`tel:${phoneNumber}`}>
+                  <span>Call Us :</span> {phoneNumber}
+                </Link>
+                <br />
+                <br />
+                <span>Address:</span> {address}
               </div>
             </div>
             <div className={style.footerListing}>
