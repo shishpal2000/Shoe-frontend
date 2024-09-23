@@ -241,12 +241,6 @@ const Cart = () => {
     return (cartData.discountedTotal > 0 ? cartData.discountedTotal : subtotal + delivery).toFixed(2);
   };
 
-  if (!cartData.items || cartData.items.length === 0) {
-    return <div>Your cart is empty.</div>;
-  }
-
-  console.log("Cart Data Items:", cartData.items);
-
   return (
     <>
       <PageLinkBar currentPage="Cart" />
