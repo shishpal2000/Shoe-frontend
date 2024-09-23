@@ -353,3 +353,16 @@
   transform: scale(0.98);
   /* Slight press effect */
 }
+.removeButton {
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.removeButton:hover {
+  background-color: #ff4d4d;
+}

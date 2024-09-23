@@ -17,6 +17,7 @@ const Cart = () => {
   });
   const [isActive, setIsActive] = useState(false);
   const [couponCode, setCouponCode] = useState("");
+  const [isCouponApplied, setIsCouponApplied] = useState(false);
 
   const toggleClass = () => {
     setIsActive(!isActive);
@@ -40,6 +41,7 @@ const Cart = () => {
             ...updatedCart,
             totalItems: updatedCart.items.length,
           });
+          setIsCouponApplied(!!response.data.cart.couponCode);
         } else {
           console.error("Unexpected response format:", response.data);
         }
@@ -181,11 +183,47 @@ const Cart = () => {
           couponCode: response.data.couponCode || "",
           totalItems: prevCart.items.reduce((acc, item) => acc + item.quantity, 0),
         }));
+        setIsCouponApplied(true);
       } else {
         console.error("Failed to apply coupon:", response.data.message);
       }
     } catch (error) {
       console.error("Error applying coupon:", error);
+    }
+  };
+  const removeCoupon = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
+      if (!userId || !token) {
+        console.error("User not authenticated.");
+        return;
+      }
+
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove-coupon`, {
+        userId,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        setCartData((prevCart) => ({
+          ...prevCart,
+          discountedTotal: prevCart.subtotal,
+          discountAmount: 0,
+          couponCode: "",
+          totalItems: prevCart.items.length,
+        }));
+        setCouponCode('');
+        setIsCouponApplied(false);
+      } else {
+        console.error("Failed to remove coupon:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error removing coupon:", error);
     }
   };
 
@@ -324,15 +362,26 @@ const Cart = () => {
               </div>
               <div className={style.coupon}>
                 <h4>Apply Coupon</h4>
-                <input
-                  type="text"
-                  placeholder="Enter coupon code"
-                  value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value)}
-                />
-                <button className={style.applyButton} onClick={applyCoupon}>
-                  Apply
-                </button>
+                {!isCouponApplied ? (
+                  <>
+                    <input
+                      type="text"
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value)}
+                    />
+                    <button className={style.applyButton} onClick={applyCoupon}>
+                      Apply
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p>Coupon Applied: {cartData.couponCode}</p>
+                    <button className={style.removeButton} onClick={removeCoupon}>
+                      Remove Coupon
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
