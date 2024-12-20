@@ -8,6 +8,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const isAuthenticated = window.localStorage.getItem("token");
   const handleSearch = (e) => {
     e.preventDefault(); // Prevent the default form submission
     if (searchTerm) {
@@ -93,13 +94,23 @@ const Header = () => {
             </ul>
 
             <ul className={style.menuOpt}>
-              <li>
-                <Link href="/account/my-orders">
-                  <figure>
-                    <img src="/user.svg" alt="" />
-                  </figure>
-                </Link>
-              </li>
+              {
+                isAuthenticated ? (
+                  <li>
+                    <Link href="/account/my-orders">
+                      <b>My Orders</b>
+                    </Link>
+                  </li>
+                ) : (
+                  <li>
+                    <Link href="/credential/log-in">
+                    <figure>
+                      <img src="/user.svg" alt="" />
+                    </figure>
+                    </Link>
+                  </li>
+                )
+              }
               <li>
                 <Link href="/cart">
                   <figure>

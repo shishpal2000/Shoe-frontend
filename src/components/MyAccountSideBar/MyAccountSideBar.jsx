@@ -18,7 +18,7 @@ const MyAccountSideBar = () => {
           });
           const user = response.data;
           console.log(response.data);
-          setUserName(`${user.firstName} ${user.lastName}`);
+          setUserName(`${user.firstName} ${user.lastName ? user.lastName : ""}`);
         }
       } catch (error) {
         console.error("Failed to fetch user data:", error);
@@ -85,12 +85,14 @@ const MyAccountSideBar = () => {
                 Sign out
               </Link>
             </li> */}
-            <li onClick={handleLogout} style={{ cursor: 'pointer' }}>
-              <figure>
-                <img src="/signOut.svg" alt="" />
-              </figure>
-              Sign out
-            </li>
+            { localStorage.getItem('token') && 
+              <li onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                <figure>
+                  <img src="/signOut.svg" alt="" />
+                </figure>
+                Sign out
+              </li>
+            }
           </ul>
         </div>
       </div>

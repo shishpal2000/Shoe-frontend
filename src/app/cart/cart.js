@@ -35,13 +35,17 @@ const Cart = () => {
           },
         });
 
+        console.log('response:', response.data);
+
         if (response.data.success && response.data.data.cart) {
           const updatedCart = response.data.data.cart;
           setCartData({
             ...updatedCart,
             totalItems: updatedCart.items.length,
           });
-          setIsCouponApplied(!!response.data.cart.couponCode);
+            if (response.data.data.cart.couponCode) {
+            setIsCouponApplied(true);
+            }
         } else {
           console.error("Unexpected response format:", response.data);
         }
@@ -51,7 +55,7 @@ const Cart = () => {
     };
 
     fetchCartData();
-  }, [cartData]);
+  }, []);
 
 
   const updateQuantity = async (productId, variantId, newQuantity) => {
@@ -241,7 +245,7 @@ const Cart = () => {
   const calculateTotal = () => {
     const subtotal = calculateSubtotal(cartData.items);
     const discount = Math.max(cartData.discountAmount || 0, 0); // Ensure discount is a valid number
-    const delivery = 6.99;
+    const delivery =  0; // Fixed delivery charge
 
     const total = subtotal - discount + delivery;
 
@@ -344,7 +348,7 @@ const Cart = () => {
                 </li>
                 <li>
                   <div className={style.type}>Delivery</div>
-                  <div className={style.val}>₹6.99</div>
+                  <div className={style.val}>₹0.00</div>
                 </li>
                 {cartData.discountAmount > 0 && (
                   <li>
@@ -359,7 +363,12 @@ const Cart = () => {
               </ul>
               <div className={style.checkoutBtn}>
                 <Link href="/checkout">
-                  <button disabled={cartData.items.length === 0}>Checkout</button>
+                  <button 
+                    disabled={cartData.items.length === 0} 
+                    style={{ cursor: cartData.items.length === 0 ? 'not-allowed' : 'pointer' }}
+                  >
+                    Checkout
+                  </button>
                 </Link>
               </div>
               <div className={style.coupon}>
