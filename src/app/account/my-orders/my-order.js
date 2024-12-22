@@ -17,6 +17,8 @@ const MyOrders = () => {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
       if (!token || !userId) {
+        console.log('token', token);
+        console.log('userId', userId);
       console.log("User not authenticated.");
       setLoading(false);
       return;

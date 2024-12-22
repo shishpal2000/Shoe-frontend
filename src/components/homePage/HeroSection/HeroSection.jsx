@@ -12,7 +12,7 @@ const HeroSection = () => {
         <div className="container">
           <div className={style.heroSection_items}>
             <figure>
-              <img src="background.png" alt="" />
+              <img src="background.webp" alt=""blurDataURL="URL" placeholder="blur"/>
             </figure>
           </div>
         </div>

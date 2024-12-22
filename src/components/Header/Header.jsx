@@ -8,7 +8,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const isAuthenticated = window.localStorage.getItem("token");
+  const isAuthenticated = localStorage.getItem("token");
   const handleSearch = (e) => {
     e.preventDefault(); // Prevent the default form submission
     if (searchTerm) {
@@ -28,8 +28,9 @@ const Header = () => {
         console.error("Error fetching contact info:", error);
       }
     };
-
-    fetchContactInfo();
+    if(isAuthenticated){
+      fetchContactInfo();
+    }
   }, []);
 
   return (
