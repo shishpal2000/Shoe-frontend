@@ -14,21 +14,25 @@ const MyOrders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      if (!token || !userId) {
+        console.log('token', token);
+        console.log('userId', userId);
+      console.log("User not authenticated.");
+      setLoading(false);
+      return;
+      }
       try {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
-        if (!token || !userId) {
-          throw new Error("No authentication token or user ID found");
-        }
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user-orders/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setOrders(response.data.orders);
-        console.log(response.data.orders);
-        setLoading(false);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user-orders/${userId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setOrders(response.data.orders);
+      console.log(response.data.orders);
       } catch (error) {
-        console.error("Failed to fetch orders", error);
-        setLoading(false);
+      console.error("Failed to fetch orders", error);
+      } finally {
+      setLoading(false);
       }
     };
 

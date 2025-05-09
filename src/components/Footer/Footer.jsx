@@ -9,6 +9,8 @@ const Footer = () => {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
+    const isAuthenticated = localStorage.getItem("token");
+
     const fetchContactInfo = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/contactinfo/get-contact-info`);
@@ -21,7 +23,9 @@ const Footer = () => {
       }
     };
 
-    fetchContactInfo();
+    if(isAuthenticated){
+      fetchContactInfo();
+    }  
   }, []);
 
   return (
